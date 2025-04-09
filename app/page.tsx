@@ -413,7 +413,8 @@ export default function Home() {
         <div className="container mx-auto px-6 py-12">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="flex items-center gap-2">
-              <div className="h-8 w-8 bg-red-600 rounded-lg"></div>
+              <img width={35} height={35} src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN" />
+
               <span className="text-xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">
                 Icarus
               </span>
