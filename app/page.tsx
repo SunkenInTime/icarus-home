@@ -52,7 +52,7 @@ export default function Home() {
           name="description"
           content="Revolutionary Valorant strategy planning tool"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="./favicon.svg" />
       </Head>
 
       {/* Navigation */}
@@ -94,10 +94,11 @@ export default function Home() {
               Community
             </a>
           </div>
-          <button className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
+
+          <a href="#download" className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
             <FaDownload />
             Download Beta
-          </button>
+          </a>
         </div>
       </nav>
 
