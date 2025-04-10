@@ -385,7 +385,7 @@ export default function Home() {
                       {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                     </h3>
                     <p className="text-gray-400 mb-6">
-                      Version 1.0.2 Beta • Released April 4, 2025
+                      Version 1.0.3 Beta • Released April 10, 2025
                     </p>
                     <a
                       href={
