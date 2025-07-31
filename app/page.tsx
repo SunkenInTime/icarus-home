@@ -19,7 +19,7 @@ export default function Home() {
     platforms: {
       windows: {
         url: "https://apps.microsoft.com/detail/9PBWHHZRQFW6?hl=en-us&gl=US&ocid=pdpshare",
-        size: "123 MB",
+        size: "31 MB",
       },
       mac: {
         url: "https://example.com/mac",
@@ -155,7 +155,10 @@ export default function Home() {
                 {/* Removed the intermediate div, applied styles directly here */}
                 <div className="relative bg-gray-900 rounded-xl overflow-hidden border border-white/10">
                   <img
-                    src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCCV8ubqfBotb9Ny0l3H6cY4aDWZsA8fF1ewvm"
+                    src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
+
+
+                    // src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
                     // Removed redundant rounded-xl (parent has overflow-hidden)
                     // Removed object-fit (it's not a standard Tailwind class or CSS value - did you mean object-cover/contain?)
                     className="block" // Ensure image is block for proper sizing
@@ -291,7 +294,7 @@ export default function Home() {
                   {/* Removed the intermediate div, applied styles directly here */}
                   <div className="relative bg-gray-900 rounded-xl overflow-hidden border border-white/10">
                     <img
-                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCCV8ubqfBotb9Ny0l3H6cY4aDWZsA8fF1ewvm"
+                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
                       // Removed redundant rounded-xl (parent has overflow-hidden)
                       // Removed object-fit (it's not a standard Tailwind class or CSS value - did you mean object-cover/contain?)
                       className="block" // Ensure image is block for proper sizing
@@ -319,7 +322,7 @@ export default function Home() {
                 </div>
                 <h2 className="text-4xl font-bold">Currently in Beta</h2>
                 <p className="text-gray-400">
-                  Icarus is approaching its 1.0 release, with new features being
+                  Icarus in its 1.0 release, with new features being
                   added regularly. Join our growing community of testers and help
                   shape the future of Valorant strategy planning.
                 </p>
@@ -385,7 +388,7 @@ export default function Home() {
                       {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
                     </h3>
                     <p className="text-gray-400 mb-6">
-                      Version 1.0.3 Beta • Released April 10, 2025
+                      Version 1.5.0 Beta • Released July 28, 2025
                     </p>
                     <a
                       href={
@@ -403,7 +406,7 @@ export default function Home() {
                   </div>
                   <div className="flex-1 bg-gray-800 rounded-lg h-[200px] flex items-center justify-center">
                     <img
-                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCCV8ubqfBotb9Ny0l3H6cY4aDWZsA8fF1ewvm"
+                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
                       className="block rounded-xl object-fit"
                       style={{ maxWidth: "100%", maxHeight: "400px" }}
                       alt="Description of the image"
@@ -569,7 +572,7 @@ const comparisonItems = [
   { feature: "Offline Access", icarus: true, competitors: false },
   { feature: "Live collaboration", icarus: false, competitors: true },
   { feature: "Open Source", icarus: true, competitors: false },
-  { feature: "Custom Line-ups", icarus: false, competitors: true },
+  { feature: "Custom Line-ups", icarus: true, competitors: true },
   { feature: "Strategy Sharing", icarus: true },];
 
 const comingSoonFeatures = [
