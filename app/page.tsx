@@ -576,7 +576,7 @@ const comparisonItems = [
   { feature: "Strategy Sharing", icarus: true },];
 
 const comingSoonFeatures = [
-  "Online functionality (Premium feature)",
+  "Online functionality (maybe??)",
   "Advanced team collaboration tools",
   "More agent-specific utilities",
   "Custom map annotations",
