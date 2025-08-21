@@ -1,451 +1,599 @@
 "use client";
+
 import Head from "next/head";
+import Link from "next/link";
 import {
   FaGithub,
   FaDiscord,
   FaTwitter,
   FaDownload,
   FaArrowRight,
+  FaHeart,
+  FaCoffee,
+  FaDonate,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+import { useMemo, useState } from "react";
+
+type Platform = "windows" | "mac" | "linux";
+
+/* Minimal palette */
+const BG = "#0E0E10"; // deeper, cleaner dark
+const DOT = "rgba(255,255,255,0.05)"; // subtle dot
+const VIGNETTE =
+  "radial-gradient(1000px 500px at 50% -10%, rgba(255,255,255,0.03), transparent)";
+const ACCENT = "#7B61FF"; // calm ultraviolet
+const ACCENT_HOVER = "#6B54E3";
+const RING = "rgba(123, 97, 255, 0.45)";
+const GLASS_BG =
+  "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))";
+const BORDER_SOFT = "rgba(255,255,255,0.10)";
+const TEXT_SOFT = "#CFCFD4";
+
+const PREVIEW_IMG =
+  "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"windows" | "mac" | "linux">(
-    "windows"
-  );
+  const [activeTab, setActiveTab] = useState<Platform>("windows");
+  const prefersReducedMotion = useReducedMotion();
 
   const latestVersion = {
+    version: "1.5.0 Beta",
+    released: "July 28, 2025",
     platforms: {
       windows: {
         url: "https://apps.microsoft.com/detail/9PBWHHZRQFW6?hl=en-us&gl=US&ocid=pdpshare",
         size: "31 MB",
       },
-      mac: {
-        url: "https://example.com/mac",
-        size: "123 MB",
-      },
-      linux: {
-        url: "https://example.com/linux",
-        size: "123 MB",
-      },
+      mac: { url: "https://example.com/mac", size: "123 MB" },
+      linux: { url: "https://example.com/linux", size: "123 MB" },
     },
   };
 
-  return (
-    <div className="min-h-screen bg-[#0A0A0F] text-white relative overflow-hidden">
-      {/* Animated Gradient Background */}
-      <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-br from-red-900/10 via-transparent to-blue-900/10 blur-3xl" />
+  const variants = useMemo(
+    () => ({
+      fadeUp: {
+        initial: { opacity: 0, y: prefersReducedMotion ? 0 : 14 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+      },
+      fadeIn: {
+        initial: { opacity: 0 },
+        animate: { opacity: 1, transition: { duration: 0.4 } },
+      },
+      pop: {
+        initial: { opacity: 0, scale: prefersReducedMotion ? 1 : 0.985 },
+        animate: { opacity: 1, scale: 1, transition: { duration: 0.4 } },
+      },
+    }),
+    [prefersReducedMotion]
+  );
 
-      {/* Dotted Grid Background */}
+  return (
+    <div
+      className="min-h-screen text-white relative overflow-hidden"
+      style={{ backgroundColor: BG }}
+    >
+      {/* Background: darker, cleaner */}
       <div
-        className="absolute inset-0 z-0 opacity-20"
+        aria-hidden
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(#ffffff 0.5px, transparent 0.5px)`,
-          backgroundSize: "24px 24px",
+          backgroundImage: `radial-gradient(${DOT} 1px, transparent 1px), ${VIGNETTE}`,
+          backgroundSize: "16px 16px, cover",
+          backgroundPosition: "center, center",
         }}
       />
-
       <Head>
-        <title>Icarus - Valorant Strategy Planner</title>
+        <title>Icarus – Valorant Strategy Planner</title>
         <meta
           name="description"
-          content="Revolutionary Valorant strategy planning tool"
+          content="Icarus is a local-first Valorant strategy planner. Minimal, fast, and private by default."
         />
         <link rel="icon" href="./favicon.svg" />
       </Head>
 
-      {/* Navigation */}
-      <nav className="relative z-10 backdrop-blur-md bg-black/20 border-b border-white/10">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <img
-              width={35}
-              height={35}
-              src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
-            />
-            <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">
-              Icarus
-            </span>
-          </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a
-              href="#features"
-              className="text-gray-300 hover:text-white transition-colors"
+      {/* Header (subtle glass) */}
+      <header className="relative z-10">
+        <div
+          className="border-b backdrop-blur-md"
+          style={{ background: GLASS_BG, borderColor: BORDER_SOFT }}
+        >
+          <div className="mx-auto max-w-6xl px-6">
+            <nav
+              className="flex h-16 items-center justify-between"
+              aria-label="Main"
             >
-              Features
-            </a>
-            <a
-              href="#beta"
-              className="text-gray-300 hover:text-white transition-colors"
-            >
-              Beta
-            </a>
-            <a
-              href="#download"
-              className="text-gray-300 hover:text-white transition-colors"
-            >
-              Download
-            </a>
-            <a
-              href="#community"
-              className="text-gray-300 hover:text-white transition-colors"
-            >
-              Community
-            </a>
-          </div>
-
-          <a href="#download" className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2">
-            <FaDownload />
-            Download Beta
-          </a>
-        </div>
-      </nav>
-
-      <main className="relative z-10">
-        {/* Hero Section */}
-        <section className="py-24 container mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex-1 space-y-6"
-            >
-              <div className="inline-block px-3 py-1 rounded-full bg-red-900/10 border border-red-400/20 text-red-400 text-xs font-semibold">
-                CURRENTLY IN BETA
-              </div>
-              <h1 className="text-5xl md:text-7xl font-bold">
-                <span className="bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">
+              <Link href="#hero" className="flex items-center gap-3">
+                <img
+                  width={28}
+                  height={28}
+                  className="rounded-md"
+                  src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
+                  alt="Icarus logo"
+                />
+                <span className="text-base font-semibold tracking-tight">
                   Icarus
                 </span>
-                <br />
-                <span className="text-white">Valorant Strategy Planner</span>
-              </h1>
-              <p className="text-xl text-gray-400 max-w-xl">
-                The next evolution in Valorant strategy planning. Local-first,
-                intuitive, and designed for competitive players.
-              </p>
-              <div className="flex gap-4 pt-4">
-                <a
-                  href="#download"
-                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-8 py-4 rounded-lg transition-all font-medium flex items-center gap-2 shadow-lg shadow-red-900/20"
-                >
-                  Download Beta <FaArrowRight />
-                </a>
-                <a
-                  href="#features"  // You can change this to any section you want it to link to
-                  className="border border-white/20 hover:bg-white/5 text-white px-8 py-4 rounded-lg transition-all font-medium inline-flex items-center"
-                >
-                  Learn More
-                </a>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex-1"
-            >
-              <div className="relative inline-block"> {/* Make the outer container inline-block */}
-                {/* Gradient background - will now size based on the inline-block container */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-400 to-gray-500 rounded-xl blur opacity-15"></div>
+              </Link>
 
-                {/* Main content container - now sized by the image */}
-                {/* Removed the intermediate div, applied styles directly here */}
-                <div className="relative bg-gray-900 rounded-xl overflow-hidden border border-white/10">
-                  <img
-                    src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
-
-
-                    // src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
-                    // Removed redundant rounded-xl (parent has overflow-hidden)
-                    // Removed object-fit (it's not a standard Tailwind class or CSS value - did you mean object-cover/contain?)
-                    className="block" // Ensure image is block for proper sizing
+              <div className="hidden md:flex items-center gap-6 text-sm">
+                {[
+                  ["Features", "#features"],
+                  ["Compare", "#compare"],
+                  ["Roadmap", "#beta"],
+                  ["Donate", "#donate"],
+                  ["Community", "#community"],
+                ].map(([label, href]) => (
+                  <motion.a
+                    key={label}
+                    href={href}
+                    className="text-gray-300 rounded px-1 focus-visible:outline-none focus-visible:ring-2"
                     style={{
-                      maxWidth: "100%", // Still useful if the container itself is constrained
-                      maxHeight: "400px",
-                      display: "block", // Explicitly set display: block for reliability
+                      borderColor: RING,
                     }}
-                    alt="Description of the image"
-                  />
-                </div>
+                    whileHover={{ y: -2, color: "#fff", textShadow: "0 0 18px rgba(123,97,255,0.45)" }}
+                    whileTap={{ y: 0 }}
+                  >
+                    {label}
+                  </motion.a>
+                ))}
               </div>
-            </motion.div>
+
+              <motion.a
+                href="#download"
+                className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                style={{
+                  backgroundColor: ACCENT,
+                  color: "#fff",
+                  borderColor: RING,
+
+                  WebkitTapHighlightColor: "transparent",
+                }}
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.97, y: 0 }}
+                onMouseOver={(e) =>
+                  ((e.currentTarget.style.backgroundColor = ACCENT_HOVER))
+                }
+                onMouseOut={(e) =>
+                  ((e.currentTarget.style.backgroundColor = ACCENT))
+                }
+              >
+                <FaDownload aria-hidden />
+                <span>Download</span>
+              </motion.a>
+            </nav>
           </div>
-        </section>
+        </div>
+      </header>
 
-        {/* Features Section */}
-        <section id="features" className="py-24 bg-black/30 backdrop-blur-sm">
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Why Choose Icarus?</h2>
-              <p className="text-gray-400 max-w-2xl mx-auto">
-                Designed from the ground up to address the shortcomings of
-                existing tools
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  key={index}
-                  className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-8 rounded-xl border border-white/5 hover:border-red-400/20 transition-all group"
+      <main className="relative z-10">
+        {/* Hero */}
+        <section id="hero" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid items-center gap-10 md:grid-cols-2">
+              <motion.div
+                initial="initial"
+                animate="animate"
+                variants={variants.fadeUp}
+                className="space-y-5"
+              >
+                <span
+                  className="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
+                  style={{
+                    color: TEXT_SOFT,
+                    border: `1px solid ${BORDER_SOFT}`,
+                    background: "rgba(255,255,255,0.03)",
+                    backdropFilter: "blur(6px)",
+                  }}
                 >
-                  <div className="w-12 h-12 bg-red-500/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-red-500/20 transition-colors">
-                    {feature.icon}
-                  </div>
-                  <h3 className="text-xl font-bold mb-4 text-white group-hover:text-red-400 transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-400">{feature.description}</p>
-                </motion.div>
-              ))}
+                  Beta
+                </span>
+
+                <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">
+                  Plan smarter. Play sharper.
+                  <br />
+                  <span className="text-white/90">Icarus</span> for Valorant.
+                </h1>
+
+                <p className="max-w-xl text-gray-300">
+                  Local-first strategy planner with a minimal, fast workflow.
+                  Private by default. Built with the community.
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-3 pt-1">
+                  <motion.a
+                    href="#download"
+                    className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                    style={{
+                      backgroundColor: ACCENT,
+                      color: "#fff",
+                      WebkitTapHighlightColor: "transparent",
+                    }}
+                    whileHover={{ scale: 1.03, y: -1 }}
+                    whileTap={{ scale: 0.97, y: 0 }}
+                    onMouseOver={(e) =>
+                      ((e.currentTarget.style.backgroundColor = ACCENT_HOVER))
+                    }
+                    onMouseOut={(e) =>
+                      ((e.currentTarget.style.backgroundColor = ACCENT))
+                    }
+                  >
+                    <FaArrowRight aria-hidden />
+                    Download beta
+                  </motion.a>
+                  <motion.a
+                    href="#features"
+                    className="inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium text-white/90 focus-visible:outline-none focus-visible:ring-2"
+                    style={{
+                      border: `1px solid ${BORDER_SOFT}`,
+                      background: "rgba(255,255,255,0.02)",
+                      backdropFilter: "blur(6px)",
+                      borderColor: RING,
+
+                    }}
+                    whileHover={{ y: -1, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}
+                    whileTap={{ y: 0, scale: 0.98 }}
+                  >
+                    Learn more
+                  </motion.a>
+                </div>
+              </motion.div>
+
+              {/* App-like preview with tool dock and subtle glow */}
+              <motion.div initial="initial" animate="animate" variants={variants.pop}>
+                <div className="relative">
+                  {/* glow */}
+                  <div
+                    aria-hidden
+                    className="absolute -inset-6 rounded-[22px] blur-2xl"
+                    style={{
+                      background:
+                        "radial-gradient(60% 60% at 70% 30%, rgba(123,97,255,0.35), rgba(123,97,255,0.06) 60%, transparent 70%)",
+                    }}
+                  />
+                  <GlassDeviceFrame>
+                    <Parallax depth={10}>
+                      <div className="relative pt-9" style={{ height: 375 }}>
+                        {/* window chrome */}
+                        <AppWindowChrome />
+                        {/* main shot */}
+                        <img
+                          src={PREVIEW_IMG}
+                          alt="Icarus interface preview"
+                          className="block w-full"
+                          style={{ height: "calc(375px - 20px)", objectFit: "cover" }}
+                        />
+                        {/* tool dock (right) */}
+                        {/* <ToolDock /> */}
+                      </div>
+                    </Parallax>
+                  </GlassDeviceFrame>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        <section className="py-24 container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              Why Switch from Other Tools?
-            </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              See how Icarus compares to existing solutions
-            </p>
+        {/* Features */}
+        <SectionShell id="features" title="Why choose Icarus?">
+          <p className="mt-3 text-gray-400 text-center">
+            Focused on speed, privacy, and a clean workflow.
+          </p>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10">
+            {features.map((f, i) => (
+              <motion.article
+                key={f.title}
+                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.35, delay: i * 0.04 }}
+                whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
+                className="rounded-lg p-5"
+                style={{
+                  border: `1px solid ${BORDER_SOFT}`,
+                  background: "rgba(255,255,255,0.02)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <div
+                  className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-md"
+                  style={{ background: "rgba(255,255,255,0.04)" }}
+                >
+                  {f.icon}
+                </div>
+                <h3 className="text-base font-semibold">{f.title}</h3>
+                <p className="mt-2 text-gray-400 text-sm">{f.description}</p>
+              </motion.article>
+            ))}
           </div>
+        </SectionShell>
 
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse">
-              <thead>
-                <tr className="border-b border-white/10">
-                  <th className="py-4 px-6 text-left">Feature</th>
-                  <th className="py-4 px-6 text-center border-t-2 border-l-2 border-r-2 border-red-400/40 rounded-t-full">
-                    Icarus
-                  </th>
+        {/* Compare */}
+        <SectionShell id="compare" title="Switch with confidence">
+          <p className="mt-3 text-gray-400 text-center">
+            A quick look at how Icarus stacks up.
+          </p>
 
-
-
-
-                  <th className="py-4 px-6 text-center">Competitors</th>
+          <div
+            className="overflow-x-auto rounded-lg mt-10"
+            style={{
+              border: `1px solid ${BORDER_SOFT}`,
+              background: "rgba(255,255,255,0.02)",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <table className="w-full text-left">
+              <thead className="bg-white/5">
+                <tr>
+                  <th className="py-3 px-4">Feature</th>
+                  <th className="py-3 px-4 text-center">Icarus</th>
+                  <th className="py-3 px-4 text-center">Competitors</th>
                 </tr>
               </thead>
               <tbody>
-                {comparisonItems.map((item, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-white/5 hover:bg-white/5"
+                {comparisonItems.map((item, idx) => (
+                  <motion.tr
+                    key={`${item.feature}-${idx}`}
+                    className="border-t hover:bg-white/5"
+                    style={{ borderColor: BORDER_SOFT }}
+                    whileHover={{ backgroundColor: "rgba(255,255,255,0.07)" }}
                   >
-                    <td className="py-4 px-6 text-gray-300">{item.feature}</td>
-
-                    <td className="py-4 px-6 text-center border-x-2 border-red-400/40">
+                    <td className="py-3 px-4 text-gray-300">{item.feature}</td>
+                    <td className="py-3 px-4 text-center">
                       <span
-                        className={
-                          item.icarus ? "text-green-500" : "text-red-400"
-                        }
+                        className={item.icarus ? "text-green-400" : "text-red-400"}
+                        aria-label={item.icarus ? "Yes" : "No"}
                       >
                         {item.icarus ? "✓" : "✗"}
                       </span>
                     </td>
-                    <td className="py-4 px-6 text-center">
+                    <td className="py-3 px-4 text-center">
                       <span
                         className={
-                          item.competitors ? "text-green-500" : "text-red-400"
+                          item.competitors ? "text-green-400" : "text-red-400"
                         }
+                        aria-label={item.competitors ? "Yes" : "No"}
                       >
                         {item.competitors ? "✓" : "✗"}
                       </span>
                     </td>
-                  </tr>
+                  </motion.tr>
                 ))}
               </tbody>
-              <tfoot>
-                <tr>
-                  <td></td>
-                  <td className="border-b-2 border-x-2 border-red-400/40 rounded-b-lg"></td>
-                  <td></td>
-                </tr>
-              </tfoot>
             </table>
           </div>
-        </section>
+        </SectionShell>
 
-
-        {/* Beta Info Section */}
-        <section id="beta" className="py-24 bg-black/30 backdrop-blur-sm">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row gap-12 items-center">
+        {/* Roadmap / Beta */}
+        <section id="beta" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 md:grid-cols-2 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="flex-1"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={variants.fadeIn}
               >
-                <div className="relative inline-block"> {/* Make the outer container inline-block */}
-                  {/* Gradient background - will now size based on the inline-block container */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-gray-400 to-gray-500 rounded-xl blur opacity-15"></div>
-
-                  {/* Main content container - now sized by the image */}
-                  {/* Removed the intermediate div, applied styles directly here */}
-                  <div className="relative bg-gray-900 rounded-xl overflow-hidden border border-white/10">
-                    <img
-                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
-                      // Removed redundant rounded-xl (parent has overflow-hidden)
-                      // Removed object-fit (it's not a standard Tailwind class or CSS value - did you mean object-cover/contain?)
-                      className="block" // Ensure image is block for proper sizing
-                      style={{
-                        maxWidth: "100%", // Still useful if the container itself is constrained
-                        maxHeight: "400px",
-                        display: "block", // Explicitly set display: block for reliability
-                      }}
-                      alt="Description of the image"
-                    />
-                  </div>
-                </div>
-
+                <GlassDeviceFrame rounded="lg">
+                  <img src={PREVIEW_IMG} alt="Icarus board" className="block w-full" style={{ maxHeight: 400, objectFit: "cover" }} />
+                </GlassDeviceFrame>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
-                className="flex-1 space-y-6"
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true, amount: 0.3 }}
+                variants={variants.fadeUp}
+                className="space-y-4"
               >
-                <div className="inline-block px-3 py-1 rounded-full bg-red-900/10 border border-red-400/20 text-red-400 text-xs font-semibold">
-                  ROADMAP
-                </div>
-                <h2 className="text-4xl font-bold">Currently in Beta</h2>
-                <p className="text-gray-400">
-                  Icarus in its 1.0 release, with new features being
-                  added regularly. Join our growing community of testers and help
-                  shape the future of Valorant strategy planning.
+                <span
+                  className="inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide"
+                  style={{
+                    color: TEXT_SOFT,
+                    border: `1px solid ${BORDER_SOFT}`,
+                    background: "rgba(255,255,255,0.03)",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  Roadmap
+                </span>
+                <h3 className="text-2xl font-semibold">Currently in Beta</h3>
+                <p className="text-gray-300">
+                  Iterating toward 1.0 with focused, useful releases. Join the
+                  community for early builds and feedback.
                 </p>
 
-                <div className="space-y-4 pt-4">
-                  <h3 className="text-xl font-bold text-red-400">
-                    Coming Soon
-                  </h3>
-                  <ul className="space-y-3">
-                    {comingSoonFeatures.map((feature, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-red-900/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                          <span className="text-red-400 text-sm">✓</span>
-                        </div>
-                        <span className="text-gray-300">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="mt-2 space-y-2">
+                  {comingSoonFeatures.map((f) => (
+                    <li key={f} className="flex items-start gap-3">
+                      <span className="mt-0.5 text-white/70">•</span>
+                      <span className="text-gray-300">{f}</span>
+                    </li>
+                  ))}
+                </ul>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Download Section */}
-        <section id="download" className="py-24 container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">Get Started Today</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto">
-              Download the beta version and join the revolution in Valorant
-              strategy planning
-            </p>
-          </div>
+        {/* Download */}
+        <SectionShell id="download" title="Get started today">
+          <p className="mt-3 text-gray-400 text-center">
+            Download the beta and start planning smarter.
+          </p>
 
-          <div className="max-w-3xl mx-auto">
-            <div className="bg-gradient-to-b from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-xl border border-white/5 overflow-hidden">
-              <div className="flex border-b border-white/10">
-                {["windows", "mac", "linux"].map((platform) => (
-                  <button
-                    key={platform}
-                    onClick={() =>
-                      setActiveTab(platform as "windows" | "mac" | "linux")
-                    }
-                    className={`flex-1 py-4 text-center transition-colors ${activeTab === platform
-                      ? "bg-red-500/10 text-white"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
-                      }`}
-                    disabled={platform === "mac" || platform === "linux"}
+          <div
+            className="overflow-hidden rounded-lg mt-10"
+            style={{
+              border: `1px solid ${BORDER_SOFT}`,
+              background: "rgba(255,255,255,0.02)",
+              backdropFilter: "blur(6px)",
+            }}
+          >
+            <div className="flex overflow-x-auto">
+              {(["windows", "mac", "linux"] as Platform[]).map((p) => {
+                const disabled = p === "mac" || p === "linux";
+                const isActive = activeTab === p;
+                return (
+                  <motion.button
+                    key={p}
+                    onClick={() => !disabled && setActiveTab(p)}
+                    className="flex-1 px-4 py-3 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2"
+                    style={{
+                      color: isActive ? "#fff" : "#BDBDBD",
+                      backgroundColor: isActive
+                        ? "rgba(255,255,255,0.04)"
+                        : "transparent",
+                      opacity: disabled ? 0.6 : 1,
+                      cursor: disabled ? "not-allowed" : "pointer",
+                      borderColor: RING,
+
+                    }}
+                    whileHover={!disabled ? { y: -1 } : undefined}
+                    whileTap={!disabled ? { y: 0, scale: 0.98 } : undefined}
+                    aria-pressed={isActive}
+                    aria-disabled={disabled}
                   >
-                    {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                    {platform === "mac" || platform === "linux"
-                      ? " (Coming Soon)"
-                      : ""}
-                  </button>
-                ))}
-              </div>
+                    {p.charAt(0).toUpperCase() + p.slice(1)}
+                    {disabled ? " (Coming soon)" : ""}
+                  </motion.button>
+                );
+              })}
+            </div>
 
-              <div className="p-8">
-                <div className="flex flex-col md:flex-row gap-8 items-center">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold mb-4">
-                      Download for{" "}
-                      {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
-                    </h3>
-                    <p className="text-gray-400 mb-6">
-                      Version 1.5.0 Beta • Released July 28, 2025
-                    </p>
-                    <a
-                      href={
-                        latestVersion.platforms[
-                          activeTab as "windows" | "mac" | "linux"
-                        ].url
+            <div className="p-6 sm:p-8">
+              <div className="grid gap-8 md:grid-cols-2 items-center">
+                <div>
+                  <h3 className="text-xl font-semibold">
+                    Download for{" "}
+                    {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
+                  </h3>
+                  <p className="mt-2 text-gray-400">
+                    {latestVersion.version} • Released {latestVersion.released}
+                  </p>
+
+                  <div className="mt-6 space-y-3">
+                    <motion.a
+                      href={latestVersion.platforms[activeTab].url}
+                      className="inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                      style={{
+                        backgroundColor: ACCENT,
+                        color: "#fff",
+                        WebkitTapHighlightColor: "transparent",
+                      }}
+                      whileHover={{ scale: 1.02, y: -1 }}
+                      whileTap={{ scale: 0.97, y: 0 }}
+                      onMouseOver={(e) =>
+                        ((e.currentTarget.style.backgroundColor = ACCENT_HOVER))
                       }
-                      className="w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-8 py-4 rounded-lg transition-all font-medium flex items-center justify-center gap-2 shadow-lg shadow-red-900/10"
+                      onMouseOut={(e) =>
+                        ((e.currentTarget.style.backgroundColor = ACCENT))
+                      }
                     >
-                      <FaDownload /> Download Now
-                    </a>
-                    <p className="text-xs text-gray-500 mt-4 text-center">
-                      By downloading, you agree to our Terms of Service
+                      <FaDownload aria-hidden />
+                      Download now
+                    </motion.a>
+                    <p className="text-center text-xs text-gray-500">
+                      File size: {latestVersion.platforms[activeTab].size} • By
+                      downloading, you agree to our Terms of Service.
                     </p>
                   </div>
-                  <div className="flex-1 bg-gray-800 rounded-lg h-[200px] flex items-center justify-center">
-                    <img
-                      src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1"
-                      className="block rounded-xl object-fit"
-                      style={{ maxWidth: "100%", maxHeight: "400px" }}
-                      alt="Description of the image"
-                    />
-                  </div>
+                </div>
+
+                <div>
+                  <GlassDeviceFrame rounded="lg">
+                    <img src={PREVIEW_IMG} alt="Icarus app preview" className="block w-full" style={{ maxHeight: 320, objectFit: "cover" }} />
+                  </GlassDeviceFrame>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </SectionShell>
 
-        {/* Community Section */}
-        <section id="community" className="py-24 bg-black/30 backdrop-blur-sm">
-          <div className="container mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold mb-4">Join the Community</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto mb-12">
-              Connect with other users, share strategies, and contribute to the
-              development of Icarus
+        {/* Donations (simplified) */}
+        <SectionShell id="donate" title="Support the project">
+          <p className="mt-3 text-gray-400 text-center max-w-2xl mx-auto">
+            Icarus is open source. Your support helps fund maintenance and
+            new features.
+          </p>
+
+          <div className="grid gap-6 md:grid-cols-3 mt-10">
+            {donationOptions.map((opt, i) => (
+              <motion.a
+                key={opt.title}
+                href={opt.url}
+                target="_blank"
+                rel="noreferrer"
+                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.3, delay: i * 0.04 }}
+                className="rounded-lg p-5"
+                style={{
+                  border: `1px solid ${BORDER_SOFT}`,
+                  background: "rgba(255,255,255,0.02)",
+                  backdropFilter: "blur(6px)",
+                }}
+              >
+                <div
+                  className="mb-3 mx-auto flex h-10 w-10 items-center justify-center rounded-md"
+                  style={{ background: "rgba(255,255,255,0.04)" }}
+                >
+                  {opt.icon}
+                </div>
+                <h3 className="text-base font-semibold text-center">
+                  {opt.title}
+                </h3>
+                <p className="mt-2 text-sm text-gray-400 text-center">
+                  {opt.description}
+                </p>
+              </motion.a>
+            ))}
+          </div>
+        </SectionShell>
+
+        {/* Community */}
+        <section id="community" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-6xl px-6 text-center">
+            <h2 className="text-2xl sm:text-3xl font-semibold">
+              Join the community
+            </h2>
+            <p className="mt-3 mb-10 text-gray-400">
+              Share strategies, request features, and help shape Icarus.
             </p>
 
-            <div className="flex flex-wrap gap-6 justify-center">
-              {communityLinks.map((link, index) => (
+            <div className="flex flex-wrap justify-center gap-6">
+              {communityLinks.map((link, i) => (
                 <motion.a
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  whileHover={{ y: -5 }}
-                  key={index}
+                  key={link.title}
                   href={link.url}
-                  className="bg-gradient-to-b from-gray-800 to-gray-900 hover:from-red-900/20 hover:to-red-900/5 p-6 rounded-xl border border-white/5 hover:border-red-400/20 transition-all group w-64"
+                  target="_blank"
+                  rel="noreferrer"
+                  initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.3, delay: i * 0.04 }}
+                  whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
+                  className="w-64 rounded-lg p-5 text-left"
+                  style={{
+                    border: `1px solid ${BORDER_SOFT}`,
+                    background: "rgba(255,255,255,0.02)",
+                    backdropFilter: "blur(6px)",
+                  }}
                 >
-                  <div className="w-12 h-12 mx-auto bg-red-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-red-500/20 transition-colors">
+                  <div
+                    className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md"
+                    style={{ background: "rgba(255,255,255,0.04)" }}
+                  >
                     {link.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-red-400 transition-colors">
+                  <h3 className="text-base font-semibold text-center">
                     {link.title}
                   </h3>
-                  <p className="text-gray-400 text-sm">{link.description}</p>
+                  <p className="mt-2 text-sm text-gray-400 text-center">
+                    {link.description}
+                  </p>
                 </motion.a>
               ))}
             </div>
@@ -453,61 +601,266 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="relative z-10 border-t border-white/5 bg-black/50 backdrop-blur-md">
-        <div className="container mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+      {/* Footer */}
+      <footer
+        className="relative z-10 backdrop-blur"
+        style={{
+          borderTop: `1px solid ${BORDER_SOFT}`,
+          background: "rgba(255,255,255,0.03)",
+        }}
+      >
+        <div className="mx-auto max-w-6xl px-6 py-10">
+          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
             <div className="flex items-center gap-2">
               <img
-                width={35}
-                height={35}
+                width={24}
+                height={24}
                 src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
+                alt="Icarus logo small"
               />
-
-              <span className="text-xl font-bold bg-gradient-to-r from-red-400 to-red-500 bg-clip-text text-transparent">
-                Icarus
-              </span>
+              <span className="text-base font-semibold">Icarus</span>
             </div>
 
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-red-500/10 flex items-center justify-center transition-colors"
+            <div className="flex items-center gap-3">
+              <motion.a
+                href="https://github.com/SunkenInTime/icarus"
+                className="flex h-9 w-9 items-center justify-center rounded-full hover:opacity-90 focus-visible:outline-none focus-visible:ring-2"
+                aria-label="GitHub"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  borderColor: RING,
+
+                }}
+                whileHover={{
+                  scale: 1.12,
+                  rotate: 3,
+                  boxShadow: `0 0 0 2px ${RING}, 0 10px 24px rgba(123,97,255,0.18)`,
+                }}
+                whileTap={{ scale: 0.94, rotate: 0 }}
               >
                 <FaGithub />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-red-500/10 flex items-center justify-center transition-colors"
+              </motion.a>
+              <motion.a
+                href="https://discord.gg/PN2uKwCqYB"
+                className="flex h-9 w-9 items-center justify-center rounded-full hover:opacity-90 focus-visible:outline-none focus-visible:ring-2"
+                aria-label="Discord"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  borderColor: RING,
+
+                }}
+                whileHover={{ scale: 1.08, rotate: -2, boxShadow: `0 0 0 2px ${RING}` }}
+                whileTap={{ scale: 0.95, rotate: 0 }}
               >
                 <FaDiscord />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
                 href="#"
-                className="w-10 h-10 rounded-full bg-white/5 hover:bg-red-500/10 flex items-center justify-center transition-colors"
+                className="flex h-9 w-9 items-center justify-center rounded-full hover:opacity-90 focus-visible:outline-none focus-visible:ring-2"
+                aria-label="Twitter"
+                style={{
+                  background: "rgba(255,255,255,0.05)",
+                  borderColor: RING,
+
+                }}
+                whileHover={{ scale: 1.08, rotate: 2, boxShadow: `0 0 0 2px ${RING}` }}
+                whileTap={{ scale: 0.95, rotate: 0 }}
               >
                 <FaTwitter />
-              </a>
+              </motion.a>
             </div>
           </div>
 
-          <div className="border-t border-white/5 mt-8 pt-8 text-center text-gray-500 text-sm">
-            <p>© 2024 Icarus. All rights reserved. Created by Dara.</p>
-          </div>
+          <p className="mt-6 text-center text-sm text-gray-500">
+            © {new Date().getFullYear()} Icarus. All rights reserved. Created by
+            Dara.
+          </p>
         </div>
       </footer>
     </div>
   );
 }
 
-// Data
+/* Helpers */
+
+function AppWindowChrome() {
+  return (
+    <div
+      className="absolute left-0 right-0 top-0 h-9 flex items-center px-3 select-none"
+      style={{
+        background:
+          "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0))",
+        borderBottom: `1px solid ${BORDER_SOFT}`,
+        backdropFilter: "blur(6px)",
+      }}
+    >
+      {/* window controls */}
+      <div className="flex items-center gap-2">
+        {[
+          "#ff5f57",
+          "#febc2e",
+          "#28c840",
+        ].map((c) => (
+          <span
+            key={c}
+            className="inline-block h-2.5 w-2.5 rounded-full"
+            style={{ backgroundColor: c, boxShadow: `0 0 0 1px rgba(0,0,0,0.25) inset` }}
+          />
+        ))}
+      </div>
+      <div className="mx-auto text-xs text-white/70 tracking-wide">
+        Icarus – Strategy Planner
+      </div>
+      <div className="w-16" />
+    </div>
+  );
+}
+
+function ToolDock() {
+  const Icon = ({ children }: { children: React.ReactNode }) => (
+    <motion.div
+      whileHover={{ scale: 1.06, y: -1 }}
+      whileTap={{ scale: 0.96, y: 0 }}
+      className="flex h-10 w-10 items-center justify-center rounded-md"
+      style={{
+        background: "rgba(255,255,255,0.04)",
+        border: `1px solid ${BORDER_SOFT}`,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+
+  return (
+    <div className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2">
+      <div
+        className="flex flex-col items-center gap-2 p-2 rounded-xl"
+        style={{
+          background: "rgba(0,0,0,0.25)",
+          border: `1px solid ${BORDER_SOFT}`,
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        <Icon>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#E4E4E7" strokeWidth="2">
+            <path d="M7 13c3-2 2-8 7-8 2 0 3 2 3 4 0 5-5 7-5 10 0 1-1 2-2 2s-2-1-2-2c0-2 1-4-1-6z" />
+          </svg>
+        </Icon>
+        <Icon>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#E4E4E7" strokeWidth="2">
+            <path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+        </Icon>
+        <Icon>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#E4E4E7" strokeWidth="2">
+            <path d="M3 17h18M6 13h12M9 9h6M11 5h2" />
+          </svg>
+        </Icon>
+        <Icon>
+          <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="#E4E4E7" strokeWidth="2">
+            <path d="M6 20l6-16 6 16" />
+          </svg>
+        </Icon>
+      </div>
+    </div>
+  );
+}
+
+function SectionShell({
+  id,
+  title,
+  children,
+}: {
+  id: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section id={id} className="py-16 sm:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="text-center">
+          <h2 className="text-2xl sm:text-3xl font-semibold">{title}</h2>
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function Parallax({
+  children,
+  depth = 8,
+}: {
+  children: React.ReactNode;
+  depth?: number;
+}) {
+  return (
+    <div
+      className="transition-transform will-change-transform"
+      style={{
+        transform:
+          "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)",
+      }}
+      onMouseMove={(e) => {
+        const t = e.currentTarget as HTMLDivElement;
+        const r = t.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        t.style.transform = `perspective(900px) rotateX(${-y * depth
+          }deg) rotateY(${x * depth}deg) translateZ(0)`;
+      }}
+      onMouseLeave={(e) => {
+        const t = e.currentTarget as HTMLDivElement;
+        t.style.transform =
+          "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)";
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function GlassDeviceFrame({
+  children,
+  rounded = "xl",
+}: {
+  children: React.ReactNode;
+  rounded?: "lg" | "xl";
+}) {
+  const radius = rounded === "lg" ? "0.75rem" : "1rem";
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{
+        borderRadius: radius,
+        border: `1px solid ${BORDER_SOFT}`,
+        background: "rgba(255,255,255,0.03)",
+        backdropFilter: "blur(10px)",
+        boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+      }}
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)" }}
+      />
+      {children}
+    </div>
+  );
+}
+
+/* Data */
+
 const features = [
   {
     icon: (
       <svg
-        className="w-6 h-6 text-red-400"
+        className="h-5 w-5"
         fill="none"
-        stroke="currentColor"
+        stroke="#E4E4E7"
         viewBox="0 0 24 24"
+        aria-hidden
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -518,17 +871,17 @@ const features = [
         />
       </svg>
     ),
-    title: "Local-First Approach",
-    description:
-      "Your strategies belong to you. All data is stored locally - no subscriptions, no lost work, complete privacy.",
+    title: "Local-first",
+    description: "Your strategies stay on your device. No lock-in.",
   },
   {
     icon: (
       <svg
-        className="w-6 h-6 text-red-400"
+        className="h-5 w-5"
         fill="none"
-        stroke="currentColor"
+        stroke="#E4E4E7"
         viewBox="0 0 24 24"
+        aria-hidden
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -539,17 +892,17 @@ const features = [
         />
       </svg>
     ),
-    title: "Intuitive Interface",
-    description:
-      "Designed for both beginners and pros with a clean, modern UI that puts functionality first and adapts to your workflow.",
+    title: "Minimal UX",
+    description: "Clean, distraction-free interface for faster planning.",
   },
   {
     icon: (
       <svg
-        className="w-6 h-6 text-red-400"
+        className="h-5 w-5"
         fill="none"
-        stroke="currentColor"
+        stroke="#E4E4E7"
         viewBox="0 0 24 24"
+        aria-hidden
         xmlns="http://www.w3.org/2000/svg"
       >
         <path
@@ -560,41 +913,65 @@ const features = [
         />
       </svg>
     ),
-    title: "Open Source",
-    description:
-      "Built by the community, for the community. Contribute, suggest features, or just peek under the hood to see how it works.",
+    title: "Open source",
+    description: "Built by and for the community.",
   },
 ];
 
-const comparisonItems = [
-  { feature: "Local Storage", icarus: true, competitors: false },
-  { feature: "No Subscription Required", icarus: true, competitors: false },
-  { feature: "Offline Access", icarus: true, competitors: false },
-  { feature: "Live collaboration", icarus: false, competitors: true },
-  { feature: "Open Source", icarus: true, competitors: false },
-  { feature: "Custom Line-ups", icarus: true, competitors: true },
-  { feature: "Strategy Sharing", icarus: true },];
-
-const comingSoonFeatures = [
-  "Online functionality (maybe??)",
-  "Advanced team collaboration tools",
-  "More agent-specific utilities",
-  "Custom map annotations",
-  "Multi-page support",
-];
+const comparisonItems: {
+  feature: string;
+  icarus: boolean;
+  competitors?: boolean;
+}[] = [
+    { feature: "Local storage", icarus: true, competitors: false },
+    { feature: "No subscription", icarus: true, competitors: false },
+    { feature: "Offline access", icarus: true, competitors: false },
+    { feature: "Live collaboration", icarus: false, competitors: true },
+    { feature: "Open source", icarus: true, competitors: false },
+    { feature: "Custom line-ups", icarus: true, competitors: true },
+    { feature: "Strategy sharing", icarus: true, competitors: false },
+  ];
 
 const communityLinks = [
   {
-    icon: <FaGithub className="text-2xl text-red-400" />,
+    icon: <FaGithub className="text-lg" color="#E4E4E7" aria-hidden />,
     title: "GitHub",
     description:
-      "Contribute to the project, report issues, or suggest new features",
+      "Contribute to the project, report issues, or suggest features.",
     url: "https://github.com/SunkenInTime/icarus",
   },
   {
-    icon: <FaDiscord className="text-2xl text-red-400" />,
+    icon: <FaDiscord className="text-lg" color="#E4E4E7" aria-hidden />,
     title: "Discord",
-    description: "Join our community to discuss strategies and get help",
+    description: "Discuss strategies and get help from the community.",
     url: "https://discord.gg/PN2uKwCqYB",
   },
+];
+
+const donationOptions = [
+  {
+    icon: <FaDonate className="text-base" color="#E4E4E7" aria-hidden />,
+    title: "GitHub Sponsors",
+    description: "Recurring support with perks and transparency.",
+    url: "https://github.com/sponsors/SunkenInTime",
+  },
+  {
+    icon: <FaCoffee className="text-base" color="#E4E4E7" aria-hidden />,
+    title: "Ko-fi",
+    description: "One-time tips to fuel development.",
+    url: "https://ko-fi.com/",
+  },
+  {
+    icon: <FaHeart className="text-base" color="#E4E4E7" aria-hidden />,
+    title: "OpenCollective",
+    description: "Transparent community funding.",
+    url: "https://opencollective.com/",
+  },
+];
+const comingSoonFeatures = [
+  "Optional online sync",
+  "Advanced collaboration tools",
+  "Agent-specific utilities",
+  "Custom map annotations",
+  "Multi-page support",
 ];
