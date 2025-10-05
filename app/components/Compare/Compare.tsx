@@ -29,7 +29,7 @@ const Compare = () => {
                     </thead>
                     <tbody>
                         {comparisonItems.map((item, i) => (
-                            <motion.tr key={`${item.feature}-${i}`} className="border-t hover:bg-white/5" style={{ borderColor: BORDER_SOFT }} whileHover={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
+                            <motion.tr key={`${item.feature}-${i}`} className="border-t hover:bg-white/5" style={{ borderColor: BORDER_SOFT, backgroundColor: "transparent" }} whileHover={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
                                 <td className="py-3 px-4 text-gray-300">{item.feature}</td>
                                 <td className="py-3 px-4 text-center">
                                     <span className={item.icarus ? "text-green-400" : "text-red-400"} aria-label={item.icarus ? "Yes" : "No"}>
