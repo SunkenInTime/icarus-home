@@ -2,8 +2,6 @@ import SocialButton from "@/app/components/ui/SocialButton";
 import { BORDER_SOFT } from "@/app/constants";
 
 const Footer = () => {
-    console.log(SocialButton);
-
     return (
         <footer
             className="relative z-10 backdrop-blur"

@@ -1,3 +1,5 @@
+"use client";
+
 import { RING } from "@/app/constants";
 import { motion } from "framer-motion";
 import { IconType } from "react-icons";
