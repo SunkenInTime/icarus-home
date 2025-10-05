@@ -1,9 +1,11 @@
 "use client";
 
-import { GLASS_BG, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER } from "@/app/constants";
-import { motion } from "framer-motion";
 import Link from "next/link";
+
+import { motion } from "framer-motion";
 import { FaDownload } from "react-icons/fa";
+
+import { GLASS_BG, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER } from "@/app/constants";
 
 const Header = () => {
     return (

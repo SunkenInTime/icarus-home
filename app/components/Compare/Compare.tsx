@@ -1,8 +1,10 @@
-import { BORDER_SOFT } from "@/app/constants";
-import comparisonItems from "@/app/data/comparisonItems";
 import { motion } from "framer-motion";
-import React from "react";
-import SectionShell from "../ui/SectionShell";
+
+import SectionShell from "@/app/components/ui/SectionShell";
+
+import comparisonItems from "@/app/data/comparisonItems";
+
+import { BORDER_SOFT } from "@/app/constants";
 
 const Compare = () => {
     return (

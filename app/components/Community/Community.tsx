@@ -1,7 +1,8 @@
-import { ACCENT, BORDER_SOFT } from "@/app/constants";
-import communityLinks from "@/app/data/communityLinks";
 import { motion } from "framer-motion";
-import React from "react";
+
+import communityLinks from "@/app/data/communityLinks";
+
+import { ACCENT, BORDER_SOFT } from "@/app/constants";
 
 const Community = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
     return (

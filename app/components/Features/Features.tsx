@@ -1,7 +1,10 @@
-import { ACCENT, BORDER_SOFT } from "@/app/constants";
 import { motion } from "framer-motion";
+
+import SectionShell from "@/app/components/ui/SectionShell";
+
 import features from "@/app/data/features";
-import SectionShell from "../ui/SectionShell";
+
+import { ACCENT, BORDER_SOFT } from "@/app/constants";
 
 const Features = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
     return (

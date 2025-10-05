@@ -1,7 +1,10 @@
-import donationOptions from "@/app/data/donationOptions";
-import SectionShell from "@/app/components/ui/SectionShell";
-import { BORDER_SOFT } from "@/app/constants";
 import { motion } from "framer-motion";
+
+import SectionShell from "@/app/components/ui/SectionShell";
+
+import donationOptions from "@/app/data/donationOptions";
+
+import { BORDER_SOFT } from "@/app/constants";
 
 const Donations = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
     return (

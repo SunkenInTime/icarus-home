@@ -1,12 +1,16 @@
 "use client";
 
-import { BORDER_SOFT, RING, ACCENT, ACCENT_HOVER, PREVIEW_IMG } from "@/app/constants";
+import { useState } from "react";
+
 import { motion } from "framer-motion";
 import { FaDownload } from "react-icons/fa";
-import GlassDeviceFrame from "../ui/GlassDeviceFrame";
-import SectionShell from "../ui/SectionShell";
-import { useState } from "react";
+
+import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
+import SectionShell from "@/app/components/ui/SectionShell";
+
 import latestVersion from "@/app/data/versionInfo";
+
+import { BORDER_SOFT, RING, ACCENT, ACCENT_HOVER, PREVIEW_IMG } from "@/app/constants";
 
 type Platform = "windows" | "mac" | "linux";
 

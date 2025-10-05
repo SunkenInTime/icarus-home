@@ -1,4 +1,5 @@
 import SocialButton from "@/app/components/ui/SocialButton";
+
 import { BORDER_SOFT } from "@/app/constants";
 
 const Footer = () => {

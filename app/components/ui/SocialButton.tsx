@@ -1,9 +1,10 @@
 "use client";
 
-import { RING } from "@/app/constants";
 import { motion } from "framer-motion";
 import { IconType } from "react-icons";
 import { FaDiscord, FaGithub, FaTwitter } from "react-icons/fa";
+
+import { RING } from "@/app/constants";
 
 type Social = "github" | "discord" | "twitter";
 

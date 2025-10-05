@@ -1,7 +1,11 @@
-import { PREVIEW_IMG, TEXT_SOFT, BORDER_SOFT } from "@/app/constants";
-import comingSoonFeatures from "@/app/data/comingSoonFeatures";
 import { motion } from "framer-motion";
+
 import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
+
+import comingSoonFeatures from "@/app/data/comingSoonFeatures";
+
+import { PREVIEW_IMG, TEXT_SOFT, BORDER_SOFT } from "@/app/constants";
+
 import { AnimationVariants } from "@/app/types/AnimationVariants";
 
 const Roadmap = ({ variants }: { variants: AnimationVariants }) => {

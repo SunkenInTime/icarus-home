@@ -1,11 +1,14 @@
 "use client";
 
-import { TEXT_SOFT, BORDER_SOFT, ACCENT, ACCENT_HOVER, RING, PREVIEW_IMG } from "@/app/constants";
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
-import AppWindowChrome from "../ui/AppWindowChrome";
-import GlassDeviceFrame from "../ui/GlassDeviceFrame";
-import Parallax from "../ui/Parallax";
+
+import AppWindowChrome from "@/app/components/ui/AppWindowChrome";
+import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
+import Parallax from "@/app/components/ui/Parallax";
+
+import { TEXT_SOFT, BORDER_SOFT, ACCENT, ACCENT_HOVER, RING, PREVIEW_IMG } from "@/app/constants";
+
 import { AnimationVariants } from "@/app/types/AnimationVariants";
 
 const Hero = ({ variants }: { variants: AnimationVariants }) => {
