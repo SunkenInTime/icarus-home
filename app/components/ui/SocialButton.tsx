@@ -13,7 +13,7 @@ const SOCIALS: Record<Social, { icon: IconType; label: string }> = {
 
 const SocialButton = ({ platform, href }: { platform: Social; href: string }) => {
     const social = SOCIALS[platform];
-    if (!social || !social.icon) return null;
+    if (!social?.icon) return null;
     const { icon: Icon, label } = social;
 
     return (
