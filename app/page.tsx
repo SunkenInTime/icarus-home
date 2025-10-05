@@ -3,11 +3,16 @@
 import Head from "next/head";
 import Link from "next/link";
 
-import comparisonItems from "./data/comparisonItems";
-import comingSoonFeatures from "./data/comingSoonFeatures";
-import donationOptions from "./data/donationOptions";
-import communityLinks from "./data/communityLinks";
-import features from "./data/features";
+import comparisonItems from "@/app/data/comparisonItems";
+import comingSoonFeatures from "@/app/data/comingSoonFeatures";
+import donationOptions from "@/app/data/donationOptions";
+import communityLinks from "@/app/data/communityLinks";
+import features from "@/app/data/features";
+
+import AppWindowChrome from "@/app/components/ui/AppWindowChrome";
+import SectionShell from "@/app/components/ui/SectionShell";
+import Parallax from "@/app/components/ui/Parallax";
+import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
 
 import { FaGithub, FaDiscord, FaTwitter, FaDownload, FaArrowRight } from "react-icons/fa";
 import { motion, useReducedMotion } from "framer-motion";
@@ -560,29 +565,7 @@ export default function Home() {
     );
 }
 
-/* Helpers */
-
-function AppWindowChrome() {
-    return (
-        <div
-            className="absolute left-0 right-0 top-0 h-9 flex items-center px-3 select-none"
-            style={{
-                background: "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0))",
-                borderBottom: `1px solid ${BORDER_SOFT}`,
-                backdropFilter: "blur(6px)",
-            }}
-        >
-            {/* window controls */}
-            <div className="flex items-center gap-2">
-                {["#ff5f57", "#febc2e", "#28c840"].map((c) => (
-                    <span key={c} className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: c, boxShadow: `0 0 0 1px rgba(0,0,0,0.25) inset` }} />
-                ))}
-            </div>
-            <div className="mx-auto text-xs text-white/70 tracking-wide">Icarus – Strategy Planner</div>
-            <div className="w-16" />
-        </div>
-    );
-}
+// Keeping this because I couldn't figure out what its for and it isn't used anywhere.
 
 function ToolDock() {
     const Icon = ({ children }: { children: React.ReactNode }) => (
@@ -631,62 +614,6 @@ function ToolDock() {
                     </svg>
                 </Icon>
             </div>
-        </div>
-    );
-}
-
-function SectionShell({ id, title, children }: { id: string; title: string; children: React.ReactNode }) {
-    return (
-        <section id={id} className="py-16 sm:py-24">
-            <div className="mx-auto max-w-6xl px-6">
-                <div className="text-center">
-                    <h2 className="text-2xl sm:text-3xl font-semibold">{title}</h2>
-                </div>
-                {children}
-            </div>
-        </section>
-    );
-}
-
-function Parallax({ children, depth = 8 }: { children: React.ReactNode; depth?: number }) {
-    return (
-        <div
-            className="transition-transform will-change-transform"
-            style={{
-                transform: "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)",
-            }}
-            onMouseMove={(e) => {
-                const t = e.currentTarget as HTMLDivElement;
-                const r = t.getBoundingClientRect();
-                const x = (e.clientX - r.left) / r.width - 0.5;
-                const y = (e.clientY - r.top) / r.height - 0.5;
-                t.style.transform = `perspective(900px) rotateX(${-y * depth}deg) rotateY(${x * depth}deg) translateZ(0)`;
-            }}
-            onMouseLeave={(e) => {
-                const t = e.currentTarget as HTMLDivElement;
-                t.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0)";
-            }}
-        >
-            {children}
-        </div>
-    );
-}
-
-function GlassDeviceFrame({ children, rounded = "xl" }: { children: React.ReactNode; rounded?: "lg" | "xl" }) {
-    const radius = rounded === "lg" ? "0.75rem" : "1rem";
-    return (
-        <div
-            className="relative overflow-hidden"
-            style={{
-                borderRadius: radius,
-                border: `1px solid ${BORDER_SOFT}`,
-                background: "rgba(255,255,255,0.03)",
-                backdropFilter: "blur(10px)",
-                boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
-            }}
-        >
-            <div aria-hidden className="pointer-events-none absolute inset-0" style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,0.06)" }} />
-            {children}
         </div>
     );
 }
