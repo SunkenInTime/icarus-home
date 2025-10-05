@@ -3,7 +3,7 @@
 import Head from "next/head";
 import { useMemo } from "react";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useReducedMotion } from "framer-motion";
 
 import Hero from "@/app/components/Hero/Hero";
 import Features from "@/app/components/Features/Features";
@@ -13,7 +13,7 @@ import Download from "@/app/components/Download/Download";
 import Donations from "@/app/components/Donations/Donations";
 import Community from "@/app/components/Community/Community";
 
-import { BG, DOT, VIGNETTE, BORDER_SOFT } from "@/app/constants";
+import { BG, DOT, VIGNETTE } from "@/app/constants";
 
 import { AnimationVariants } from "@/app/types/AnimationVariants";
 
