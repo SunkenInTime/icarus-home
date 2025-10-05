@@ -2,7 +2,14 @@
 
 import Head from "next/head";
 import Link from "next/link";
-import { FaGithub, FaDiscord, FaTwitter, FaDownload, FaArrowRight, FaHeart, FaCoffee, FaDonate } from "react-icons/fa";
+
+import comparisonItems from "./data/comparisonItems";
+import comingSoonFeatures from "./data/comingSoonFeatures";
+import donationOptions from "./data/donationOptions";
+import communityLinks from "./data/communityLinks";
+import features from "./data/features";
+
+import { FaGithub, FaDiscord, FaTwitter, FaDownload, FaArrowRight } from "react-icons/fa";
 import { motion, useReducedMotion } from "framer-motion";
 import { useMemo, useState } from "react";
 
@@ -224,9 +231,9 @@ export default function Home() {
                     <p className="mt-3 text-gray-400 text-center">Focused on speed, privacy, and a clean workflow.</p>
 
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-10">
-                        {features.map((f, i) => (
+                        {features.map((feature, i) => (
                             <motion.article
-                                key={f.title}
+                                key={feature.title}
                                 initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 12 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
@@ -240,10 +247,12 @@ export default function Home() {
                                 }}
                             >
                                 <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                    {f.icon}
+                                    <svg className="h-5 w-5" fill="none" stroke="#E4E4E7" viewBox={feature.icon.viewBox} aria-hidden xmlns="http://www.w3.org/2000/svg">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={feature.icon.d} />
+                                    </svg>
                                 </div>
-                                <h3 className="text-base font-semibold">{f.title}</h3>
-                                <p className="mt-2 text-gray-400 text-sm">{f.description}</p>
+                                <h3 className="text-base font-semibold">{feature.title}</h3>
+                                <p className="mt-2 text-gray-400 text-sm">{feature.description}</p>
                             </motion.article>
                         ))}
                     </div>
@@ -407,35 +416,38 @@ export default function Home() {
                     </div>
                 </SectionShell>
 
-                {/* Donations (simplified) */}
+                {/* Donations */}
                 <SectionShell id="donate" title="Support the project">
                     <p className="mt-3 text-gray-400 text-center max-w-2xl mx-auto">Icarus is open source. Your support helps fund maintenance and new features.</p>
 
                     <div className="grid gap-6 md:grid-cols-3 mt-10">
-                        {donationOptions.map((opt, i) => (
-                            <motion.a
-                                key={opt.title}
-                                href={opt.url}
-                                target="_blank"
-                                rel="noreferrer"
-                                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.3, delay: i * 0.04 }}
-                                className="rounded-lg p-5"
-                                style={{
-                                    border: `1px solid ${BORDER_SOFT}`,
-                                    background: "rgba(255,255,255,0.02)",
-                                    backdropFilter: "blur(6px)",
-                                }}
-                            >
-                                <div className="mb-3 mx-auto flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                    {opt.icon}
-                                </div>
-                                <h3 className="text-base font-semibold text-center">{opt.title}</h3>
-                                <p className="mt-2 text-sm text-gray-400 text-center">{opt.description}</p>
-                            </motion.a>
-                        ))}
+                        {donationOptions.map((option, i) => {
+                            const Icon = option.icon;
+                            return (
+                                <motion.a
+                                    key={option.title}
+                                    href={option.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.3 }}
+                                    transition={{ duration: 0.3, delay: i * 0.04 }}
+                                    className="rounded-lg p-5"
+                                    style={{
+                                        border: `1px solid ${BORDER_SOFT}`,
+                                        background: "rgba(255,255,255,0.02)",
+                                        backdropFilter: "blur(6px)",
+                                    }}
+                                >
+                                    <div className="mb-3 mx-auto flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
+                                        <Icon className="text-base" color="#E4E4E7" aria-hidden />
+                                    </div>
+                                    <h3 className="text-base font-semibold text-center">{option.title}</h3>
+                                    <p className="mt-2 text-sm text-gray-400 text-center">{option.description}</p>
+                                </motion.a>
+                            );
+                        })}
                     </div>
                 </SectionShell>
 
@@ -446,31 +458,34 @@ export default function Home() {
                         <p className="mt-3 mb-10 text-gray-400">Share strategies, request features, and help shape Icarus.</p>
 
                         <div className="flex flex-wrap justify-center gap-6">
-                            {communityLinks.map((link, i) => (
-                                <motion.a
-                                    key={link.title}
-                                    href={link.url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, amount: 0.3 }}
-                                    transition={{ duration: 0.3, delay: i * 0.04 }}
-                                    whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
-                                    className="w-64 rounded-lg p-5 text-left"
-                                    style={{
-                                        border: `1px solid ${BORDER_SOFT}`,
-                                        background: "rgba(255,255,255,0.02)",
-                                        backdropFilter: "blur(6px)",
-                                    }}
-                                >
-                                    <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                        {link.icon}
-                                    </div>
-                                    <h3 className="text-base font-semibold text-center">{link.title}</h3>
-                                    <p className="mt-2 text-sm text-gray-400 text-center">{link.description}</p>
-                                </motion.a>
-                            ))}
+                            {communityLinks.map((link, i) => {
+                                const Icon = link.icon;
+                                return (
+                                    <motion.a
+                                        key={link.title}
+                                        href={link.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true, amount: 0.3 }}
+                                        transition={{ duration: 0.3, delay: i * 0.04 }}
+                                        whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
+                                        className="w-64 rounded-lg p-5 text-left"
+                                        style={{
+                                            border: `1px solid ${BORDER_SOFT}`,
+                                            background: "rgba(255,255,255,0.02)",
+                                            backdropFilter: "blur(6px)",
+                                        }}
+                                    >
+                                        <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
+                                            <Icon className="text-lg" color="#E4E4E7" aria-hidden />
+                                        </div>
+                                        <h3 className="text-base font-semibold text-center">{link.title}</h3>
+                                        <p className="mt-2 text-sm text-gray-400 text-center">{link.description}</p>
+                                    </motion.a>
+                                );
+                            })}
                         </div>
                     </div>
                 </section>
@@ -675,86 +690,3 @@ function GlassDeviceFrame({ children, rounded = "xl" }: { children: React.ReactN
         </div>
     );
 }
-
-/* Data */
-
-const features = [
-    {
-        icon: (
-            <svg className="h-5 w-5" fill="none" stroke="#E4E4E7" viewBox="0 0 24 24" aria-hidden xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-            </svg>
-        ),
-        title: "Local-first",
-        description: "Your strategies stay on your device. No lock-in.",
-    },
-    {
-        icon: (
-            <svg className="h-5 w-5" fill="none" stroke="#E4E4E7" viewBox="0 0 24 24" aria-hidden xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-            </svg>
-        ),
-        title: "Minimal UX",
-        description: "Clean, distraction-free interface for faster planning.",
-    },
-    {
-        icon: (
-            <svg className="h-5 w-5" fill="none" stroke="#E4E4E7" viewBox="0 0 24 24" aria-hidden xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-            </svg>
-        ),
-        title: "Open source",
-        description: "Built by and for the community.",
-    },
-];
-
-const comparisonItems: {
-    feature: string;
-    icarus: boolean;
-    competitors?: boolean;
-}[] = [
-    { feature: "Local storage", icarus: true, competitors: false },
-    { feature: "No subscription", icarus: true, competitors: false },
-    { feature: "Offline access", icarus: true, competitors: false },
-    { feature: "Live collaboration", icarus: false, competitors: true },
-    { feature: "Open source", icarus: true, competitors: false },
-    { feature: "Custom line-ups", icarus: true, competitors: true },
-    { feature: "Strategy sharing", icarus: true, competitors: false },
-];
-
-const communityLinks = [
-    {
-        icon: <FaGithub className="text-lg" color="#E4E4E7" aria-hidden />,
-        title: "GitHub",
-        description: "Contribute to the project, report issues, or suggest features.",
-        url: "https://github.com/SunkenInTime/icarus",
-    },
-    {
-        icon: <FaDiscord className="text-lg" color="#E4E4E7" aria-hidden />,
-        title: "Discord",
-        description: "Discuss strategies and get help from the community.",
-        url: "https://discord.gg/PN2uKwCqYB",
-    },
-];
-
-const donationOptions = [
-    {
-        icon: <FaDonate className="text-base" color="#E4E4E7" aria-hidden />,
-        title: "GitHub Sponsors",
-        description: "Recurring support with perks and transparency.",
-        url: "https://github.com/sponsors/SunkenInTime",
-    },
-    {
-        icon: <FaCoffee className="text-base" color="#E4E4E7" aria-hidden />,
-        title: "Ko-fi",
-        description: "One-time tips to fuel development.",
-        url: "https://ko-fi.com/",
-    },
-    {
-        icon: <FaHeart className="text-base" color="#E4E4E7" aria-hidden />,
-        title: "OpenCollective",
-        description: "Transparent community funding.",
-        url: "https://opencollective.com/",
-    },
-];
-const comingSoonFeatures = ["Optional online sync", "Advanced collaboration tools", "Agent-specific utilities", "Custom map annotations", "Multi-page support"];
