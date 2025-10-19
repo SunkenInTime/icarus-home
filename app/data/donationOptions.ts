@@ -9,23 +9,17 @@ type DonationOption = {
 };
 
 const donationOptions: DonationOption[] = [
-    {
-        icon: FaDonate,
-        title: "GitHub Sponsors",
-        description: "Recurring support with perks and transparency.",
-        url: "https://github.com/sponsors/SunkenInTime",
-    },
+    // {
+    //     icon: FaDonate,
+    //     title: "GitHub Sponsors",
+    //     description: "Recurring support with perks and transparency.",
+    //     url: "https://github.com/sponsors/SunkenInTime",
+    // },
     {
         icon: FaCoffee,
-        title: "Ko-fi",
+        title: "Buy Me a Coffee",
         description: "One-time tips to fuel development.",
-        url: "https://ko-fi.com/",
-    },
-    {
-        icon: FaHeart,
-        title: "OpenCollective",
-        description: "Transparent community funding.",
-        url: "https://opencollective.com/",
+        url: "https://buymeacoffee.com/daradoescode",
     },
 ];
 

@@ -20,7 +20,7 @@ const Footer = () => {
                     <div className="flex items-center gap-3">
                         <SocialButton platform="github" href="https://github.com/SunkenInTime/icarus" />
                         <SocialButton platform="discord" href="https://discord.gg/PN2uKwCqYB" />
-                        <SocialButton platform="twitter" href="#" />
+                        <SocialButton platform="twitter" href="https://x.com/daradoescode" />
                     </div>
                 </div>
                 <p className="mt-6 text-center text-sm text-gray-500">© {new Date().getFullYear()} Icarus. All rights reserved. Created by Dara.</p>
