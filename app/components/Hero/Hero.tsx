@@ -82,18 +82,18 @@ const Hero = ({ variants }: { variants: AnimationVariants }) => {
                                     background: "radial-gradient(60% 60% at 70% 30%, rgba(123,97,255,0.35), rgba(123,97,255,0.06) 60%, transparent 70%)",
                                 }}
                             />
-                            <GlassDeviceFrame>
-                                <Parallax depth={10}>
-                                    <div className="relative pt-9" style={{ height: 375 }}>
-                                        {/* window chrome */}
-                                        <AppWindowChrome />
-                                        {/* main shot */}
-                                        <img src={PREVIEW_IMG} alt="Icarus interface preview" className="block w-full" style={{ height: "calc(375px - 20px)", objectFit: "cover" }} />
-                                        {/* tool dock (right) */}
-                                        {/* <ToolDock /> */}
-                                    </div>
-                                </Parallax>
-                            </GlassDeviceFrame>
+
+                            <Parallax depth={10}>
+                                <div className="relative pt-9" style={{ height: 375 }}>
+                                    {/* window chrome */}
+
+                                    {/* main shot */}
+                                    <img src={PREVIEW_IMG} alt="Icarus interface preview" className="block w-full" style={{ height: "calc(375px )", objectFit: "cover" }} />
+                                    {/* tool dock (right) */}
+                                    {/* <ToolDock /> */}
+                                </div>
+                            </Parallax>
+
                         </div>
                     </motion.div>
                 </div>
