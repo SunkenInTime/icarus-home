@@ -7,4 +7,4 @@ export const RING = "rgba(123, 97, 255, 0.45)";
 export const GLASS_BG = "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))";
 export const BORDER_SOFT = "rgba(255,255,255,0.10)";
 export const TEXT_SOFT = "#CFCFD4";
-export const PREVIEW_IMG = "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCnar5XbcjR2aezOZ4lNvPKq05MfxnY3hisyg1";
+export const PREVIEW_IMG = "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCpB9qMageWNaYX3kSziMD5UmKObA6uIe7wB0Z";

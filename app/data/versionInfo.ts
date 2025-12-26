@@ -1,6 +1,6 @@
 const versionInfo = {
-    version: "1.7.3 Beta",
-    released: "October 15, 2025",
+    version: "2.3.1 Beta",
+    released: "December 26, 2025",
     platforms: {
         windows: {
             url: "https://apps.microsoft.com/detail/9PBWHHZRQFW6?hl=en-us&gl=US&ocid=pdpshare",
