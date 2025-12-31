@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import { Analytics } from "@vercel/analytics/next"
 import Footer from "@/app/components/Footer/Footer";
 import Header from "@/app/components/Header/Header";
 
@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+
         <script
           src="https://retn.io/script.js"
           data-token="8PeXBD7NmQXDLoIk2LbuKi0EZ0vclpO2"
@@ -41,6 +42,7 @@ export default function RootLayout({
       >
         <Header />
         {children}
+        <Analytics />
         <Footer />
       </body>
     </html>
