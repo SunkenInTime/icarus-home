@@ -102,7 +102,7 @@ const Download = () => {
                 </motion.a>
                 <p className="text-center text-xs text-gray-500">
                   File size: {latestVersion.platforms[activeTab].size} • By
-                  downloading, you agree to our Terms of Service.
+                  downloading, you agree to our <a href="/tos" className="text-[#7B61FF] hover:underline">Terms of Service</a>.
                 </p>
               </div>
             </div>

@@ -13,7 +13,7 @@ const Header = () => {
             <div className="border-b backdrop-blur-md" style={{ background: GLASS_BG, borderColor: BORDER_SOFT }}>
                 <div className="mx-auto max-w-6xl px-6">
                     <nav className="flex h-16 items-center justify-between" aria-label="Main">
-                        <Link href="#hero" className="flex items-center gap-3">
+                        <Link href="/" className="flex items-center gap-3">
                             <img width={28} height={28} className="rounded-md" src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN" alt="Icarus logo" />
                             <span className="text-base font-semibold tracking-tight">Icarus</span>
                         </Link>
