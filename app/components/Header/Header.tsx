@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { motion } from "framer-motion";
 import { FaDownload } from "react-icons/fa";
@@ -8,6 +9,13 @@ import { FaDownload } from "react-icons/fa";
 import { GLASS_BG, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER } from "@/app/constants";
 
 const Header = () => {
+    const pathname = usePathname();
+    const onHome = pathname === "/";
+    const onHackathon = pathname?.startsWith("/hackathon");
+
+    const homeSection = (hash: string) => (onHome ? hash : `/${hash}`);
+    const downloadHref = onHackathon ? "#download" : homeSection("#download");
+
     return (
         <header className="relative z-10">
             <div className="border-b backdrop-blur-md" style={{ background: GLASS_BG, borderColor: BORDER_SOFT }}>
@@ -20,11 +28,12 @@ const Header = () => {
 
                         <div className="hidden md:flex items-center gap-6 text-sm">
                             {[
-                                ["Features", "#features"],
-                                ["Compare", "#compare"],
-                                ["Roadmap", "#beta"],
-                                ["Donate", "#donate"],
-                                ["Community", "#community"],
+                                ["Features", homeSection("#features")],
+                                ["Compare", homeSection("#compare")],
+                                ["Roadmap", homeSection("#beta")],
+                                ["Donate", homeSection("#donate")],
+                                ["Community", homeSection("#community")],
+                                ["Hackathon", "/hackathon"],
                             ].map(([label, href]) => (
                                 <motion.a
                                     key={label}
@@ -42,7 +51,7 @@ const Header = () => {
                         </div>
 
                         <motion.a
-                            href="#download"
+                            href={downloadHref}
                             className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                             style={{
                                 backgroundColor: ACCENT,
