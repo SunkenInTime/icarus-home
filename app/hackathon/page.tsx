@@ -20,7 +20,7 @@ const hackathonBuild = {
   note: "Breaking changes. Not aligned with the current beta.",
   platforms: {
     windows: {
-      url: "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCcIOvwZUnCZlhqru1GWzgRdyVwO9Sj50sM3ei",
+      url: "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UCcHinHaUnCZlhqru1GWzgRdyVwO9Sj50sM3ei",
       size: "TBD",
       label: "Download (Windows)",
     },
