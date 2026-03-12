@@ -8,8 +8,6 @@ import { FaDownload } from "react-icons/fa";
 import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
 import SectionShell from "@/app/components/ui/SectionShell";
 
-import latestVersion from "@/app/data/versionInfo";
-
 import {
   BORDER_SOFT,
   RING,
@@ -17,11 +15,18 @@ import {
   ACCENT_HOVER,
   PREVIEW_IMG,
 } from "@/app/constants";
-
+import { VersionInfo } from "@/app/data/versionInfo";
 type Platform = "windows" | "mac" | "linux";
+type DownloadProps = {
+  latestVersion: VersionInfo;
+};
 
-const Download = () => {
+const Download = ({ latestVersion }: DownloadProps) => {
   const [activeTab, setActiveTab] = useState<Platform>("windows");
+  const activePlatform = latestVersion.platforms[activeTab];
+  const windowsPlatform = latestVersion.platforms.windows;
+  const isWindows = activeTab === "windows";
+
   return (
     <SectionShell id="download" title="Get started today">
       <p className="mt-3 text-gray-400 text-center">
@@ -76,12 +81,18 @@ const Download = () => {
               <p className="mt-2 text-gray-400">
                 {latestVersion.version} • Released {latestVersion.released}
               </p>
+              {isWindows ? (
+                <p className="mt-2 text-sm text-gray-300">
+                  {windowsPlatform.preferredLabel} is the recommended version.{" "}
+                  {windowsPlatform.preferredReason}
+                </p>
+              ) : null}
 
               <div className="mt-6 space-y-3">
                 <motion.a
                   data-retn-click
                   data-retn-name="Download click"
-                  href={latestVersion.platforms[activeTab].url}
+                  href={activePlatform.url}
                   className="inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                   style={{
                     backgroundColor: ACCENT,
@@ -98,11 +109,27 @@ const Download = () => {
                   }
                 >
                   <FaDownload aria-hidden />
-                  Download now
+                  {isWindows ? "Download installer" : "Download now"}
                 </motion.a>
+                {isWindows && windowsPlatform.secondaryUrl ? (
+                  <p className="text-center text-xs text-gray-500">
+                    Prefer the Microsoft Store instead?{" "}
+                    <a
+                      href={windowsPlatform.secondaryUrl}
+                      className="text-gray-400 underline decoration-gray-700 underline-offset-2 transition-colors hover:text-gray-300"
+                    >
+                      Use the {windowsPlatform.secondaryLabel} version
+                    </a>
+                    .
+                  </p>
+                ) : null}
                 <p className="text-center text-xs text-gray-500">
-                  File size: {latestVersion.platforms[activeTab].size} • By
-                  downloading, you agree to our <a href="/tos" className="text-[#7B61FF] hover:underline">Terms of Service</a>.
+                  File size: {activePlatform.size} • By downloading, you agree
+                  to our{" "}
+                  <a href="/tos" className="text-[#7B61FF] hover:underline">
+                    Terms of Service
+                  </a>
+                  .
                 </p>
               </div>
             </div>

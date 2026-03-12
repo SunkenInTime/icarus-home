@@ -3,11 +3,10 @@
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
-import AppWindowChrome from "@/app/components/ui/AppWindowChrome";
-import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
+import HalftoneVideoPreview, { QLOOP_HALFTONE_PRESET } from "@/app/components/Hero/HalftoneVideoPreview";
 import Parallax from "@/app/components/ui/Parallax";
 
-import { TEXT_SOFT, BORDER_SOFT, ACCENT, ACCENT_HOVER, RING, PREVIEW_IMG } from "@/app/constants";
+import { TEXT_SOFT, BORDER_SOFT, ACCENT, ACCENT_HOVER, RING } from "@/app/constants";
 
 import { AnimationVariants } from "@/app/types/AnimationVariants";
 
@@ -85,15 +84,14 @@ const Hero = ({ variants }: { variants: AnimationVariants }) => {
 
                             <Parallax depth={10}>
                                 <div className="relative pt-9" style={{ height: 375 }}>
-                                    {/* window chrome */}
-
-                                    {/* main shot */}
-                                    <img src={PREVIEW_IMG} alt="Icarus interface preview" className="block w-full" style={{ height: "calc(375px )", objectFit: "cover" }} />
-                                    {/* tool dock (right) */}
-                                    {/* <ToolDock /> */}
+                                    <HalftoneVideoPreview
+                                        videoSrc="/loop_video.mp4"
+                                        title="Icarus Preview"
+                                        subtitle="Halftone / grayscale / noise field"
+                                        settings={QLOOP_HALFTONE_PRESET}
+                                    />
                                 </div>
                             </Parallax>
-
                         </div>
                     </motion.div>
                 </div>
