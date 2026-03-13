@@ -3,8 +3,7 @@
 import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
-import HalftoneVideoPreview, { QLOOP_HALFTONE_PRESET } from "@/app/components/Hero/HalftoneVideoPreview";
-import Parallax from "@/app/components/ui/Parallax";
+import HalftoneHero from "@/app/components/Hero/HalftoneHero";
 
 import { TEXT_SOFT, BORDER_SOFT, ACCENT, ACCENT_HOVER, RING } from "@/app/constants";
 
@@ -70,28 +69,9 @@ const Hero = ({ variants }: { variants: AnimationVariants }) => {
                         </div>
                     </motion.div>
 
-                    {/* App-like preview with tool dock and subtle glow */}
                     <motion.div initial="initial" animate="animate" variants={variants.pop}>
-                        <div className="relative">
-                            {/* glow */}
-                            <div
-                                aria-hidden
-                                className="absolute -inset-6 rounded-[22px] blur-2xl"
-                                style={{
-                                    background: "radial-gradient(60% 60% at 70% 30%, rgba(123,97,255,0.35), rgba(123,97,255,0.06) 60%, transparent 70%)",
-                                }}
-                            />
-
-                            <Parallax depth={10}>
-                                <div className="relative pt-9" style={{ height: 375 }}>
-                                    <HalftoneVideoPreview
-                                        videoSrc="/loop_video.mp4"
-                                        title="Icarus Preview"
-                                        subtitle="Halftone / grayscale / noise field"
-                                        settings={QLOOP_HALFTONE_PRESET}
-                                    />
-                                </div>
-                            </Parallax>
+                        <div className="relative pt-9" style={{ height: 375 }}>
+                            <HalftoneHero videoSrc="/loop_video.mp4" />
                         </div>
                     </motion.div>
                 </div>
