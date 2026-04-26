@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { motion } from "framer-motion";
-import { FaDownload } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 
-import { GLASS_BG, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER } from "@/app/constants";
+import { ACCENT, ACCENT_HOVER } from "@/app/constants";
 
 const Header = () => {
     const pathname = usePathname();
@@ -17,16 +17,44 @@ const Header = () => {
     const downloadHref = onHackathon ? "#download" : homeSection("#download");
 
     return (
-        <header className="relative z-10">
-            <div className="border-b backdrop-blur-md" style={{ background: GLASS_BG, borderColor: BORDER_SOFT }}>
+        <header className="sticky top-0 z-40">
+            <div
+                className="backdrop-blur-md"
+                style={{
+                    background: "rgba(9,9,11,0.75)",
+                    borderBottom: "1px solid #1d1d20",
+                }}
+            >
                 <div className="mx-auto max-w-6xl px-6">
                     <nav className="flex h-16 items-center justify-between" aria-label="Main">
                         <Link href="/" className="flex items-center gap-3">
-                            <img width={28} height={28} className="rounded-md" src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN" alt="Icarus logo" />
-                            <span className="text-base font-semibold tracking-tight">Icarus</span>
+                            <span
+                                className="relative flex h-8 w-8 items-center justify-center rounded-md overflow-hidden"
+                                style={{
+                                    background: "#0d0d10",
+                                    border: "1px solid #27272a",
+                                    boxShadow: "inset 0 0 0 1px rgba(124,58,237,0.18)",
+                                }}
+                            >
+                                <img
+                                    width={28}
+                                    height={28}
+                                    className="rounded-sm"
+                                    src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
+                                    alt="Icarus logo"
+                                />
+                            </span>
+                            <div className="flex items-center gap-2 leading-none">
+                                <span className="font-display text-lg font-semibold tracking-tight">
+                                    Icarus
+                                </span>
+                                <span className="callsign hidden sm:inline" style={{ fontSize: 9, color: ACCENT }}>
+                                    BETA
+                                </span>
+                            </div>
                         </Link>
 
-                        <div className="hidden md:flex items-center gap-6 text-sm">
+                        <div className="hidden md:flex items-center gap-1 text-sm">
                             {[
                                 ["Features", homeSection("#features")],
                                 ["Compare", homeSection("#compare")],
@@ -38,12 +66,10 @@ const Header = () => {
                                 <motion.a
                                     key={label}
                                     href={href}
-                                    className="text-gray-300 rounded px-1 focus-visible:outline-none focus-visible:ring-2"
-                                    style={{
-                                        borderColor: RING,
-                                    }}
-                                    whileHover={{ y: -2, color: "#fff", textShadow: "0 0 18px rgba(123,97,255,0.45)" }}
-                                    whileTap={{ y: 0 }}
+                                    className="rounded-md px-3 py-1.5 text-sm transition-colors"
+                                    style={{ color: "#d4d4d8" }}
+                                    whileHover={{ backgroundColor: "rgba(124,58,237,0.10)", color: "#fff" }}
+                                    whileTap={{ scale: 0.97 }}
                                 >
                                     {label}
                                 </motion.a>
@@ -52,21 +78,15 @@ const Header = () => {
 
                         <motion.a
                             href={downloadHref}
-                            className="inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                            style={{
-                                backgroundColor: ACCENT,
-                                color: "#fff",
-                                borderColor: RING,
-
-                                WebkitTapHighlightColor: "transparent",
-                            }}
+                            className="inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium"
+                            style={{ backgroundColor: ACCENT, color: "#fff" }}
                             whileHover={{ scale: 1.03, y: -1 }}
                             whileTap={{ scale: 0.97, y: 0 }}
                             onMouseOver={(e) => (e.currentTarget.style.backgroundColor = ACCENT_HOVER)}
                             onMouseOut={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
                         >
-                            <FaDownload aria-hidden />
-                            <span>Download</span>
+                            <span>Get Icarus</span>
+                            <FaArrowRight aria-hidden size={11} />
                         </motion.a>
                     </nav>
                 </div>

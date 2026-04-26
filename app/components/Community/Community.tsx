@@ -1,17 +1,23 @@
+"use client";
+
 import { motion } from "framer-motion";
+import { FaArrowRight } from "react-icons/fa";
 
 import communityLinks from "@/app/data/communityLinks";
-
-import { ACCENT, BORDER_SOFT } from "@/app/constants";
+import { ACCENT } from "@/app/constants";
+import { SectionLabel } from "@/app/components/ui/Tactical";
 
 const Community = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
     return (
-        <section id="community" className="py-16 sm:py-24">
-            <div className="mx-auto max-w-6xl px-6 text-center">
-                <h2 className="text-2xl sm:text-3xl font-semibold">Join the community</h2>
-                <p className="mt-3 mb-10 text-gray-400">Share strategies, request features, and help shape Icarus.</p>
+        <section id="community" className="relative py-20 sm:py-28">
+            <div className="mx-auto max-w-6xl px-6">
+                <SectionLabel
+                    index="// 06"
+                    title="JOIN COMMS"
+                    description={"Icarus is steered by the people who use it. Pull up a seat."}
+                />
 
-                <div className="flex flex-wrap justify-center gap-6">
+                <div className="grid gap-4 sm:grid-cols-2">
                     {communityLinks.map((link, i) => {
                         const Icon = link.icon;
                         return (
@@ -20,23 +26,44 @@ const Community = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) 
                                 href={link.url}
                                 target="_blank"
                                 rel="noreferrer"
-                                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
+                                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.3, delay: i * 0.04 }}
-                                whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
-                                className="w-64 rounded-lg p-5 text-left"
+                                transition={{ duration: 0.3, delay: i * 0.05 }}
+                                whileHover={{
+                                    y: -3,
+                                    borderColor: "rgba(124,58,237,0.55)",
+                                    boxShadow: "0 18px 40px -25px rgba(124,58,237,0.5)",
+                                }}
+                                className="group flex items-center justify-between gap-5 px-6 py-6"
                                 style={{
-                                    border: `1px solid ${BORDER_SOFT}`,
-                                    background: "rgba(255,255,255,0.02)",
-                                    backdropFilter: "blur(6px)",
+                                    border: "1px solid #27272a",
+                                    borderRadius: 12,
+                                    background: "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005))",
                                 }}
                             >
-                                <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                    <Icon className="text-lg" color="#E4E4E7" aria-hidden />
+                                <div className="flex items-center gap-5 min-w-0">
+                                    <div
+                                        className="flex h-12 w-12 items-center justify-center rounded-md shrink-0"
+                                        style={{
+                                            background: "rgba(124,58,237,0.10)",
+                                            border: "1px solid rgba(124,58,237,0.25)",
+                                        }}
+                                    >
+                                        <Icon className="text-xl" color={ACCENT} aria-hidden />
+                                    </div>
+                                    <div className="min-w-0">
+                                        <h3 className="text-base font-semibold">{link.title}</h3>
+                                        <p className="mt-0.5 text-sm leading-relaxed" style={{ color: "#a1a1aa" }}>
+                                            {link.description}
+                                        </p>
+                                    </div>
                                 </div>
-                                <h3 className="text-base font-semibold text-center">{link.title}</h3>
-                                <p className="mt-2 text-sm text-gray-400 text-center">{link.description}</p>
+                                <FaArrowRight
+                                    aria-hidden
+                                    className="shrink-0 transition-transform group-hover:translate-x-1"
+                                    style={{ color: ACCENT }}
+                                />
                             </motion.a>
                         );
                     })}
