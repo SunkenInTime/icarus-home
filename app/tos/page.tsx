@@ -4,6 +4,8 @@ import fs from "fs";
 import path from "path";
 
 import { BG, DOT, VIGNETTE, TEXT_SOFT, ACCENT } from "@/app/constants";
+import Header from "@/app/components/Header/Header";
+import Footer from "@/app/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Terms of Service - Icarus",
@@ -24,6 +26,7 @@ export default async function TosPage() {
       className="min-h-screen text-white relative overflow-hidden"
       style={{ backgroundColor: BG }}
     >
+      <Header />
       {/* Background pattern */}
       <div
         aria-hidden
@@ -104,6 +107,7 @@ export default async function TosPage() {
           </Markdown>
         </article>
       </main>
+      <Footer />
     </div>
   );
 }

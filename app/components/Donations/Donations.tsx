@@ -1,48 +1,75 @@
-import { motion } from "framer-motion";
+"use client";
 
-import SectionShell from "@/app/components/ui/SectionShell";
+import { motion } from "framer-motion";
+import { FaArrowRight } from "react-icons/fa";
 
 import donationOptions from "@/app/data/donationOptions";
-
-import { ACCENT, BORDER_SOFT } from "@/app/constants";
+import { ACCENT } from "@/app/constants";
+import { SectionLabel } from "@/app/components/ui/Tactical";
 
 const Donations = ({ prefersReducedMotion }: { prefersReducedMotion: boolean }) => {
     return (
-        <SectionShell id="donate" title="Support the project">
-            <p className="mt-3 text-gray-400 text-center max-w-2xl mx-auto">Icarus is open source. Your support helps fund maintenance and new features.</p>
+        <section id="donate" className="relative py-20 sm:py-28">
+            <div className="mx-auto max-w-6xl px-6">
+                <SectionLabel
+                    index="// 05"
+                    title="SUPPORT"
+                    description={"Icarus is free and stays free. If it's earned a spot in your team's workflow, you can chip in."}
+                />
 
-            {/* Center the card and give it a sensible max width when there's only one option */}
-            <div className="mt-8 flex flex-wrap justify-center gap-6">
-                {donationOptions.map((option, i) => {
-                    const Icon = option.icon;
-                    return (
-                        <motion.a
-                            key={option.title}
-                            href={option.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            whileHover={{ y: -3, borderColor: ACCENT, boxShadow: "0 12px 30px rgba(123,97,255,0.12)" }}
-                            transition={{ duration: 0.3, delay: i * 0.04 }}
-                            className="block w-full max-w-sm rounded-lg p-6 border"
-                            style={{
-                                border: `1px solid ${BORDER_SOFT}`,
-                                background: "rgba(255,255,255,0.02)",
-                                backdropFilter: "blur(6px)",
-                            }}
-                        >
-                            <div className="mb-3 mx-auto flex h-10 w-10 items-center justify-center rounded-md" style={{ background: "rgba(255,255,255,0.04)" }}>
-                                <Icon className="text-base" color="#E4E4E7" aria-hidden />
-                            </div>
-                            <h3 className="text-base font-semibold text-center">{option.title}</h3>
-                            <p className="mt-2 text-sm text-gray-400 text-center">{option.description}</p>
-                        </motion.a>
-                    );
-                })}
+                <div className="mx-auto grid gap-4 sm:grid-cols-1 max-w-xl">
+                    {donationOptions.map((option, i) => {
+                        const Icon = option.icon;
+                        return (
+                            <motion.a
+                                key={option.title}
+                                href={option.url}
+                                target="_blank"
+                                rel="noreferrer"
+                                initial={{ opacity: 0, y: prefersReducedMotion ? 0 : 8 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.3, delay: i * 0.05 }}
+                                whileHover={{
+                                    y: -2,
+                                    borderColor: "rgba(124,58,237,0.55)",
+                                    boxShadow: "0 18px 40px -25px rgba(124,58,237,0.5)",
+                                }}
+                                className="group flex items-center justify-between gap-5 px-6 py-5"
+                                style={{
+                                    border: "1px solid #27272a",
+                                    borderRadius: 12,
+                                    background: "linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005))",
+                                }}
+                            >
+                                <div className="flex items-center gap-5 min-w-0">
+                                    <div
+                                        className="flex h-11 w-11 items-center justify-center rounded-md shrink-0"
+                                        style={{
+                                            background: "rgba(124,58,237,0.10)",
+                                            border: "1px solid rgba(124,58,237,0.25)",
+                                        }}
+                                    >
+                                        <Icon className="text-lg" color={ACCENT} aria-hidden />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-base font-semibold">{option.title}</h3>
+                                        <p className="mt-0.5 text-sm" style={{ color: "#a1a1aa" }}>
+                                            {option.description}
+                                        </p>
+                                    </div>
+                                </div>
+                                <FaArrowRight
+                                    aria-hidden
+                                    className="shrink-0 transition-transform group-hover:translate-x-1"
+                                    style={{ color: ACCENT }}
+                                />
+                            </motion.a>
+                        );
+                    })}
+                </div>
             </div>
-        </SectionShell>
+        </section>
     );
 };
 

@@ -8,6 +8,8 @@ import { FaDownload, FaExclamationTriangle, FaFlask, FaVoteYea } from "react-ico
 
 import SectionShell from "@/app/components/ui/SectionShell";
 import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
+import Header from "@/app/components/Header/Header";
+import Footer from "@/app/components/Footer/Footer";
 
 import { BG, DOT, VIGNETTE, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER, TEXT_SOFT, PREVIEW_IMG } from "@/app/constants";
 import { AnimationVariants } from "@/app/types/AnimationVariants";
@@ -66,6 +68,7 @@ export default function HackathonPage() {
 
   return (
     <div className="min-h-screen text-white relative overflow-hidden" style={{ backgroundColor: BG }}>
+      <Header />
       <div
         aria-hidden
         className="absolute inset-0 z-0 pointer-events-none"
@@ -341,6 +344,7 @@ export default function HackathonPage() {
           </div>
         </SectionShell>
       </main>
+      <Footer />
     </div>
   );
 }
