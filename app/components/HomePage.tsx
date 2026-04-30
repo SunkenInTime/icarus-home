@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -170,6 +171,8 @@ function Hero() {
                 ["--my" as string]: "50%",
             }}
         >
+            <AsciiTacticalLayer />
+
             <div
                 aria-hidden
                 className="pointer-events-none absolute inset-0"
@@ -200,18 +203,18 @@ function Hero() {
                             maxWidth: "16ch",
                         }}
                     >
-                        Built for
+                        Free, focused
                         <br />
-                        <span style={{ color: "#c4b5fd" }}>strat callers</span>.
+                        <span style={{ color: "#c4b5fd" }}>Valorant</span> strategy.
                     </h1>
 
                     <p
                         className="mx-auto mt-7 max-w-xl text-[16.5px] leading-[1.6]"
                         style={{ color: "#a1a1aa" }}
                     >
-                        Icarus understands how Valorant plans actually happen:
-                        quick calls, messy mid-round ideas, and clean boards your
-                        team can read without slowing down.
+                        Open source, local-first, and built with restraint.
+                        Every feature earns its place so planning stays clean,
+                        fast, and free.
                     </p>
 
                     <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -308,6 +311,120 @@ function Hero() {
 }
 
 /* ── Principles ────────────────────────────────────────────────── */
+
+function AsciiTacticalLayer() {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const context = canvas.getContext("2d");
+        if (!context) return;
+
+        const canvasElement = canvas;
+        const context2d = context;
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const glyphs = ["A", "B", "C", "X", "O", "+", "-", "/", "\\", "|", ".", ":", "0", "1"];
+        const colors = ["rgba(196,181,253,", "rgba(125,211,252,", "rgba(250,250,250,"];
+        const cells: Array<{
+            x: number;
+            y: number;
+            char: string;
+            phase: number;
+            speed: number;
+            size: number;
+            alpha: number;
+        }> = [];
+
+        let raf = 0;
+        let width = 0;
+        let height = 0;
+        let dpr = 1;
+
+        function resize() {
+            const rect = canvasElement.getBoundingClientRect();
+            width = Math.max(1, rect.width);
+            height = Math.max(1, rect.height);
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            canvasElement.width = Math.floor(width * dpr);
+            canvasElement.height = Math.floor(height * dpr);
+            context2d.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            cells.length = 0;
+            const count = Math.max(76, Math.floor((width * height) / 12000));
+            for (let i = 0; i < count; i += 1) {
+                cells.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    char: glyphs[Math.floor(Math.random() * glyphs.length)],
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.18 + Math.random() * 0.38,
+                    size: 10 + Math.random() * 4,
+                    alpha: 0.16 + Math.random() * 0.26,
+                });
+            }
+        }
+
+        function draw(now: number) {
+            const time = now * 0.001;
+            context2d.clearRect(0, 0, width, height);
+            context2d.textAlign = "center";
+            context2d.textBaseline = "middle";
+
+            for (let i = 0; i < cells.length; i += 1) {
+                const cell = cells[i];
+                const drift = reduceMotion ? 0 : Math.sin(time * cell.speed + cell.phase) * 9;
+                const scan = reduceMotion ? 0 : ((time * 10 * cell.speed + cell.phase * 18) % (height + 80)) - 40;
+                const pulse = reduceMotion ? 0.55 : 0.45 + Math.sin(time * 1.4 + cell.phase) * 0.2;
+                const alpha = Math.max(0.03, cell.alpha * pulse);
+
+                context2d.font = `${cell.size}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+                context2d.fillStyle = `${colors[i % colors.length]}${alpha})`;
+                context2d.fillText(cell.char, cell.x + drift, (cell.y + scan * 0.05) % height);
+
+                if (i % 9 === 0) {
+                    context2d.strokeStyle = `rgba(124,58,237,${alpha * 0.38})`;
+                    context2d.lineWidth = 1;
+                    context2d.beginPath();
+                    context2d.moveTo(cell.x - 18, cell.y);
+                    context2d.lineTo(cell.x + 18, cell.y);
+                    context2d.moveTo(cell.x, cell.y - 18);
+                    context2d.lineTo(cell.x, cell.y + 18);
+                    context2d.stroke();
+                }
+            }
+
+            if (!reduceMotion) {
+                raf = requestAnimationFrame(draw);
+            }
+        }
+
+        resize();
+        draw(0);
+        window.addEventListener("resize", resize);
+
+        return () => {
+            cancelAnimationFrame(raf);
+            window.removeEventListener("resize", resize);
+        };
+    }, []);
+
+    return (
+        <canvas
+            ref={canvasRef}
+            aria-hidden
+            className="pointer-events-none absolute inset-0 h-full w-full"
+            style={{
+                opacity: 0.9,
+                mixBlendMode: "screen",
+                maskImage: "linear-gradient(180deg, transparent 0%, black 12%, black 74%, transparent 100%)",
+                WebkitMaskImage:
+                    "linear-gradient(180deg, transparent 0%, black 12%, black 74%, transparent 100%)",
+            }}
+        />
+    );
+}
 
 function Principles() {
     return (
