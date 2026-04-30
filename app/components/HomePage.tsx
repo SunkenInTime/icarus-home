@@ -45,9 +45,9 @@ const PRINCIPLES = [
     },
     {
         n: "03",
-        title: "Free, forever",
+        title: "Local stays free",
         body:
-            "No subscriptions, no paywalls, no \u201Cpro\u201D tier. Open source under MIT. The roadmap is public.",
+            "The local-first planner stays free. Pro online mode is coming for teams who want sync and shared workflows.",
     },
     {
         n: "04",
@@ -159,7 +159,7 @@ function Header() {
 function Hero() {
     const spotlight = useSpotlight<HTMLDivElement>();
     const { parent, child } = useParallax<HTMLDivElement, HTMLDivElement>(14);
-    const cta = useMagnetic<HTMLAnchorElement>(0.22);
+    const cta = useMagnetic<HTMLAnchorElement>(0.07);
 
     return (
         <section
@@ -190,35 +190,28 @@ function Hero() {
                     transition={{ duration: 0.65 }}
                     className="text-center"
                 >
-                    <p
-                        className="font-mono uppercase tracking-[0.22em] text-[11px]"
-                        style={{ color: "#a1a1aa" }}
-                    >
-                        Icarus · Local-first Valorant strategy planner
-                    </p>
-
                     <h1
-                        className="mx-auto mt-7 font-onest"
+                        className="mx-auto font-onest"
                         style={{
                             fontSize: "clamp(50px, 9vw, 132px)",
                             lineHeight: 0.96,
                             fontWeight: 700,
-                            letterSpacing: "-0.045em",
+                            letterSpacing: 0,
                             maxWidth: "16ch",
                         }}
                     >
-                        From idea
+                        Built for
                         <br />
-                        to <span style={{ color: "#c4b5fd" }}>board,</span> instantly.
+                        <span style={{ color: "#c4b5fd" }}>strat callers</span>.
                     </h1>
 
                     <p
                         className="mx-auto mt-7 max-w-xl text-[16.5px] leading-[1.6]"
                         style={{ color: "#a1a1aa" }}
                     >
-                        A quiet desktop tool for getting what&rsquo;s in your head onto
-                        the map as fast as your hands move. Free, open source, designed
-                        around restraint.
+                        Icarus understands how Valorant plans actually happen:
+                        quick calls, messy mid-round ideas, and clean boards your
+                        team can read without slowing down.
                     </p>
 
                     <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">

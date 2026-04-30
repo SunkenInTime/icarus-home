@@ -4,9 +4,8 @@ import { RefObject, useEffect, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 
 /**
- * Magnetic effect — element subtly translates toward the cursor when
- * hovered. Returns a ref to attach. Quiet by default; bump `strength`
- * for more pronounced motion.
+ * Magnetic effect - element drifts toward the cursor when hovered.
+ * Returns a ref to attach. Quiet by default; bump `strength` for more motion.
  */
 export function useMagnetic<T extends HTMLElement>(strength = 0.18): RefObject<T | null> {
     const ref = useRef<T>(null);
@@ -17,24 +16,51 @@ export function useMagnetic<T extends HTMLElement>(strength = 0.18): RefObject<T
         if (!el || reduce) return;
 
         let raf = 0;
+        let active = false;
+        let currentX = 0;
+        let currentY = 0;
+        let targetX = 0;
+        let targetY = 0;
+
+        function frame() {
+            const target = el!;
+            currentX += (targetX - currentX) * 0.16;
+            currentY += (targetY - currentY) * 0.16;
+
+            if (Math.abs(targetX - currentX) < 0.02 && Math.abs(targetY - currentY) < 0.02) {
+                currentX = targetX;
+                currentY = targetY;
+            }
+
+            target.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
+
+            if (active || currentX !== targetX || currentY !== targetY) {
+                raf = requestAnimationFrame(frame);
+            }
+        }
 
         function move(e: MouseEvent) {
             const target = el!;
             const rect = target.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
-            const dx = (e.clientX - cx) * strength;
-            const dy = (e.clientY - cy) * strength;
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => {
-                target.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
-            });
+            const maxDrift = 5;
+            targetX = Math.max(-maxDrift, Math.min(maxDrift, (e.clientX - cx) * strength));
+            targetY = Math.max(-maxDrift, Math.min(maxDrift, (e.clientY - cy) * strength));
+
+            if (!active) {
+                active = true;
+                cancelAnimationFrame(raf);
+                raf = requestAnimationFrame(frame);
+            }
         }
 
         function leave() {
+            active = false;
+            targetX = 0;
+            targetY = 0;
             cancelAnimationFrame(raf);
-            const target = el!;
-            target.style.transform = "translate3d(0, 0, 0)";
+            raf = requestAnimationFrame(frame);
         }
 
         el.addEventListener("mousemove", move);
