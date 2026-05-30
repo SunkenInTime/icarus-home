@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -77,6 +77,20 @@ type Props = {
     latestVersion: VersionInfo;
 };
 
+function hasShareCodeInUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.has("code") || params.has("token")) {
+        return true;
+    }
+
+    const segments = window.location.pathname
+        .split("/")
+        .map((segment) => segment.trim())
+        .filter(Boolean);
+
+    return segments.some((segment) => segment.toLowerCase() === "share");
+}
+
 /**
  * Icarus homepage — Showcase design. Confident centered hero with the
  * app screenshot living in the same viewport as the headline. The hero
@@ -84,10 +98,23 @@ type Props = {
  * frame parallaxes a few pixels, and the primary CTA is magnetic.
  */
 export default function HomePage({ latestVersion }: Props) {
+    const [shareMode, setShareMode] = useState(false);
+
+    useEffect(() => {
+        const timer = window.setTimeout(() => {
+            setShareMode(hasShareCodeInUrl());
+        }, 0);
+
+        return () => window.clearTimeout(timer);
+    }, []);
+
+    if (shareMode) {
+        return <ShareLinkHandler />;
+    }
+
     return (
         <div className="relative min-h-screen text-white" style={{ background: "#08080a" }}>
             <Header />
-            <ShareLinkHandler />
             <main>
                 <Hero />
                 <Principles />

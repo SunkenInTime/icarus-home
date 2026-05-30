@@ -1,7 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { FaArrowRight, FaCheck, FaCopy } from "react-icons/fa";
+
+const ICARUS_LOGO_URL =
+    "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN";
 
 const SHARE_CODE_PATTERN =
     /^ICR-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}$/;
@@ -124,43 +128,103 @@ export default function ShareLinkHandler() {
     }
 
     return (
-        <aside
+        <section
+            aria-labelledby="share-title"
             aria-live="polite"
-            className="fixed inset-x-0 top-16 z-50 px-4 sm:px-6"
+            className="fixed inset-0 z-50 flex min-h-screen items-center justify-center overflow-hidden px-5 py-10 text-white"
+            style={{ background: "#08080a" }}
         >
             <div
-                className="mx-auto flex max-w-3xl flex-col gap-4 rounded-lg border p-4 shadow-2xl sm:flex-row sm:items-center sm:justify-between"
+                aria-hidden
+                className="absolute inset-0"
                 style={{
-                    borderColor: "rgba(255,255,255,0.12)",
                     background:
-                        "linear-gradient(180deg, rgba(18,18,22,0.96), rgba(10,10,12,0.96))",
-                    boxShadow:
-                        "0 22px 80px -28px rgba(0,0,0,0.9), 0 0 0 1px rgba(124,58,237,0.18)",
+                        "radial-gradient(520px 320px at 50% 22%, rgba(124,58,237,0.22), transparent 72%)",
                 }}
+            />
+            <div
+                aria-hidden
+                className="absolute inset-0 opacity-[0.08]"
+                style={{
+                    backgroundImage:
+                        "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
+                    backgroundSize: "56px 56px",
+                    maskImage:
+                        "linear-gradient(180deg, transparent 0%, black 22%, black 72%, transparent 100%)",
+                    WebkitMaskImage:
+                        "linear-gradient(180deg, transparent 0%, black 22%, black 72%, transparent 100%)",
+                }}
+            />
+
+            <div
+                className="relative mx-auto flex w-full max-w-md flex-col items-center text-center"
             >
-                <div className="min-w-0">
-                    <p
-                        className="font-mono text-[10px] uppercase tracking-[0.22em]"
-                        style={{ color: "#7c3aed" }}
-                    >
-                        Icarus Share
-                    </p>
-                    <p className="mt-1 text-sm" style={{ color: "#fafafa" }}>
-                        {status}
-                    </p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                    src={ICARUS_LOGO_URL}
+                    alt="Icarus logo"
+                    width={72}
+                    height={72}
+                    className="h-[72px] w-[72px] rounded-2xl"
+                    style={{
+                        boxShadow:
+                            "0 24px 70px -24px rgba(124,58,237,0.9), 0 0 0 1px rgba(255,255,255,0.12)",
+                    }}
+                />
+
+                <p
+                    className="mt-7 font-mono text-[10px] uppercase tracking-[0.26em]"
+                    style={{ color: "#a78bfa" }}
+                >
+                    Icarus Share
+                </p>
+                <h1
+                    id="share-title"
+                    className="mt-3 font-onest text-[34px] font-semibold leading-[1.05] sm:text-[44px]"
+                    style={{ letterSpacing: 0 }}
+                >
+                    Opening shared strategy
+                </h1>
+                <p className="mt-4 max-w-sm text-sm leading-6" style={{ color: "#a1a1aa" }}>
+                    This link is for the Icarus desktop app. Keep this page open if your
+                    browser asks for permission.
+                </p>
+
+                <div
+                    className="mt-8 w-full rounded-lg border p-4 text-left"
+                    style={{
+                        borderColor: "rgba(255,255,255,0.10)",
+                        background: "rgba(255,255,255,0.035)",
+                    }}
+                >
+                    <div className="flex items-center justify-between gap-4">
+                        <span
+                            className="font-mono text-[10px] uppercase tracking-[0.22em]"
+                            style={{ color: "#71717a" }}
+                        >
+                            Share code
+                        </span>
+                        <span
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{
+                                background: "#7c3aed",
+                                boxShadow: "0 0 14px rgba(124,58,237,0.8)",
+                            }}
+                        />
+                    </div>
                     <code
-                        className="mt-2 block select-all overflow-hidden text-ellipsis whitespace-nowrap rounded-md border px-2.5 py-1.5 font-mono text-[12px]"
-                        style={{
-                            borderColor: "rgba(255,255,255,0.10)",
-                            background: "rgba(255,255,255,0.035)",
-                            color: "#d4d4d8",
-                        }}
+                        className="mt-3 block select-all overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px]"
+                        style={{ color: "#fafafa" }}
                     >
                         {shareLink.code}
                     </code>
                 </div>
 
-                <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                <p className="mt-5 min-h-5 text-sm" style={{ color: "#d4d4d8" }}>
+                    {status}
+                </p>
+
+                <div className="mt-6 flex w-full flex-col gap-2 sm:flex-row">
                     <a
                         href={shareLink.deepLink}
                         onClick={() => {
@@ -170,7 +234,7 @@ export default function ShareLinkHandler() {
                                 );
                             }, 900);
                         }}
-                        className="inline-flex items-center justify-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium"
+                        className="inline-flex flex-1 items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-medium"
                         style={{ background: "#fafafa", color: "#0a0a0a" }}
                     >
                         Open in Icarus
@@ -179,7 +243,7 @@ export default function ShareLinkHandler() {
                     <button
                         type="button"
                         onClick={copyShareCode}
-                        className="inline-flex items-center justify-center gap-2 rounded-md border px-3.5 py-2 text-sm font-medium transition-colors hover:bg-white/[0.04]"
+                        className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border px-3.5 py-2.5 text-sm font-medium transition-colors hover:bg-white/[0.04]"
                         style={{
                             borderColor: "rgba(255,255,255,0.12)",
                             color: "#fafafa",
@@ -193,7 +257,15 @@ export default function ShareLinkHandler() {
                         {copyLabel}
                     </button>
                 </div>
+
+                <Link
+                    href="/"
+                    className="mt-6 text-xs transition-colors hover:text-white"
+                    style={{ color: "#71717a" }}
+                >
+                    Go to icarusstrats.com
+                </Link>
             </div>
-        </aside>
+        </section>
     );
 }
