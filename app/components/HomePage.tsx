@@ -8,6 +8,7 @@ import { FaArrowRight, FaGithub } from "react-icons/fa";
 
 import type { VersionInfo } from "@/app/data/versionInfo";
 
+import ShareLinkHandler from "@/app/components/ShareLinkHandler";
 import { useMagnetic, useParallax, useSpotlight } from "@/app/components/hooks";
 
 const ACCENT = "#7c3aed";
@@ -86,6 +87,7 @@ export default function HomePage({ latestVersion }: Props) {
     return (
         <div className="relative min-h-screen text-white" style={{ background: "#08080a" }}>
             <Header />
+            <ShareLinkHandler />
             <main>
                 <Hero />
                 <Principles />
