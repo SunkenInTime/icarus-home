@@ -97,7 +97,7 @@ const Download = ({ latestVersion }: DownloadProps) => {
                         <div className="grid gap-10 md:grid-cols-[1fr_1.1fr] items-center">
                             <div>
                                 <TacticalBadge>
-                                    BUILD {latestVersion.version} · {latestVersion.released.toUpperCase()}
+                                    BUILD {latestVersion.version} · UPDATED {latestVersion.released.toUpperCase()}
                                 </TacticalBadge>
 
                                 <h3 className="mt-5 font-display text-3xl sm:text-4xl font-medium tracking-tight">

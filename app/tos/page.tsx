@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import fs from "fs";
 import path from "path";
@@ -6,10 +6,34 @@ import path from "path";
 import { BG, DOT, VIGNETTE, TEXT_SOFT, ACCENT } from "@/app/constants";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
+import { siteConfig } from "@/app/seo";
+
+const title = "Terms of Service";
+const description =
+  "Terms of Service for Icarus, a free local-first VALORANT strategy planner.";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Icarus",
-  description: "Terms of Service for Icarus - Valorant Strategy Planner",
+  title,
+  description,
+  alternates: {
+    canonical: "/tos",
+  },
+  openGraph: {
+    type: "website",
+    url: "/tos",
+    siteName: siteConfig.name,
+    title: `${title} | ${siteConfig.name}`,
+    description,
+    images: [siteConfig.ogImage],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@icarusstrats",
+    creator: "@daradoescode",
+    title: `${title} | ${siteConfig.name}`,
+    description,
+    images: [siteConfig.ogImage.url],
+  },
 };
 
 async function getTosContent() {

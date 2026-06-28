@@ -2,17 +2,10 @@ import fallbackVersionInfo, { VersionInfo } from "@/app/data/versionInfo";
 
 type GitHubTag = {
     name: string;
-    commit: {
-        url: string;
-    };
 };
 
-type GitHubCommit = {
-    commit: {
-        committer: {
-            date: string;
-        };
-    };
+type GitHubRepository = {
+    pushed_at: string;
 };
 
 type ParsedTag = {
@@ -21,8 +14,10 @@ type ParsedTag = {
     minor: number;
     patch: number;
     prerelease?: string;
-    commitUrl: string;
 };
+
+const GITHUB_REPO_URL =
+    "https://api.github.com/repos/SunkenInTime/icarus";
 
 const GITHUB_TAGS_URL =
     "https://api.github.com/repos/SunkenInTime/icarus/tags?per_page=20";
@@ -43,7 +38,6 @@ function parseTag(tag: GitHubTag): ParsedTag | null {
         minor: Number(match[2]),
         patch: Number(match[3]),
         prerelease: match[4],
-        commitUrl: tag.commit.url,
     };
 }
 
@@ -82,52 +76,55 @@ function formatReleaseDate(date: string) {
     }).format(new Date(date));
 }
 
-export async function getLatestVersionInfo(): Promise<VersionInfo> {
+async function fetchGitHubJson<T>(url: string): Promise<T> {
+    const response = await fetch(url, {
+        headers: {
+            Accept: "application/vnd.github+json",
+            "User-Agent": "icarus-home",
+        },
+        next: { revalidate: 3600 },
+    });
+
+    if (!response.ok) {
+        throw new Error(`GitHub request failed with ${response.status}`);
+    }
+
+    return (await response.json()) as T;
+}
+
+async function getLatestVersion(): Promise<string | null> {
     try {
-        const tagsResponse = await fetch(GITHUB_TAGS_URL, {
-            headers: {
-                Accept: "application/vnd.github+json",
-                "User-Agent": "icarus-home",
-            },
-            next: { revalidate: 3600 },
-        });
-
-        if (!tagsResponse.ok) {
-            throw new Error(`GitHub tags request failed with ${tagsResponse.status}`);
-        }
-
-        const tags = (await tagsResponse.json()) as GitHubTag[];
+        const tags = await fetchGitHubJson<GitHubTag[]>(GITHUB_TAGS_URL);
         const latestTag = tags
             .map(parseTag)
             .filter((tag): tag is ParsedTag => tag !== null)
             .sort(compareTags)[0];
 
-        if (!latestTag) {
-            return fallbackVersionInfo;
-        }
-
-        const commitResponse = await fetch(latestTag.commitUrl, {
-            headers: {
-                Accept: "application/vnd.github+json",
-                "User-Agent": "icarus-home",
-            },
-            next: { revalidate: 3600 },
-        });
-
-        if (!commitResponse.ok) {
-            throw new Error(
-                `GitHub commit request failed with ${commitResponse.status}`
-            );
-        }
-
-        const commit = (await commitResponse.json()) as GitHubCommit;
-
-        return {
-            ...fallbackVersionInfo,
-            version: latestTag.normalized,
-            released: formatReleaseDate(commit.commit.committer.date),
-        };
+        return latestTag?.normalized ?? null;
     } catch {
-        return fallbackVersionInfo;
+        return null;
     }
+}
+
+async function getLastUpdateDate(): Promise<string | null> {
+    try {
+        const repository = await fetchGitHubJson<GitHubRepository>(GITHUB_REPO_URL);
+
+        return formatReleaseDate(repository.pushed_at);
+    } catch {
+        return null;
+    }
+}
+
+export async function getLatestVersionInfo(): Promise<VersionInfo> {
+    const [version, released] = await Promise.all([
+        getLatestVersion(),
+        getLastUpdateDate(),
+    ]);
+
+    return {
+        ...fallbackVersionInfo,
+        version: version ?? fallbackVersionInfo.version,
+        released: released ?? fallbackVersionInfo.released,
+    };
 }

@@ -232,18 +232,19 @@ function Hero() {
                             maxWidth: "16ch",
                         }}
                     >
-                        Free, focused
+                        Free VALORANT
                         <br />
-                        <span style={{ color: "#c4b5fd" }}>Valorant</span> strategy.
+                        <span style={{ color: "#c4b5fd" }}>strategy planner</span>.
                     </h1>
 
                     <p
                         className="mx-auto mt-7 max-w-xl text-[16.5px] leading-[1.6]"
                         style={{ color: "#a1a1aa" }}
                     >
-                        Open source, local-first, and built with restraint.
-                        Every feature earns its place so planning stays clean,
-                        fast, and free.
+                        Draw tactics, plan lineups, organize strats locally,
+                        and share with teammates. Icarus is a free,
+                        open-source Valoplant alternative built for clean,
+                        fast VALORANT planning.
                     </p>
 
                     <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -552,7 +553,7 @@ function Download({ latestVersion }: { latestVersion: VersionInfo }) {
                     className="mx-auto mt-3 max-w-md text-[15px] leading-[1.6]"
                     style={{ color: "#a1a1aa" }}
                 >
-                    Free, {win.size}, self-updating. v{latestVersion.version} — {latestVersion.released}.
+                    Free, {win.size}, self-updating. v{latestVersion.version} — Updated {latestVersion.released}.
                 </p>
                 <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <motion.a

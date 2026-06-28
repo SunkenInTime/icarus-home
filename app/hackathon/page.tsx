@@ -1,6 +1,5 @@
 "use client";
 
-import Head from "next/head";
 import { useMemo, useState } from "react";
 
 import { motion, useReducedMotion } from "framer-motion";
@@ -78,14 +77,6 @@ export default function HackathonPage() {
           backgroundPosition: "center, center",
         }}
       />
-
-      <Head>
-        <title>Icarus – Hackathon Build</title>
-        <meta
-          name="description"
-          content="Download the ultra-experimental hackathon build of Icarus (breaking changes)."
-        />
-      </Head>
 
       <main className="relative z-10">
         <section className="py-16 sm:py-24">
