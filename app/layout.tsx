@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Onest } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Onest } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { siteConfig } from "@/app/seo";
@@ -18,6 +18,12 @@ const geistMono = Geist_Mono({
 
 const onest = Onest({
   variable: "--font-onest",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
 });
@@ -93,7 +99,7 @@ export default function RootLayout({
         ></script>
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${onest.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${onest.variable} ${inter.variable} antialiased`}
       >
         {children}
         <Analytics />
