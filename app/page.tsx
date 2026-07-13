@@ -1,4 +1,4 @@
-import HomePage from "@/app/components/HomePage";
+import SunHome from "@/app/components/SunHome";
 import { getLatestVersionInfo } from "@/app/lib/getLatestVersionInfo";
 import { absoluteUrl, sameAs, siteConfig } from "@/app/seo";
 
@@ -74,7 +74,7 @@ export default async function Home() {
                     __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
                 }}
             />
-            <HomePage latestVersion={latestVersion} />
+            <SunHome />
         </>
     );
 }
