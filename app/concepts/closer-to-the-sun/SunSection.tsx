@@ -78,10 +78,11 @@ export default function SunSection() {
     }, []);
     const markShown = markLanded || (reduceMotion === true && featherArmed);
 
-    // 0 when the section is still a viewport away, 0.75 when its heart is centered.
+    // 0 when the section is still a viewport away, 0.75 when the scroll
+    // bottoms out — the sun peaks exactly where the page ends.
     const { scrollYProgress } = useScroll({
         target: sectionRef,
-        offset: ["start 200%", "center center"],
+        offset: ["start 200%", "end end"],
     });
     useMotionValueEvent(scrollYProgress, "change", (v) => {
         setScrollHeat(Math.round(v * 75) / 100);
@@ -137,7 +138,7 @@ export default function SunSection() {
 
             {featherArmed && !reduceMotion && <DriftingFeather />}
 
-            <div className="relative z-10 mx-auto flex min-h-[135vh] max-w-3xl flex-col items-center justify-center px-6 py-32 text-center">
+            <div className="relative z-10 mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-32 text-center">
                 {/* The flight path ends here: wing meets sun. */}
                 <span data-flight-anchor aria-hidden className="mb-8 block h-2 w-2" />
 
@@ -199,7 +200,7 @@ export default function SunSection() {
 
                 {/* Quiet footer, inside the sun. */}
                 <div
-                    className="mt-24 flex items-center gap-7 text-[13px]"
+                    className="mt-24 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[13px]"
                     style={{ color: palette.muted }}
                 >
                     <a

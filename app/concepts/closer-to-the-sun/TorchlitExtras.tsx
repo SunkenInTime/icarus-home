@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 
 import DitherLight from "../_shared/DitherLight";
 import { palette } from "../_shared/tokens";
@@ -40,6 +40,21 @@ function outCubic(t: number) {
     return 1 - Math.pow(1 - t, 3);
 }
 
+function CardFace({ extra }: { extra: Extra }) {
+    const Icon = extra.icon;
+    return (
+        <>
+            <Icon size={16} color={palette.lavender} aria-hidden />
+            <p className="callsign mt-4" style={{ color: palette.fg }}>
+                {extra.tag}
+            </p>
+            <p className="mt-2 text-[13.5px] leading-[1.6]" style={{ color: palette.muted }}>
+                {extra.detail}
+            </p>
+        </>
+    );
+}
+
 function FeatureCard({
     extra,
     x,
@@ -55,7 +70,6 @@ function FeatureCard({
     rotate: number;
     lit: number;
 }) {
-    const Icon = extra.icon;
     return (
         <div
             className="absolute left-1/2 top-1/2 rounded-xl border p-6"
@@ -68,13 +82,7 @@ function FeatureCard({
                 transition: "border-color 200ms ease",
             }}
         >
-            <Icon size={16} color={palette.lavender} aria-hidden />
-            <p className="callsign mt-4" style={{ color: palette.fg }}>
-                {extra.tag}
-            </p>
-            <p className="mt-2 text-[13.5px] leading-[1.6]" style={{ color: palette.muted }}>
-                {extra.detail}
-            </p>
+            <CardFace extra={extra} />
         </div>
     );
 }
@@ -131,14 +139,50 @@ export default function TorchlitExtras() {
     const torch = p < 0.7 ? (p / 0.7) * 0.62 : Math.max(0.1, 0.62 - ((p - 0.7) / 0.3) * 0.52);
 
     return (
-        <section id="extras" ref={sectionRef} className="relative h-[240vh]">
+        <section id="extras" ref={sectionRef} className="relative md:h-[240vh]">
             {/* Flight anchors: the comet falls past the pinned screens. */}
             <span data-flight-anchor aria-hidden className="absolute right-[18%] top-[6%] h-2 w-2" />
             <span data-flight-anchor aria-hidden className="absolute left-[16%] top-[92%] h-2 w-2" />
 
             <ExtrasInventory />
 
-            <div className="sticky top-0 h-screen overflow-hidden">
+            {/* Mobile: the constellation doesn't fit, so the torch lights a
+                plain stack instead — nothing lost. */}
+            <div className="px-6 py-24 md:hidden" aria-hidden>
+                <div className="flex flex-col items-center">
+                    <Image src="/assets/torch.png" alt="" width={48} height={48} />
+                    <p className="callsign mt-6" style={{ color: palette.muted }}>
+                        and the rest
+                    </p>
+                    <div className="mt-10">
+                        <IcarusMark
+                            size={96}
+                            style={{ display: "block", filter: "drop-shadow(0 0 18px rgba(196,181,253,0.28))" }}
+                        />
+                    </div>
+                </div>
+                <div className="mx-auto mt-12 flex max-w-[420px] flex-col gap-4">
+                    {EXTRAS.map((extra, i) => (
+                        <motion.div
+                            key={extra.tag}
+                            className="rounded-xl border p-6"
+                            style={{
+                                background: palette.card,
+                                borderColor: palette.border,
+                                rotate: TILT[i % TILT.length] * 0.4,
+                            }}
+                            initial={{ opacity: 0, y: 24 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-40px" }}
+                            transition={{ duration: 0.5, ease: "easeOut" }}
+                        >
+                            <CardFace extra={extra} />
+                        </motion.div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="sticky top-0 hidden h-screen overflow-hidden md:block">
                 <div className="absolute inset-0">
                     <DitherLight progress={torch} light={{ x: 0.5, y: 0.52 }} cell={9} />
                 </div>
