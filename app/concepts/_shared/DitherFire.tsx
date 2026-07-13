@@ -78,7 +78,10 @@ void main() {
 
     vec2 cellIdx = floor(frag / uCell);
     vec2 center = (cellIdx + 0.5) * uCell;
-    vec2 p = center / uSize.y;
+    // Normalize by the short axis: on landscape screens this matches the
+    // app's height-normalized field exactly, and on portrait phones it keeps
+    // several noise features on screen instead of zooming into one blob.
+    vec2 p = center / min(uSize.x, uSize.y);
 
     float t = uTime;
     float energy = mix(0.55, 1.0, uProgress);

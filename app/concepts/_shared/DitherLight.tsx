@@ -65,7 +65,9 @@ void main() {
 
     vec2 cellIdx = floor(frag / uCell);
     vec2 center = (cellIdx + 0.5) * uCell;
-    vec2 p = center / uSize.y;
+    // Short-axis normalization keeps the rim flicker scale consistent
+    // between landscape and portrait (see DitherFire).
+    vec2 p = center / min(uSize.x, uSize.y);
 
     float t = uTime;
 
