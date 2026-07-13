@@ -114,8 +114,8 @@ export default function ProgressButton({
             )}
             <span style={{ position: "relative", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 {phase === "idle" && (
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                        <path d="M12 3v12m0 0 5-5m-5 5-5-5M4 21h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                        <path d="M3 4.2 10.4 3v8.2H3V4.2Zm8.4-1.35L21 1.4v9.8h-9.6V2.85ZM3 12.2h7.4V21L3 19.8v-7.6Zm8.4 0H21V22.6l-9.6-1.45V12.2Z" />
                     </svg>
                 )}
                 {phase === "done" && (

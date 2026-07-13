@@ -8,8 +8,7 @@ import versionInfo from "@/app/data/versionInfo";
 import ProgressButton from "../_shared/ProgressButton";
 import { palette } from "../_shared/tokens";
 
-import Altimeter from "./Altimeter";
-import AssetSlot from "./AssetSlot";
+import DemoVideo from "./DemoVideo";
 import FlightPath from "./FlightPath";
 import TorchlitExtras from "./TorchlitExtras";
 import SunSection from "./SunSection";
@@ -20,8 +19,7 @@ import SunSection from "./SunSection";
  * The rule of this pass: the myth lives in headlines and in the two big
  * visuals (flight path, sun). Everything else — labels, body copy, feature
  * names — talks about the product. Between the hero and the sun, every
- * visual is real Icarus UI; AssetSlot frames mark the screenshots still to
- * be captured.
+ * visual is real Icarus UI.
  */
 
 const win = versionInfo.platforms.windows;
@@ -76,6 +74,21 @@ function Hero() {
 
     return (
         <section className="tactical-dots relative flex min-h-screen flex-col justify-center">
+            {/* The destination, sketched faint and far away in the corner of
+                the sky — the real one blazes at the bottom of the page. */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute right-[5%] top-[7%] hidden sm:block"
+            >
+                <Image
+                    src="/assets/sun.png"
+                    alt=""
+                    width={118}
+                    height={118}
+                    style={{ opacity: 0.28 }}
+                />
+            </div>
+
             <div className="mx-auto w-full max-w-[1160px] px-6 pb-28 pt-24">
                 <h1
                     className="font-display max-w-[15ch]"
@@ -101,7 +114,7 @@ function Hero() {
                 <div className="mt-8 flex flex-wrap items-center gap-4">
                     <ProgressButton
                         href={win.url}
-                        label="Download for Windows"
+                        label="Download"
                         downloadingLabel={(percent) => `Downloading… ${percent}%`}
                         doneLabel="Check your downloads"
                     />
@@ -241,11 +254,9 @@ function AgentBar() {
                     </p>
                 </div>
 
-                <AssetSlot
-                    index="01"
-                    title="Agent bar, in place"
-                    aspect="4 / 3"
-                    note="Crop showing the side-mounted agent bar against the map edge, agents visible, mid-strat. ≥1600px wide."
+                <DemoVideo
+                    src="/sidebar-showcase.mp4"
+                    label="The side-mounted agent bar in use: grabbing and dropping agents onto the map mid-strat"
                 />
             </div>
         </section>
@@ -261,11 +272,9 @@ function LocalFirst() {
             <span data-flight-anchor aria-hidden className="absolute right-[14%] top-[32%] h-2 w-2" />
 
             <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-                <AssetSlot
-                    index="02"
-                    title="Export a strat as a file"
-                    aspect="4 / 3"
-                    note="Crop of the export/share flow — a strategy leaving Icarus as a file. ≥1600px wide."
+                <DemoVideo
+                    src="/strategy-export.mp4"
+                    label="Exporting a strategy from Icarus as a file to share"
                     className="order-last md:order-first"
                 />
 
@@ -281,6 +290,16 @@ function LocalFirst() {
                         anywhere — offline, on LAN, on tournament wifi. And nothing is locked
                         in: export any strategy as a file and hand it straight to a friend.
                     </p>
+                    {/* The handed-off strategy, mid-flight to that friend. */}
+                    <Image
+                        aria-hidden
+                        src="/assets/paper-plane.png"
+                        alt=""
+                        width={96}
+                        height={96}
+                        className="mt-6 hidden md:block"
+                        style={{ opacity: 0.5, transform: "rotate(5deg)" }}
+                    />
                 </div>
             </div>
         </section>
@@ -295,7 +314,21 @@ function Community() {
             {/* Flight path banks left past the community section. */}
             <span data-flight-anchor aria-hidden className="absolute left-[13%] top-[30%] h-2 w-2" />
 
-            <div className="mx-auto max-w-[760px] px-6 text-center">
+            {/* A wing, barely there, behind the people who built it. */}
+            <div
+                aria-hidden
+                className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+                <Image
+                    src="/assets/wing.png"
+                    alt=""
+                    width={540}
+                    height={540}
+                    style={{ opacity: 0.06 }}
+                />
+            </div>
+
+            <div className="relative mx-auto max-w-[760px] px-6 text-center">
                 <SectionHeading label="community">
                     Built in the open, steered by players.
                 </SectionHeading>
@@ -341,8 +374,6 @@ function Community() {
 export default function CloserToTheSunClient() {
     return (
         <div className="min-h-screen" style={{ background: palette.bg, color: palette.fg }}>
-            <Altimeter />
-
             {/* FlightPath threads through everything inside this wrapper. */}
             <main className="relative">
                 <FlightPath />

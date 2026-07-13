@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 
 import DitherLight from "../_shared/DitherLight";
@@ -142,8 +143,17 @@ export default function TorchlitExtras() {
                     <DitherLight progress={torch} light={{ x: 0.5, y: 0.52 }} cell={9} />
                 </div>
 
+                {/* The torch itself, burning and dimming with its light. */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute left-1/2 top-7 -translate-x-1/2"
+                    style={{ opacity: Math.min(1, torch * 1.5) }}
+                >
+                    <Image src="/assets/torch.png" alt="" width={64} height={64} />
+                </div>
+
                 <p
-                    className="callsign absolute left-1/2 top-20 -translate-x-1/2"
+                    className="callsign absolute left-1/2 top-28 -translate-x-1/2"
                     style={{ color: palette.muted, opacity: 0.35 + 0.65 * Math.min(1, p * 2) }}
                 >
                     and the rest

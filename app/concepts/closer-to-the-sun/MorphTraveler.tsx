@@ -1,8 +1,8 @@
 "use client";
 
 import { forwardRef, useImperativeHandle, useRef } from "react";
-
-import IcarusMark from "./IcarusMark";
+import Image from "next/image";
+import icarusLogo from "../../../icarus-logo-svg.svg";
 
 /**
  * The thing that falls down the flight path. Every stage is line art drawn
@@ -25,6 +25,20 @@ type Shape = { strokes: Stroke[]; alpha: number[] };
 const STROKES = 5;
 const NUMS = 14;
 
+/** Rotate directional artwork clockwise around the center of the 64px grid. */
+function rotateShapeClockwise(shape: Shape): Shape {
+    return {
+        strokes: shape.strokes.map((stroke) => {
+            const rotated: Stroke = [];
+            for (let i = 0; i < stroke.length; i += 2) {
+                rotated.push(64 - stroke[i + 1], stroke[i]);
+            }
+            return rotated;
+        }),
+        alpha: shape.alpha,
+    };
+}
+
 const SHAPES: Record<string, Shape> = {
     // Layered gull wing: long leading edge, three feathers, a body line.
     wing: {
@@ -39,7 +53,7 @@ const SHAPES: Record<string, Shape> = {
     },
     // Paper plane, nose right: top edge, bottom edge, inner fold, rear edge,
     // and a lighter fold shadow.
-    dart: {
+    dart: rotateShapeClockwise({
         strokes: [
             [6, 18, 20, 21.5, 34, 25, 45, 28, 49, 29.3, 53, 30.6, 56, 32],
             [6, 50, 20, 46, 34, 41, 45, 37, 49, 35.6, 53, 34.3, 56, 32],
@@ -48,7 +62,7 @@ const SHAPES: Record<string, Shape> = {
             [12, 46, 22, 42.5, 32, 39, 42, 35.5, 46, 34.3, 51, 33.1, 55, 32],
         ],
         alpha: [1, 1, 1, 1, 0.45],
-    },
+    }),
     // Scope reticle: full circle (two arcs) crossed by full axes.
     reticle: {
         strokes: [
@@ -83,7 +97,7 @@ const SHAPES: Record<string, Shape> = {
         alpha: [1, 1, 0.7, 0.7, 0.7],
     },
     // Comet: round head, three tapering tails, a sparkle ahead.
-    comet: {
+    comet: rotateShapeClockwise({
         strokes: [
             [45, 25, 53, 27, 55, 36, 49, 41, 44, 45, 36, 42, 36, 34],
             [40, 25, 31, 22.5, 22, 20.5, 15, 19.3, 12, 18.8, 9, 18.4, 6, 18],
@@ -92,7 +106,7 @@ const SHAPES: Record<string, Shape> = {
             [51, 15, 52, 16.7, 53, 18.3, 54, 20, 54, 20, 54, 20, 54, 20],
         ],
         alpha: [1, 1, 1, 1, 0.7],
-    },
+    }),
     // A gesture of the logomark; the real mark fades in over it.
     logo: {
         strokes: [
@@ -108,14 +122,14 @@ const SHAPES: Record<string, Shape> = {
 
 /** Stage order along the page; index = nearest flight anchor, clamped. */
 export const STAGES = [
-    "logo", // hero headline — begin with the supplied Icarus mark
+    "wing", // hero headline — the falling wing begins the journey
     "dart", // why icarus
     "reticle", // agent bar
     "folder", // local-first
     "heart", // community
     "comet", // extras (two anchors)
     "comet",
-    "wing", // the sun — the mark has become a falling wing
+    "logo", // the sun — the traveler resolves into the Icarus mark
 ] as const;
 
 const MORPH_MS = 480;
@@ -142,12 +156,16 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
     function MorphTraveler({ size = 48 }, ref) {
         const pathRefs = useRef<(SVGPathElement | null)[]>([]);
         const strokesRef = useRef<SVGSVGElement>(null);
+        const planeRef = useRef<HTMLDivElement>(null);
+        const cometRef = useRef<HTMLDivElement>(null);
         const logoRef = useRef<HTMLDivElement>(null);
 
-        const current = useRef<number[][]>(SHAPES.logo.strokes.map((s) => [...s]));
-        const currentAlpha = useRef<number[]>([...SHAPES.logo.alpha]);
-        const stageKey = useRef<string>("logo");
-        const logoShown = useRef(1);
+        const current = useRef<number[][]>(SHAPES.wing.strokes.map((s) => [...s]));
+        const currentAlpha = useRef<number[]>([...SHAPES.wing.alpha]);
+        const stageKey = useRef<string>("wing");
+        const planeShown = useRef(0);
+        const cometShown = useRef(0);
+        const logoShown = useRef(0);
         const raf = useRef(0);
 
         useImperativeHandle(ref, () => ({
@@ -157,6 +175,12 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
                 if (key === stageKey.current) return;
                 stageKey.current = key;
 
+                // Let the page react to the mark arriving/leaving (the sun
+                // section fades its wordmark in step with the crossfade).
+                window.dispatchEvent(
+                    new CustomEvent("ctts-logo-morph", { detail: key === "logo" }),
+                );
+
                 const reduceMotion = window.matchMedia(
                     "(prefers-reduced-motion: reduce)",
                 ).matches;
@@ -164,6 +188,10 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
                 const from = current.current.map((s) => [...s]);
                 const fromAlpha = [...currentAlpha.current];
                 const to = SHAPES[key];
+                const planeFrom = planeShown.current;
+                const planeTo = key === "dart" ? 1 : 0;
+                const cometFrom = cometShown.current;
+                const cometTo = key === "comet" ? 1 : 0;
                 const logoFrom = logoShown.current;
                 const logoTo = key === "logo" ? 1 : 0;
                 const start = performance.now();
@@ -184,13 +212,28 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
                             el.style.opacity = currentAlpha.current[i].toFixed(3);
                         }
                     }
+                    planeShown.current = planeFrom + (planeTo - planeFrom) * t;
+                    if (planeRef.current) {
+                        planeRef.current.style.opacity = planeShown.current.toFixed(3);
+                    }
+                    cometShown.current = cometFrom + (cometTo - cometFrom) * t;
+                    if (cometRef.current) {
+                        cometRef.current.style.opacity = cometShown.current.toFixed(3);
+                    }
                     logoShown.current = logoFrom + (logoTo - logoFrom) * t;
                     if (logoRef.current) {
                         logoRef.current.style.opacity = logoShown.current.toFixed(3);
-                        logoRef.current.style.transform = `scale(${(0.7 + 0.3 * logoShown.current).toFixed(3)})`;
+                        logoRef.current.style.transform = `scale(${(0.7 + 1.3 * logoShown.current).toFixed(3)})`;
                     }
                     if (strokesRef.current) {
-                        strokesRef.current.style.opacity = (1 - logoShown.current).toFixed(3);
+                        strokesRef.current.style.opacity = (
+                            1 -
+                            Math.max(
+                                planeShown.current,
+                                cometShown.current,
+                                logoShown.current,
+                            )
+                        ).toFixed(3);
                     }
                 };
 
@@ -219,7 +262,7 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
                     width={size}
                     height={size}
                     fill="none"
-                    style={{ opacity: 0 }}
+                    style={{ opacity: 1 }}
                 >
                     {SHAPES.wing.strokes.map((stroke, i) => (
                         <path
@@ -227,19 +270,79 @@ const MorphTraveler = forwardRef<MorphTravelerHandle, { size?: number }>(
                             ref={(el) => {
                                 pathRefs.current[i] = el;
                             }}
-                            d={strokeD(SHAPES.logo.strokes[i])}
+                            d={strokeD(SHAPES.wing.strokes[i])}
                             stroke="#fafafa"
                             strokeWidth={3.2}
                             strokeLinecap="round"
-                            style={{ opacity: 0 }}
+                            style={{ opacity: SHAPES.wing.alpha[i] }}
                         />
                     ))}
                 </svg>
                 <div
-                    ref={logoRef}
-                    style={{ position: "absolute", inset: 0, opacity: 1, transform: "scale(1)" }}
+                    ref={planeRef}
+                    style={{
+                        position: "absolute",
+                        inset: 0,
+                        opacity: 0,
+                        transform: "rotate(90deg)",
+                        transformOrigin: "center",
+                    }}
                 >
-                    <IcarusMark size={size} />
+                    <Image
+                        src="/assets/paper-plane.png"
+                        alt=""
+                        width={size}
+                        height={size}
+                        style={{
+                            display: "block",
+                            width: size,
+                            height: size,
+                            objectFit: "contain",
+                        }}
+                    />
+                </div>
+                <div
+                    ref={cometRef}
+                    style={{
+                        position: "absolute",
+                        inset: 0,
+                        opacity: 0,
+                        transform: "rotate(90deg)",
+                        transformOrigin: "center",
+                    }}
+                >
+                    <Image
+                        src="/assets/comet.png"
+                        alt=""
+                        width={size}
+                        height={size}
+                        style={{
+                            display: "block",
+                            width: size,
+                            height: size,
+                            objectFit: "contain",
+                        }}
+                    />
+                </div>
+                <div
+                    ref={logoRef}
+                    style={{
+                        position: "absolute",
+                        left: 0,
+                        top: 0,
+                        width: size,
+                        opacity: 0,
+                        transform: "scale(0.7)",
+                        transformOrigin: `${size / 2}px ${size / 2}px`,
+                    }}
+                >
+                    <Image
+                        src={icarusLogo}
+                        alt=""
+                        width={size}
+                        height={size}
+                        style={{ display: "block", width: size, height: size }}
+                    />
                 </div>
             </div>
         );
