@@ -57,14 +57,19 @@ function SectionHeading({
 
 /* ── 1 · Hero: what it is, what it looks like, how to get it ───── */
 
-/** Tail keyframes for the scroll arrow: the head stays planted at (9,41). */
-const ARROW_TAIL = [
-    "M9 3 C 6 12, 12 19, 9 28 C 7.5 33, 9.5 37, 9 41",
-    "M13 3 C 16 12, 5 19, 9.5 28 C 8 33, 9.5 37, 9 41",
-    "M9 3 C 6 12, 12 19, 9 28 C 7.5 33, 9.5 37, 9 41",
-    "M5 3 C 2 12, 13 19, 8.5 28 C 7 33, 9.5 37, 9 41",
-    "M9 3 C 6 12, 12 19, 9 28 C 7.5 33, 9.5 37, 9 41",
-] as const;
+/** A travelling wave that eases back to center before reaching the arrowhead. */
+const ARROW_WAVE = Array.from({ length: 9 }, (_, frame) => {
+    const phase = (frame / 8) * Math.PI * 2;
+    const points = Array.from({ length: 51 }, (_, index) => {
+        const y = index * 2;
+        const taper = Math.max(0, Math.min(1, (100 - y) / 38));
+        const x = 10 + Math.sin(y * 0.27 - phase) * 3.5 * taper;
+
+        return `L ${x.toFixed(2)} ${y}`;
+    });
+
+    return `M 10 0 ${points.join(" ")}`;
+});
 
 function Hero() {
     const reduceMotion = useReducedMotion();
@@ -111,10 +116,6 @@ function Hero() {
                         View source
                     </a>
                 </div>
-                <p className="callsign mt-4" style={{ color: palette.dim, fontSize: 10 }}>
-                    free · mit · v{versionInfo.version} · {win.size}
-                </p>
-
                 <div
                     className="relative mt-14 overflow-hidden rounded-2xl border"
                     style={{
@@ -139,20 +140,21 @@ function Hero() {
                 aria-hidden
                 className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
             >
-                <svg width="18" height="46" viewBox="0 0 18 46" fill="none">
+                <svg width="20" height="100" viewBox="0 0 20 100" fill="none">
                     <motion.path
-                        d={ARROW_TAIL[0]}
-                        animate={reduceMotion ? undefined : { d: [...ARROW_TAIL] }}
-                        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+                        d={ARROW_WAVE[0]}
+                        animate={reduceMotion ? undefined : { d: ARROW_WAVE }}
+                        transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
                         stroke="rgba(250,250,250,0.6)"
-                        strokeWidth={3}
+                        strokeWidth={1.5}
                         strokeLinecap="round"
                     />
                     <path
-                        d="M9 42 L 4 36 M9 42 L 14 36"
+                        d="M1 91 L10 100 L19 91"
                         stroke="rgba(250,250,250,0.6)"
-                        strokeWidth={3}
+                        strokeWidth={1.5}
                         strokeLinecap="round"
+                        strokeLinejoin="round"
                     />
                 </svg>
                 <span className="callsign" style={{ color: palette.muted }}>
