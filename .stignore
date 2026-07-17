@@ -1,0 +1,11 @@
+// Version-control internals and machine-local generated files.
+(?d).git
+(?d)**/node_modules
+(?d)**/.next
+(?d)**/out
+(?d)**/build
+(?d)**/coverage
+(?d)**/.vercel
+(?d)**/*.tsbuildinfo
+(?d)**/*.log
+

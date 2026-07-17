@@ -131,6 +131,10 @@ export default function FlightPath() {
             const tumble = Math.sin(s.len / 78) * 11 + Math.sin(s.len / 31 + 0.8) * 4;
             const landing = smoothstep((targetY - (flightEndY - 320)) / 320);
             const rotation = (s.bank + tumble + tiltDeg) * (1 - landing);
+            // The flight rides behind the page, but the landed mark is part
+            // of the sun section (it pairs with the wordmark): surface the
+            // traveler for the final descent so the logo sits over the field.
+            travelerLayer!.style.zIndex = landing > 0 ? "30" : "";
             wing!.style.transform =
                 `translate3d(${(s.x - SIZE / 2).toFixed(1)}px, ${(s.y - SIZE / 2).toFixed(1)}px, 0) ` +
                 `rotate(${rotation.toFixed(2)}deg) scale(${travelerScale})`;
@@ -471,11 +475,12 @@ export default function FlightPath() {
                 </svg>
             </div>
 
-            {/* Traveler layer: above section content — the protagonist. */}
+            {/* Traveler layer: behind section content, like the path — a
+                companion in the backdrop rather than an overlay. */}
             <div
                 ref={travelerLayerRef}
                 aria-hidden
-                className="pointer-events-none absolute inset-0 z-20 overflow-hidden"
+                className="pointer-events-none absolute inset-0 overflow-hidden"
             >
                 <div
                     ref={wingRef}

@@ -66,6 +66,7 @@ html,
 body {
   background: var(--bg);
   color: var(--text);
+  overscroll-behavior: none;
   /* Inter Variable at 500 for body; 700 is emphasis (font-bold). */
   font-family: var(--font-inter), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   font-weight: 500;
