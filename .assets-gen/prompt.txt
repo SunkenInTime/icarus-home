@@ -1,0 +1,24 @@
+<task>
+Use your image_gen tool to generate 6 image assets for a marketing website. Generate each one, then save/copy the file to the exact path listed below.
+
+Art direction (identical for all 6): thin hand-drawn white ink line art, like a quick confident pen sketch. Strokes are white / off-white (#FAFAFA), roughly 3-4px at 1024px canvas, slightly imperfect and lively. NO fills, NO shading, NO color in the artwork — line work only, generous empty margin around the subject (subject occupies ~70% of canvas).
+
+Background (critical, identical for all 6): a SOLID, FLAT, PURE PURPLE background, hex #7F00FF, filling the entire canvas edge to edge. No gradient, no vignette, no texture, no noise — one uniform purple color. It will be chroma-keyed out later, so absolutely no purple tones may appear in the line art itself, and nothing except the white strokes may sit on the purple.
+
+Each image is 1024x1024 PNG. The 6 assets:
+
+1. .assets-gen\raw\wing.png — a large spread bird wing with layered feathers, drawn in flowing strokes, tip pointing upper-right
+2. .assets-gen\raw\feather.png — a single feather drifting as it falls, gently S-curved, a few barbs separated
+3. .assets-gen\raw\paper-plane.png — a classic folded paper plane, nose pointing right and slightly down, fold lines visible
+4. .assets-gen\raw\sun.png — a radiant sun: a circle with sketchy uneven rays of varying length around it
+5. .assets-gen\raw\comet.png — a comet: small round head at right, three long tapering tail strokes streaming to the left, one tiny sparkle
+6. .assets-gen\raw\torch.png — a hand-held torch: simple handle, small lively flame of 2-3 strokes
+
+Paths are relative to the working directory. Only write files inside .assets-gen\raw\ — do not touch anything else in the repository.
+</task>
+<output_contract>
+A short list: for each of the 6 assets, the path written and a one-line confirmation that the background is a single flat #7F00FF purple. Nothing else.
+</output_contract>
+<follow_through>
+If a generated image comes back with a gradient/vignetted or non-purple background, regenerate that one (up to 2 retries) rather than saving it. If the tool cannot hit the exact hex, the closest flat saturated purple is acceptable — flatness matters more than the exact hex. Do not ask questions; finish all 6.
+</follow_through>
