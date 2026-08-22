@@ -113,6 +113,7 @@ export default function TorchlitExtras() {
     if (reduceMotion) {
         return (
             <section id="extras" className="relative py-24 sm:py-32">
+                <ExtrasInventory />
                 <div className="mx-auto max-w-[1000px] px-6">
                     <p className="callsign text-center" style={{ color: palette.dim }}>
                         and the rest

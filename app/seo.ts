@@ -1,8 +1,8 @@
 export const siteConfig = {
-  name: "Icarus",
-  alternateName: "Icarus Strats",
+  name: "Icarus Strats",
+  alternateName: "Icarus",
   url: "https://icarusstrats.com",
-  title: "Icarus - Free Open-Source VALORANT Strategy Planner",
+  title: "Icarus Strats - Free Open-Source VALORANT Strategy Planner",
   description:
     "Free, open-source VALORANT strategy planner and Valoplant alternative for map drawing, lineups, callouts, team strats, and local-first planning.",
   keywords: [

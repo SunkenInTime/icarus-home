@@ -1,8 +1,19 @@
+import type { Metadata } from "next";
+
 import SunHome from "@/app/components/SunHome";
 import { getLatestVersionInfo } from "@/app/lib/getLatestVersionInfo";
 import { absoluteUrl, sameAs, siteConfig } from "@/app/seo";
 
 export const revalidate = 3600;
+
+export const metadata: Metadata = {
+    alternates: {
+        canonical: "/",
+        types: {
+            "text/markdown": "/index.md",
+        },
+    },
+};
 
 export default async function Home() {
     const latestVersion = await getLatestVersionInfo();
@@ -54,6 +65,13 @@ export default async function Home() {
                 sameAs: [siteConfig.social.creatorX],
             },
             sameAs,
+            brand: {
+                "@type": "Brand",
+                name: siteConfig.name,
+                alternateName: siteConfig.alternateName,
+                url: siteConfig.url,
+                sameAs: [siteConfig.social.github, siteConfig.social.x],
+            },
             featureList: [
                 "Draw tactics and annotations on VALORANT maps",
                 "Plan lineups with notes, images, and video references",

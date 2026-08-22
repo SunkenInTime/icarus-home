@@ -92,6 +92,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="describedby" href="/llms.txt" />
         <script
           src="https://retn.io/script.js"
           data-token="8PeXBD7NmQXDLoIk2LbuKi0EZ0vclpO2"

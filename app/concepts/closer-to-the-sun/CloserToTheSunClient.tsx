@@ -107,7 +107,7 @@ function Hero() {
                     className="mt-6 max-w-xl text-[16.5px] leading-[1.6]"
                     style={{ color: palette.muted }}
                 >
-                    Icarus is a free, open-source strategy board for VALORANT — local-first,
+                    Icarus Strats is a free, open-source strategy board for VALORANT — local-first,
                     fast, and honestly just nice to use every day.
                 </p>
 
@@ -202,18 +202,19 @@ function Claims() {
             <span data-flight-anchor aria-hidden className="absolute right-[12%] top-[30%] h-2 w-2" />
 
             <div className="mx-auto max-w-[1160px] px-6">
+                <h2 className="sr-only">Why use Icarus</h2>
                 <p className="callsign" style={{ color: palette.dim }}>
                     why icarus
                 </p>
                 <div className="mt-8 grid gap-10 sm:grid-cols-3">
                     {CLAIMS.map((claim) => (
                         <div key={claim.title}>
-                            <h2
+                            <h3
                                 className="font-display text-[26px]"
                                 style={{ fontWeight: 700, letterSpacing: "-0.015em" }}
                             >
                                 {claim.title}
-                            </h2>
+                            </h3>
                             <p
                                 className="mt-2 max-w-[36ch] text-[14.5px] leading-[1.65]"
                                 style={{ color: palette.muted }}

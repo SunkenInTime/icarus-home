@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { absoluteUrl } from "@/app/seo";
 
-const lastModified = new Date("2026-06-28T02:03:49.000Z");
+const lastModified = new Date("2026-08-22T00:00:00.000Z");
 
 const routes = [
   {

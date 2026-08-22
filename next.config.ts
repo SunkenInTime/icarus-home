@@ -8,6 +8,10 @@ const REDIRECTED_HOSTS = [
 ] as const;
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/api/agent-markdown/*": ["./app/content/*"],
+    "/llms.txt": ["./app/content/llms.txt"],
+  },
   async redirects() {
     return [
       ...REDIRECTED_HOSTS.map((host) => ({

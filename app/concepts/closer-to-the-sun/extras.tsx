@@ -51,12 +51,16 @@ export function ChipFace({ extra }: { extra: Extra }) {
 
 export function ExtrasInventory() {
     return (
-        <ul className="sr-only">
-            {EXTRAS.map((extra) => (
-                <li key={extra.tag}>
-                    {extra.tag} — {extra.detail}
-                </li>
-            ))}
-        </ul>
+        <div className="sr-only">
+            <h2>More Icarus features</h2>
+            <ul>
+                {EXTRAS.map((extra) => (
+                    <li key={extra.tag}>
+                        <h3>{extra.tag}</h3>
+                        <p>{extra.detail}</p>
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
 }
