@@ -1,15 +1,18 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 
 import versionInfo from "@/app/data/versionInfo";
 import ProgressButton from "../_shared/ProgressButton";
-import { palette } from "../_shared/tokens";
+import { easing, palette } from "../_shared/tokens";
 
 import DemoVideo from "./DemoVideo";
 import FlightPath from "./FlightPath";
+import PointerField from "./PointerField";
+import SunPreEcho, { type PreEchoShape } from "./SunPreEcho";
 import TorchlitExtras from "./TorchlitExtras";
 import SunSection from "./SunSection";
 
@@ -25,6 +28,157 @@ import SunSection from "./SunSection";
 const win = versionInfo.platforms.windows;
 const GITHUB_URL = "https://github.com/SunkenInTime/icarus";
 const DISCORD_URL = "https://discord.gg/PN2uKwCqYB";
+
+const SUN_RAY_CLIPS = [
+    "polygon(47% 7%, 53% 7%, 53% 29%, 47% 29%)",
+    "polygon(20% 18%, 37% 18%, 37% 35%, 20% 35%)",
+    "polygon(38% 21%, 44% 21%, 44% 30%, 38% 30%)",
+    "polygon(59% 17%, 68% 17%, 68% 31%, 59% 31%)",
+    "polygon(68% 23%, 86% 23%, 86% 38%, 68% 38%)",
+    "polygon(19% 38%, 31% 38%, 31% 45%, 19% 45%)",
+    "polygon(71% 39%, 83% 39%, 83% 46%, 71% 46%)",
+    "polygon(9% 52%, 30% 52%, 30% 61%, 9% 61%)",
+    "polygon(72% 50%, 94% 50%, 94% 59%, 72% 59%)",
+    "polygon(24% 61%, 33% 61%, 33% 69%, 24% 69%)",
+    "polygon(69% 61%, 80% 61%, 80% 71%, 69% 71%)",
+    "polygon(27% 68%, 40% 68%, 40% 86%, 27% 86%)",
+    "polygon(47% 72%, 51% 72%, 51% 85%, 47% 85%)",
+    "polygon(61% 68%, 78% 68%, 78% 90%, 61% 90%)",
+] as const;
+
+const SUN_RAY_ORIGINS = [
+    "50% 28%",
+    "35% 33%",
+    "42% 29%",
+    "61% 29%",
+    "69% 36%",
+    "29% 42%",
+    "73% 44%",
+    "28% 55%",
+    "73% 53%",
+    "31% 64%",
+    "70% 64%",
+    "38% 69%",
+    "50% 73%",
+    "63% 70%",
+] as const;
+
+const SUN_IMAGE_STYLE = {
+    backgroundImage: 'url("/assets/sun.png")',
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
+} as const;
+
+const SUN_RAY_FRAME_COUNT = 6;
+
+/**
+ * Sized to sit between the original 118px (invisible) and the 620px first pass
+ * (dominant): present in the corner of the eye, not competing with the
+ * headline. Nudge SUN_SIZE alone to re-tune; the offsets bleed it off the
+ * corner proportionally enough to hold.
+ */
+const SUN_SIZE = "clamp(200px, 22vw, 320px)";
+const SUN_OPACITY = 0.17;
+const SUN_OPACITY_WARM = 0.36;
+
+/**
+ * The bigger swings from the homepage review. Production ships the ones that
+ * landed (hairline pre-echo, word cascade); the rest stay behind flags at
+ * /concepts/bigger-swings so they can still be judged against that baseline.
+ */
+export type BigSwings = {
+    /** A cold slice of the sun's own field, brought up into the hero. */
+    preEcho?: boolean;
+    /** Where that field sits relative to the copy. See SunPreEcho. */
+    preEchoShape?: PreEchoShape;
+    /** Live overrides for the pre-echo's band height and field energy. */
+    preEchoDepth?: number;
+    preEchoHeat?: number;
+    /** A torchlight pool in the hero backdrop that follows the pointer. */
+    pointerField?: boolean;
+    /** Lead with the agent-bar demo so the first scroll lands on a visual. */
+    reorder?: boolean;
+    /** Cascade the headline word by word instead of as one block. */
+    wordReveal?: boolean;
+    /** Draw a violet pen stroke under the last word once the headline lands. */
+    drawnUnderline?: boolean;
+};
+
+/** What the homepage actually ships. The judging rig starts here too. */
+export const SHIPPED_SWINGS: BigSwings = {
+    preEcho: true,
+    preEchoShape: "hairline",
+    wordReveal: true,
+};
+
+function getRandomizedRayScales(index: number): number[] {
+    const samples = Array.from({ length: SUN_RAY_FRAME_COUNT }, (_, frame) => {
+        let value =
+            Math.imul(index + 1, 0x45d9f3b) ^ Math.imul(frame + 1, 0x27d4eb2d);
+        value ^= value >>> 16;
+        return (value >>> 0) / 0xffffffff;
+    });
+    const minimum = Math.min(...samples);
+    const maximum = Math.max(...samples);
+    const lengthShift = 0.085 + (index % 4) * 0.012;
+
+    return samples.map((sample) => {
+        const normalized = (sample - minimum) / (maximum - minimum);
+        return 1 + (normalized * 2 - 1) * lengthShift;
+    });
+}
+
+function getRayStyle(clipPath: string, index: number): React.CSSProperties {
+    const scales = getRandomizedRayScales(index);
+
+    return {
+        ...SUN_IMAGE_STYLE,
+        clipPath,
+        transformOrigin: SUN_RAY_ORIGINS[index],
+        animationDelay: `${-((index * 137) % 500)}ms`,
+        "--ray-s-0": `${scales[0]}`,
+        "--ray-s-1": `${scales[1]}`,
+        "--ray-s-2": `${scales[2]}`,
+        "--ray-s-3": `${scales[3]}`,
+        "--ray-s-4": `${scales[4]}`,
+        "--ray-s-5": `${scales[5]}`,
+    } as React.CSSProperties;
+}
+
+function AnimatedSun({ warm }: { warm: boolean }) {
+    return (
+        <div
+            data-animated-sun
+            aria-hidden
+            className="pointer-events-none absolute hidden sm:block"
+            style={{
+                top: -56,
+                right: -44,
+                width: SUN_SIZE,
+                height: SUN_SIZE,
+                opacity: warm ? SUN_OPACITY_WARM : SUN_OPACITY,
+                transition: `opacity 420ms ${easing.outCubic}`,
+            }}
+        >
+            <div data-sun-artwork className="absolute inset-0">
+                <div
+                    data-sun-circle
+                    className="absolute inset-0"
+                    style={{ ...SUN_IMAGE_STYLE, clipPath: "inset(29% 28% 28% 30%)" }}
+                />
+                {SUN_RAY_CLIPS.map((clipPath, index) => (
+                    <div
+                        key={clipPath}
+                        data-sun-ray
+                        className="sun-ray-on-twos absolute inset-0"
+                        style={getRayStyle(clipPath, index)}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+}
 
 function SectionHeading({
     label,
@@ -69,55 +223,152 @@ const ARROW_WAVE = Array.from({ length: 9 }, (_, frame) => {
     return `M 10 0 ${points.join(" ")}`;
 });
 
-function Hero() {
+/**
+ * Arrival order for the hero, in ms. Nothing else on the page animates on
+ * mount, so this is the page's only chance to read as authored rather than
+ * as a screenshot. The board comes last but stays early: it is the largest
+ * paint on the page and an invisible element cannot serve as LCP.
+ */
+const REVEAL = { headline: 60, body: 170, actions: 250, board: 340 } as const;
+
+const HEADLINE_WORDS = ["The", "strategy", "board", "that", "actually", "flies."] as const;
+/** Per-word cascade. Tight enough that the body can still land underneath it. */
+const WORD_STEP = 45;
+
+/**
+ * The pen, applied to the page: a wobbling stroke that draws itself under the
+ * last word once the headline has landed. Stretched to the word with
+ * preserveAspectRatio="none", so the stroke width is held by vectorEffect.
+ */
+function UnderlinedWord({ word }: { word: string }) {
+    return (
+        <span className="relative inline-block">
+            {word}
+            <svg
+                aria-hidden
+                className="absolute left-0 w-full"
+                style={{ bottom: "-0.04em", height: "0.16em", overflow: "visible" }}
+                viewBox="0 0 240 12"
+                preserveAspectRatio="none"
+                fill="none"
+            >
+                <path
+                    className="draw-stroke"
+                    d="M3 8.4C34 4.2 68 10.4 104 6.1 140 1.8 176 9.6 210 5.2 222 3.6 230 6 237 7.4"
+                    stroke={palette.violet}
+                    strokeWidth={3}
+                    strokeLinecap="round"
+                    vectorEffect="non-scaling-stroke"
+                />
+            </svg>
+        </span>
+    );
+}
+
+function Headline({ perWord, underline }: { perWord: boolean; underline: boolean }) {
+    return (
+        <>
+            {HEADLINE_WORDS.map((word, index) => {
+                const last = index === HEADLINE_WORDS.length - 1;
+                const glyphs = last && underline ? <UnderlinedWord word={word} /> : word;
+
+                return (
+                    <span key={word}>
+                        {index > 0 ? " " : null}
+                        {perWord ? (
+                            <span
+                                className="rise-in inline-block"
+                                style={{
+                                    animationDelay: `${REVEAL.headline + index * WORD_STEP}ms`,
+                                }}
+                            >
+                                {glyphs}
+                            </span>
+                        ) : (
+                            glyphs
+                        )}
+                    </span>
+                );
+            })}
+            {/* Y-reference only: the fall starts at headline height. */}
+            <span data-flight-anchor aria-hidden className="inline-block h-px w-px" />
+        </>
+    );
+}
+
+function Hero({ swings }: { swings: BigSwings }) {
     const reduceMotion = useReducedMotion();
+    const [sunWarm, setSunWarm] = useState(false);
+    const warmTimer = useRef(0);
+
+    useEffect(() => () => window.clearTimeout(warmTimer.current), []);
+
+    // Reaching for the download leans the sun brighter for a beat — the same
+    // answer SunSection gives a pointer entering the fire.
+    function warmForABeat() {
+        setSunWarm(true);
+        window.clearTimeout(warmTimer.current);
+        warmTimer.current = window.setTimeout(() => setSunWarm(false), 900);
+    }
+
+    // Two dot grids at different pitches read as moiré, so the pointer field
+    // replaces the static one rather than stacking on it. PointerField renders
+    // the static grid itself when it can't animate.
+    const litBackdrop = Boolean(swings.pointerField);
+    const perWord = Boolean(swings.wordReveal);
 
     return (
-        <section className="tactical-dots relative flex min-h-screen flex-col justify-center">
-            {/* The destination, sketched faint and far away in the corner of
-                the sky — the real one blazes at the bottom of the page. */}
-            <div
-                aria-hidden
-                className="pointer-events-none absolute right-[5%] top-[7%] hidden sm:block"
-            >
-                <Image
-                    src="/assets/sun.png"
-                    alt=""
-                    width={118}
-                    height={118}
-                    style={{ opacity: 0.28 }}
+        <section
+            className={`relative flex min-h-screen flex-col justify-center overflow-hidden ${
+                litBackdrop ? "" : "tactical-dots"
+            }`}
+        >
+            {/* Only the ray lengths change, held on twos like redrawn frames. */}
+            <AnimatedSun warm={sunWarm} />
+            {swings.preEcho && (
+                <SunPreEcho
+                    shape={swings.preEchoShape}
+                    depth={swings.preEchoDepth}
+                    heat={swings.preEchoHeat}
+                    warm={sunWarm}
                 />
-            </div>
+            )}
+            {swings.pointerField && <PointerField />}
 
-            <div className="mx-auto w-full max-w-[1160px] px-6 pb-28 pt-24">
+            {/* Positioned, so the copy paints over the sun rather than under it. */}
+            <div className="relative mx-auto w-full max-w-[1160px] px-6 pb-8 pt-24">
                 <h1
-                    className="font-display max-w-[15ch]"
+                    className={`font-display max-w-[15ch] ${perWord ? "" : "rise-in"}`}
                     style={{
                         fontSize: "clamp(40px, 6.2vw, 80px)",
                         lineHeight: 1.02,
                         fontWeight: 700,
                         letterSpacing: "-0.02em",
+                        animationDelay: `${REVEAL.headline}ms`,
                     }}
                 >
-                    The strategy board that actually flies.
-                    {/* Y-reference only: the fall starts at headline height. */}
-                    <span data-flight-anchor aria-hidden className="inline-block h-px w-px" />
+                    <Headline perWord={perWord} underline={Boolean(swings.drawnUnderline)} />
                 </h1>
                 <p
-                    className="mt-6 max-w-xl text-[16.5px] leading-[1.6]"
-                    style={{ color: palette.muted }}
+                    className="rise-in mt-6 max-w-xl text-[16.5px] leading-[1.6]"
+                    style={{ color: palette.muted, animationDelay: `${REVEAL.body}ms` }}
                 >
                     Icarus Strats is a free, open-source strategy board for VALORANT — local-first,
                     fast, and honestly just nice to use every day.
                 </p>
 
-                <div className="mt-8 flex flex-wrap items-center gap-4">
-                    <ProgressButton
-                        href={win.url}
-                        label="Download"
-                        downloadingLabel={(percent) => `Downloading… ${percent}%`}
-                        doneLabel="Check your downloads"
-                    />
+                <div
+                    className="rise-in mt-8 flex flex-wrap items-center gap-4"
+                    style={{ animationDelay: `${REVEAL.actions}ms` }}
+                >
+                    <span className="inline-flex" onPointerEnter={warmForABeat} onFocus={warmForABeat}>
+                        <ProgressButton
+                            href={win.url}
+                            label="Download"
+                            downloadingLabel={(percent) => `Downloading… ${percent}%`}
+                            doneLabel="Check your downloads"
+                        />
+                    </span>
                     <a
                         href={GITHUB_URL}
                         target="_blank"
@@ -130,11 +381,12 @@ function Hero() {
                     </a>
                 </div>
                 <div
-                    className="relative mt-14 overflow-hidden rounded-2xl border"
+                    className="rise-lift relative mt-14 overflow-hidden rounded-2xl border"
                     style={{
                         borderColor: "rgba(255,255,255,0.1)",
                         boxShadow:
                             "0 40px 90px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(124,58,237,0.12)",
+                        animationDelay: `${REVEAL.board}ms`,
                     }}
                 >
                     <Image
@@ -146,33 +398,32 @@ function Hero() {
                         className="block h-auto w-full"
                     />
                 </div>
-            </div>
-
-            {/* Scroll hint: a drawn arrow pointing down, labeled "up". */}
-            <div
-                aria-hidden
-                className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2"
-            >
-                <svg width="20" height="100" viewBox="0 0 20 100" fill="none">
-                    <motion.path
-                        d={ARROW_WAVE[0]}
-                        animate={reduceMotion ? undefined : { d: ARROW_WAVE }}
-                        transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
-                        stroke="rgba(250,250,250,0.6)"
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                    />
-                    <path
-                        d="M1 91 L10 100 L19 91"
-                        stroke="rgba(250,250,250,0.6)"
-                        strokeWidth={1.5}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                    />
-                </svg>
-                <span className="callsign" style={{ color: palette.muted }}>
-                    up
-                </span>
+                {/* Keep the scroll hint in flow so it always starts after the board. */}
+                <div
+                    aria-hidden
+                    className="mt-7 flex flex-col items-center gap-2"
+                >
+                    <svg width="20" height="100" viewBox="0 0 20 100" fill="none">
+                        <motion.path
+                            d={ARROW_WAVE[0]}
+                            animate={reduceMotion ? undefined : { d: ARROW_WAVE }}
+                            transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
+                            stroke="rgba(250,250,250,0.6)"
+                            strokeWidth={1.5}
+                            strokeLinecap="round"
+                        />
+                        <path
+                            d="M1 91 L10 100 L19 91"
+                            stroke="rgba(250,250,250,0.6)"
+                            strokeWidth={1.5}
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                    <span className="callsign" style={{ color: palette.muted }}>
+                        up
+                    </span>
+                </div>
             </div>
         </section>
     );
@@ -372,15 +623,28 @@ function Community() {
 
 /* ── Page ──────────────────────────────────────────────────────── */
 
-export default function CloserToTheSunClient() {
+export default function CloserToTheSunClient({
+    swings = SHIPPED_SWINGS,
+}: {
+    swings?: BigSwings;
+}) {
     return (
         <div className="min-h-screen" style={{ background: palette.bg, color: palette.fg }}>
             {/* FlightPath threads through everything inside this wrapper. */}
             <main className="relative">
                 <FlightPath />
-                <Hero />
-                <Claims />
-                <AgentBar />
+                <Hero swings={swings} />
+                {swings.reorder ? (
+                    <>
+                        <AgentBar />
+                        <Claims />
+                    </>
+                ) : (
+                    <>
+                        <Claims />
+                        <AgentBar />
+                    </>
+                )}
                 <LocalFirst />
                 <Community />
                 <TorchlitExtras />

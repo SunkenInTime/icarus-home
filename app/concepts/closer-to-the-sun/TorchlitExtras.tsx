@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 
 import DitherLight from "../_shared/DitherLight";
+import { usePrefersReducedMotion } from "../_shared/usePrefersReducedMotion";
 import { palette } from "../_shared/tokens";
 import { ChipFace, EXTRAS, ExtrasInventory, type Extra } from "./extras";
 import IcarusMark from "./IcarusMark";
@@ -89,7 +90,9 @@ function FeatureCard({
 
 export default function TorchlitExtras() {
     const sectionRef = useRef<HTMLElement>(null);
-    const reduceMotion = useReducedMotion();
+    // Chosen here rather than with framer's hook: the two branches are
+    // different trees, so the answer has to be stable across hydration.
+    const reduceMotion = usePrefersReducedMotion();
 
     const [p, setP] = useState(0);
     const [viewport, setViewport] = useState({ w: 1280, h: 800 });

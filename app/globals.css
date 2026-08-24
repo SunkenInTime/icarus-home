@@ -159,6 +159,23 @@ body {
   100% { transform: translate3d(0,0,0); }
 }
 
+/* 24 fps timing with each drawing held for two frames: 12 redraws per second. */
+@keyframes sun-ray-length-redraw {
+  0% { transform: scale(var(--ray-s-0)); }
+  16.667% { transform: scale(var(--ray-s-1)); }
+  33.333% { transform: scale(var(--ray-s-2)); }
+  50% { transform: scale(var(--ray-s-3)); }
+  66.667% { transform: scale(var(--ray-s-4)); }
+  83.333% { transform: scale(var(--ray-s-5)); }
+}
+
+.sun-ray-on-twos {
+  animation-duration: 500ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: steps(1, end);
+  animation-name: sun-ray-length-redraw;
+}
+
 @keyframes scanline {
   0% { transform: translateY(-100%); opacity: 0; }
   10% { opacity: 0.35; }
@@ -252,4 +269,39 @@ body {
 
 .rise-in {
   animation: rise 0.7s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* Same reveal for large objects: a longer travel and a hair of scale, so the
+   move is legible on something the size of the hero board. */
+@keyframes rise-lift {
+  from { opacity: 0; transform: translateY(22px) scale(0.988); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.rise-lift {
+  animation: rise-lift 0.9s cubic-bezier(.2,.7,.2,1) both;
+}
+
+/* A stroke that draws itself, for underlining a word by hand. The dasharray
+   stays outside the animation, so switching the animation off leaves the line
+   drawn rather than invisible. */
+@keyframes draw-stroke {
+  from { stroke-dashoffset: 300; }
+  to   { stroke-dashoffset: 0; }
+}
+
+.draw-stroke {
+  stroke-dasharray: 300;
+  animation: draw-stroke 760ms cubic-bezier(.35,.75,.3,1) 950ms both;
+}
+
+/* Gated here rather than in JS: useReducedMotion() reads null on the server and
+   true on the client, so branching a className on it mismatches on hydration. */
+@media (prefers-reduced-motion: reduce) {
+  .rise-in,
+  .rise-lift,
+  .sun-ray-on-twos,
+  .draw-stroke {
+    animation: none;
+  }
 }

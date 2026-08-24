@@ -98,6 +98,16 @@ export default function ConceptsIndexClient() {
                 </div>
 
                 <p className="mt-16 text-[12px]" style={{ color: palette.dim }}>
+                    Judging the shipped page&rsquo;s open questions:{" "}
+                    <Link
+                        href="/concepts/bigger-swings"
+                        className="underline underline-offset-2 hover:text-white"
+                    >
+                        bigger swings
+                    </Link>
+                    .
+                </p>
+                <p className="mt-3 text-[12px]" style={{ color: palette.dim }}>
                     Current production page stays at{" "}
                     <Link href="/" className="underline underline-offset-2 hover:text-white">
                         icarusstrats.com

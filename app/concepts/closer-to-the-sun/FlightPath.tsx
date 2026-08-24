@@ -20,6 +20,11 @@ import MorphTraveler, { MorphTravelerHandle } from "./MorphTraveler";
  * when the velocity tilt settles. Under prefers-reduced-motion the full
  * path renders statically and the traveler rests at the top.
  *
+ * On first paint the traveler drops in from above the page and settles onto
+ * the hero anchor, so the hero has motion before anyone scrolls. The entrance
+ * is a decaying offset rather than a separate mode, which keeps scrolling
+ * mid-entrance correct.
+ *
  * The whole flight is a companion to scrolling, not a screen resident: it
  * fades out once scrolling settles and fades back in on the next scroll,
  * and only a short tail of the trail stays lit behind the traveler (a
@@ -54,6 +59,13 @@ const TAIL_SOFT = 460;
 // Idle fade: hide after this much settled time, revive fast on scroll.
 const IDLE_FADE_DELAY_MS = 1000;
 const MOBILE_MAX_W = 640;
+// Entrance: the traveler drops in from above the page on first paint instead
+// of being discovered already parked in the gutter. Offsets decay to zero, so
+// scrolling mid-entrance stays correct — it just arrives somewhere else.
+const INTRO_MS = 1300;
+const INTRO_DX = 84;
+const INTRO_DY = -460;
+const INTRO_ROLL = -26;
 
 type Sample = { x: number; y: number; bank: number; len: number; sy: number };
 
@@ -117,6 +129,11 @@ export default function FlightPath() {
         let travelerScale = 1;
         let idleTimer = 0;
         let hasScrolled = false;
+        // 1 while the traveler is still off-page, easing to 0 as it settles.
+        let introFrom = 0;
+        let introStart = 0;
+        let introRaf = 0;
+        let introDone = reduceMotion;
 
         function setLayersOpacity(opacity: number, ms: number) {
             for (const el of [svgLayer!, travelerLayer!]) {
@@ -130,13 +147,16 @@ export default function FlightPath() {
             // The loop's heading still supplies its complete somersault.
             const tumble = Math.sin(s.len / 78) * 11 + Math.sin(s.len / 31 + 0.8) * 4;
             const landing = smoothstep((targetY - (flightEndY - 320)) / 320);
-            const rotation = (s.bank + tumble + tiltDeg) * (1 - landing);
+            const rotation =
+                (s.bank + tumble + tiltDeg) * (1 - landing) + INTRO_ROLL * introFrom;
             // The flight rides behind the page, but the landed mark is part
             // of the sun section (it pairs with the wordmark): surface the
             // traveler for the final descent so the logo sits over the field.
             travelerLayer!.style.zIndex = landing > 0 ? "30" : "";
+            const x = s.x - SIZE / 2 + INTRO_DX * introFrom;
+            const y = s.y - SIZE / 2 + INTRO_DY * introFrom;
             wing!.style.transform =
-                `translate3d(${(s.x - SIZE / 2).toFixed(1)}px, ${(s.y - SIZE / 2).toFixed(1)}px, 0) ` +
+                `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) ` +
                 `rotate(${rotation.toFixed(2)}deg) scale(${travelerScale})`;
 
             // Morph toward the shape of whichever section we're nearest.
@@ -231,6 +251,30 @@ export default function FlightPath() {
             window.clearTimeout(idleTimer);
             setLayersOpacity(1, 180);
             kick();
+        }
+
+        function introFrame(now: number) {
+            const t = Math.min(1, (now - introStart) / INTRO_MS);
+            // Out-cubic on the offset: quick out of the sky, long settle in.
+            introFrom = Math.pow(1 - t, 3);
+            const targetY = currentTargetY();
+            const s = currentSample(targetY);
+            if (s) placeTraveler(s, tilt, targetY);
+
+            if (t < 1) {
+                introRaf = requestAnimationFrame(introFrame);
+            } else {
+                introRaf = 0;
+                introFrom = 0;
+                introDone = true;
+            }
+        }
+
+        function startIntro() {
+            if (introDone || introRaf) return;
+            introFrom = 1;
+            introStart = performance.now();
+            introRaf = requestAnimationFrame(introFrame);
         }
 
         function build() {
@@ -413,6 +457,7 @@ export default function FlightPath() {
                 maskCore!.style.strokeDashoffset = "0";
                 placeTraveler(samples[0], 0, yStart);
             } else {
+                startIntro();
                 kick();
             }
         }
@@ -427,6 +472,7 @@ export default function FlightPath() {
 
         return () => {
             if (raf) cancelAnimationFrame(raf);
+            if (introRaf) cancelAnimationFrame(introRaf);
             window.clearTimeout(idleTimer);
             resizeObserver.disconnect();
             window.removeEventListener("scroll", scrollKick);
