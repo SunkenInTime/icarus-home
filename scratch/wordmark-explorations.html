@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ICARUS · wordmark explorations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400..900&family=Archivo:wdth,wght@62..125,100..900&family=Space+Grotesk:wght@400..700&family=Instrument+Sans:wdth,wght@75..100,400..700&family=Geist:wght@100..900&family=Host+Grotesk:wght@300..800&family=Syncopate:wght@400;700&family=Saira:wdth,wght@50..125,100..900&family=Krona+One&family=Unbounded:wght@400..900&family=Barlow+Condensed:wght@500;600;700;800&family=Big+Shoulders+Display:wght@400..900&family=Oswald:wght@400..700&family=Bebas+Neue&family=Outfit:wght@100..900&family=Sora:wght@100..800&family=Manrope:wght@200..800&family=Urbanist:wght@100..900&family=Instrument+Serif:ital@0;1&family=Cormorant+Garamond:wght@400..700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,0..100,0..1&family=Bodoni+Moda:opsz,wght@6..96,400..900&family=Cinzel:wght@400..900&family=Geist+Mono:wght@100..900&family=JetBrains+Mono:wght@100..800&family=Space+Mono:wght@400;700&family=Orbitron:wght@400..900&family=Chakra+Petch:wght@600;700&family=Teko:wght@300..700&family=Inter:wght@400..700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&display=swap" />
+<style>
+  :root {
+    --bg: #09090b;
+    --surface: #0d0d10;
+    --card: #111114;
+    --raised: #161619;
+    --border: #27272a;
+    --border-soft: rgba(255,255,255,0.07);
+    --accent: #7c3aed;
+    --accent-deep: #4c1d95;
+    --text: #fafafa;
+    --soft: #d4d4d8;
+    --muted: #a1a1aa;
+    --dim: #71717a;
+    --ember: #f08234;
+    /* live controls */
+    --wm-color: var(--text);
+    --wm-track-nudge: 0em;
+    --wm-size: 84px;
+    /* active selection, drives the context mocks */
+    --ctx-font: "Space Grotesk";
+    --ctx-weight: 500;
+    --ctx-track: 0.22em;
+    --ctx-wdth: 100;
+    --ctx-transform: uppercase;
+    --ctx-scale: 1;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body {
+    font-family: Inter, system-ui, -apple-system, sans-serif;
+    font-weight: 400; font-size: 14px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 160px;
+  }
+  a { color: inherit; }
+  .callsign {
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .wrap { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  /* ---------- top bar ---------- */
+  header.top {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(9,9,11,0.88); backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  header.top .wrap { display: flex; align-items: center; gap: 28px; height: 56px; flex-wrap: wrap; }
+  header.top .brand { display: flex; align-items: center; gap: 10px; }
+  header.top .brand svg { width: 22px; height: 22px; }
+  .ctl { display: flex; align-items: center; gap: 8px; }
+  .ctl .callsign { font-size: 9px; color: var(--dim); }
+  .seg { display: inline-flex; background: var(--raised); border: 1px solid var(--border); border-radius: 6px; padding: 2px; }
+  .seg button {
+    all: unset; cursor: pointer; padding: 4px 10px; border-radius: 4px;
+    font: 600 11px/1.2 Inter, system-ui, sans-serif; color: var(--muted);
+  }
+  .seg button.on { background: var(--accent); color: #fff; }
+  .seg button:hover:not(.on) { color: var(--text); }
+  input[type=range] { accent-color: var(--accent); width: 120px; }
+  .sw { width: 18px; height: 18px; border-radius: 4px; border: 1px solid var(--border); cursor: pointer; }
+  .sw.on { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  /* ---------- intro ---------- */
+  .intro { padding: 56px 0 24px; border-bottom: 1px solid var(--border); }
+  .intro h1 { font-family: Onest, sans-serif; font-weight: 600; font-size: 34px; letter-spacing: -0.02em; margin: 8px 0 12px; line-height: 1.1; }
+  .intro p { color: var(--soft); max-width: 68ch; margin: 0 0 10px; }
+  .intro .now { margin-top: 28px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .now .tile { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+  .now .tile .callsign { display: block; margin-bottom: 12px; }
+  .now .tile .sample { font-size: 28px; color: var(--text); }
+
+  /* ---------- sections ---------- */
+  section { padding: 48px 0 8px; }
+  section > .wrap > .head { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; margin-bottom: 22px; align-items: end; }
+  .head h2 { font-family: Onest, sans-serif; font-weight: 600; font-size: 24px; letter-spacing: -0.015em; margin: 6px 0 0; }
+  .head .num { color: var(--accent); }
+  .head p { margin: 0; color: var(--muted); }
+  .head p b { color: var(--soft); font-weight: 600; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .card {
+    position: relative; background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 22px 22px 18px; cursor: pointer; transition: border-color 160ms, background 160ms;
+    overflow: hidden;
+  }
+  .card:hover { border-color: #3f3f46; background: var(--raised); }
+  .card.active { border-color: var(--accent); }
+  .card .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 18px; }
+  .card .meta .name { font-weight: 600; color: var(--text); font-size: 13px; }
+  .card .meta .spec { font-family: "Geist Mono", monospace; font-size: 10px; color: var(--dim); letter-spacing: 0.02em; }
+  .card .stage { min-height: 120px; display: flex; align-items: center; overflow: hidden; }
+  .wm {
+    color: var(--wm-color); line-height: 1; white-space: nowrap;
+    font-size: calc(var(--wm-size) * var(--s, 1));
+    letter-spacing: calc(var(--t, 0em) + var(--wm-track-nudge));
+    font-family: var(--f); font-weight: var(--w, 600);
+    font-variation-settings: "wdth" var(--wdth, 100), "opsz" var(--opsz, 72), "SOFT" var(--soft-ax, 0), "WONK" var(--wonk, 0);
+    text-transform: var(--tt, uppercase);
+    font-feature-settings: var(--ff, normal);
+  }
+  .wm.fixed { text-transform: none; }
+  .card .foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 18px; border-top: 1px solid var(--border-soft); padding-top: 12px; }
+  .card .foot .why { color: var(--muted); font-size: 12.5px; max-width: 60ch; }
+  .card .foot .small { display: flex; align-items: baseline; gap: 14px; flex-shrink: 0; }
+  .card .foot .small .wm { color: var(--soft); }
+  .pin {
+    all: unset; cursor: pointer; font: 600 10px/1 "Geist Mono", monospace; letter-spacing: 0.12em;
+    color: var(--dim); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px;
+  }
+  .pin:hover { color: var(--text); border-color: #3f3f46; }
+  .pin.on { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .card.warn { border-style: dashed; }
+  .card.warn .meta .name::after { content: " · anti-reference"; color: #ef4444; font-weight: 600; }
+
+  .lean { margin-top: 16px; padding: 14px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--soft); font-size: 13px; }
+  .lean b { color: var(--text); }
+
+  /* ---------- letterform ideas ---------- */
+  .ideas .grid { grid-template-columns: repeat(3, 1fr); }
+  .ideas .card .stage { min-height: 110px; justify-content: center; }
+  .ideas .wm { --f: "Archivo"; --w: 700; --wdth: 118; --t: 0.08em; font-size: 48px; }
+  .noA .a { position: relative; display: inline-block; }
+  .noA .a::after {
+    content: ""; position: absolute; left: 26%; right: 26%; top: 55%; height: 17%; clip-path: polygon(14% 0, 86% 0, 100% 100%, 0 100%);
+    background: var(--card);
+  }
+  .card:hover .noA .a::after { background: var(--raised); }
+  .sunC .c { position: relative; display: inline-block; }
+  .sunC .c::after {
+    content: ""; position: absolute; width: 0.16em; height: 0.16em; border-radius: 50%;
+    background: var(--accent); right: 0.06em; top: 50%; transform: translateY(-50%);
+  }
+  .markI { display: inline-flex; align-items: baseline; gap: 0.06em; }
+  .markI svg { height: 0.78em; width: 0.64em; flex: none; transform: translateY(0.04em); }
+  .fall span { display: inline-block; }
+  .path { display: inline-block; position: relative; padding-bottom: 0.28em; }
+  .path svg { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 0.24em; overflow: visible; }
+  .stack { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 0.12em; }
+  .stack .sub { font: 700 0.2em/1 "Geist Mono", monospace; letter-spacing: 0.32em; color: var(--accent); text-transform: uppercase; }
+  .stack .sub.dim { color: var(--muted); }
+  .tag { display: inline-flex; align-items: baseline; gap: 0.35em; }
+  .tag .v { font: 500 0.28em/1 "Geist Mono", monospace; letter-spacing: 0.08em; color: var(--dim); text-transform: none; }
+  .tag .v b { color: var(--accent); font-weight: 700; }
+  .horizon { display: inline-flex; align-items: center; gap: 0.3em; }
+  .horizon .rule { height: 1px; width: 1.4em; background: var(--border); flex: none; }
+  .horizon .dot { width: 0.14em; height: 0.14em; border-radius: 50%; background: var(--ember); flex: none; }
+  .dots .d { color: var(--accent); }
+  .boxed { display: inline-block; border: 1.5px solid currentColor; padding: 0.18em 0.32em 0.14em; border-radius: 0.08em; }
+  .outline { -webkit-text-stroke: 1px var(--text); color: transparent !important; }
+  .outline .fill { -webkit-text-stroke: 0; color: var(--text); }
+
+  /* ---------- context mocks ---------- */
+  .ctx .grid { grid-template-columns: 1fr 1fr; }
+  .mock { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .mock .lab { padding: 10px 14px; border-bottom: 1px solid var(--border-soft); display: flex; justify-content: space-between; }
+  .ctxwm {
+    font-family: var(--ctx-font); font-weight: var(--ctx-weight); letter-spacing: var(--ctx-track);
+    font-variation-settings: "wdth" var(--ctx-wdth); text-transform: var(--ctx-transform); line-height: 1;
+    white-space: nowrap; color: var(--text);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; background: var(--bg); }
+  .nav .l { display: flex; align-items: center; gap: 10px; }
+  .nav svg { width: 22px; height: 22px; }
+  .nav .links { display: flex; gap: 18px; color: var(--muted); font-size: 13px; font-weight: 500; }
+  .nav .btn { background: var(--accent); color: #fff; font-weight: 600; font-size: 13px; padding: 7px 12px; border-radius: 8px; }
+  .titlebar { display: flex; align-items: center; gap: 14px; padding: 8px 12px; background: #141114; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+  .titlebar .dots3 { display: flex; gap: 6px; }
+  .titlebar .dots3 i { width: 10px; height: 10px; border-radius: 50%; background: #3f3f46; display: block; }
+  .titlebar .sep { color: var(--dim); }
+  .board { height: 150px; background:
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 24px 24px; }
+  .splash { height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; background:
+      radial-gradient(500px 220px at 50% 110%, rgba(124,58,237,0.22), transparent 70%), var(--bg); }
+  .splash svg { width: 56px; height: 56px; }
+  .splash .callsign { color: var(--dim); font-size: 10px; }
+  .hero { padding: 40px 32px; background: var(--bg); }
+  .hero .callsign { color: var(--accent); font-size: 10px; display: block; margin-bottom: 14px; }
+  .hero h3 { font: 600 40px/1.02 Onest, sans-serif; letter-spacing: -0.03em; margin: 0 0 14px; }
+  .hero p { color: var(--muted); margin: 0; max-width: 46ch; }
+  .hero p .ctxwm { font-size: 0.95em; color: var(--soft); }
+  .icons { display: flex; align-items: center; gap: 24px; padding: 28px; background: var(--bg); }
+  .icons .tile { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .icons .tile .sq { background: #000; border-radius: 22%; display: grid; place-items: center; }
+  .icons .callsign { font-size: 9px; color: var(--dim); }
+  .ctx .note { margin-top: 14px; color: var(--muted); font-size: 12.5px; }
+
+  /* ---------- compare tray ---------- */
+  .tray {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+    background: #0d0d10; border-top: 1px solid var(--border);
+    transform: translateY(100%); transition: transform 200ms;
+  }
+  .tray.open { transform: none; }
+  .tray .wrap { display: flex; align-items: center; gap: 28px; padding: 14px 32px; overflow-x: auto; min-height: 96px; }
+  .tray .item { display: flex; flex-direction: column; gap: 6px; flex: none; }
+  .tray .item .wm { font-size: 40px; }
+  .tray .item.ideas .wm { font-size: 30px; }
+  .tray .noA .a::after { background: #0d0d10; }
+  .tray .item .callsign { font-size: 9px; color: var(--dim); }
+  .tray .clear { all: unset; cursor: pointer; margin-left: auto; flex: none; }
+  .tray .clear.callsign { color: var(--muted); }
+  .tray .clear:hover { color: var(--text); }
+  .hint { position: fixed; right: 20px; bottom: 20px; z-index: 25; color: var(--dim); font-size: 11px; background: var(--card); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; }
+  .tray.open ~ .hint { display: none; }
+
+  @media (max-width: 900px) {
+    .grid, .ideas .grid, .ctx .grid, .intro .now { grid-template-columns: 1fr; }
+    section > .wrap > .head { grid-template-columns: 1fr; }
+    :root { --wm-size: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="mark" viewBox="90 60 215 265">
+      <path d="M277.01 263.558L223.768 209.558C222.561 208.474 222.227 207.631 221.873 205.958V203.305V200.084C221.873 199.326 223.389 197.242 223.389 197.053C223.389 196.901 226.547 193.2 228.126 191.369L235.136 184.358L241.199 177.537L247.073 167.684L250.863 156.695L252.189 152.905C252.34 151.996 254.399 151.137 255.41 150.821C256.111 150.756 256.521 150.748 257.305 150.821C258.741 150.848 260.087 152.005 260.526 152.337L265.641 158.779L269.81 165.221L275.684 174.316L279.852 181.137L284.02 188.716L288.189 197.053L291.41 207.474L292.736 213.726L293.305 219.032L293.684 225.284V230.59C293.557 233.621 293.305 239.76 293.305 240.063C293.305 240.366 292.673 244.99 292.357 247.263C292.357 248.931 290.084 254.526 288.947 257.116L286.863 260.716C286.863 261.171 285.473 262.548 284.778 263.179C284.273 263.558 282.921 264.392 281.557 264.695C280.193 264.998 277.957 264.063 277.01 263.558Z" fill="currentColor"/>
+      <path d="M220.891 307.937C213.337 300.426 213.303 288.214 220.814 280.66L230.191 271.23C237.702 263.676 249.914 263.642 257.468 271.153C265.022 278.664 265.056 290.876 257.545 298.43L248.168 307.86C240.657 315.414 228.445 315.448 220.891 307.937Z" fill="currentColor"/>
+      <path d="M151.2 234.189C141.663 244.231 122.286 264.429 121.074 264.884H115.579L110.842 261.853L105.916 255.032L101.558 243.474L100.421 231.347L101.558 220.358L103.831 210.695L108.947 198.568L115.579 188.905L168.631 129.789L173.179 122.21C174.568 118.547 177.65 110.842 178.863 109.326C180.076 107.81 181.768 95.0526 182.463 88.8631L183.031 80.3368L184.737 76.1684C184.737 74.8421 187.579 72.9473 187.768 72.7579C187.92 72.6063 190.358 72.4421 191.558 72.3789L194.968 75.0315L202.547 82.6105L210.126 90L215.431 96.4421L221.305 104.021L226.231 113.684L229.452 122.21L231.158 130.547L232.105 136.8V147.41L230.779 153.663L228.695 159.158L224.147 167.116L218.463 173.937L210.126 182.463L204.063 188.337C203.684 188.526 203.305 188.716 202.547 188.905H199.516C198.899 188.785 198.645 188.625 198.196 188.341L198.189 188.337L188.716 181.137C187.845 180.452 187.317 180.18 186.252 180H180.568C179.121 180.063 178.47 180.426 177.537 181.516L159.347 201.979C158.21 203.495 156.526 205.388 155.937 206.526C155.395 207.571 154.667 208.797 154.61 210.695V228.884C154.275 230.187 153.63 231.271 151.2 234.189Z" fill="currentColor"/>
+      <path d="M134.336 274.358L166.547 241.769C168.185 239.756 168.845 238.57 169.199 236.274V217.516L170.336 215.053L171.284 213.158L181.136 202.737C182.308 201.909 183.026 201.666 184.357 201.411H186.252C187.613 201.748 188.389 202.044 189.094 202.737L228.694 242.147C229.386 242.975 229.714 243.472 229.831 244.611V248.969C229.715 250.008 229.438 250.526 228.884 251.432L220.736 259.769L168.252 312.442C167.747 312.695 166.66 313.2 166.357 313.2H163.326C162.315 312.821 160.256 311.987 160.105 311.684C159.953 311.381 142.105 293.621 133.199 284.779C132.757 284.147 131.873 282.657 131.873 281.747V278.147C132.477 276.427 133.063 275.629 134.336 274.358Z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <svg><use href="#mark"/></svg>
+      <span class="callsign" style="color:var(--text)">Wordmark explorations</span>
+    </div>
+    <div class="ctl">
+      <span class="callsign">Case</span>
+      <div class="seg" id="caseSeg">
+        <button class="on" data-tt="uppercase">CAPS</button>
+        <button data-tt="none">Icarus</button>
+        <button data-tt="lowercase">icarus</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <span class="callsign">Tracking</span>
+      <input type="range" id="track" min="-0.06" max="0.2" step="0.01" value="0" />
+      <span class="callsign" id="trackOut" style="width:56px">+0.00em</span>
+    </div>
+    <div class="ctl">
+      <span class="callsign">Size</span>
+      <input type="range" id="size" min="40" max="120" step="2" value="84" />
+    </div>
+    <div class="ctl">
+      <span class="callsign">Ink</span>
+      <div class="sw on" data-c="#fafafa" style="background:#fafafa"></div>
+      <div class="sw" data-c="#a1a1aa" style="background:#a1a1aa"></div>
+      <div class="sw" data-c="#7c3aed" style="background:#7c3aed"></div>
+      <div class="sw" data-c="#f08234" style="background:#f08234"></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap intro">
+  <span class="callsign">Icarus · brand · 2026-09-03</span>
+  <h1>What should the word ICARUS look like?</h1>
+  <p>Everything below is the same six letters set different ways. Click any card to push it into the context mocks at the bottom (nav, title bar, splash, hero). Pin cards to line them up in a compare tray. The top bar switches case and nudges tracking across every card at once, so the caps question can be answered by looking rather than arguing.</p>
+  <p>Ground rules I worked from: the mark stays. Violet stays the one command colour, so it appears in the wordmark only as a deliberate accent, never as the whole word. Nothing here should read as a generic gamer overlay, and the wordmark has to survive at 18px in a nav and at 11px in a title bar.</p>
+
+  <div class="now">
+    <div class="tile">
+      <span class="callsign">Today · site header</span>
+      <div class="sample" style="font-family:Onest;font-weight:600;letter-spacing:-0.025em">Icarus</div>
+    </div>
+    <div class="tile">
+      <span class="callsign">Today · site footer</span>
+      <div class="sample" style="font-family:Onest;font-weight:600;letter-spacing:-0.04em">ICARUS</div>
+    </div>
+    <div class="tile">
+      <span class="callsign">Today · callsign labels</span>
+      <div class="sample callsign" style="font-size:12px;color:var(--accent)">// SYS:ICARUS &nbsp; <span style="color:var(--muted)">FREE · MIT · V4.6.1</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ A. CALLSIGN ============ -->
+<section id="a">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">01</span> · Callsign</span><h2>The wordmark is a label that grew up</h2></div>
+      <p>The site already talks in tracked mono caps: <b>// SYS:ICARUS</b>, <b>FREE · MIT · V4.6.1</b>. This direction takes that voice and gives it a proper grotesk. Wide tracking, medium weight, nothing loud. It is quiet on purpose: the map is the hero, the name is the stencil on the crate.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Space Grotesk 500" style="--f:'Space Grotesk';--w:500;--t:0.22em">
+        <div class="meta"><span class="name">Space Grotesk 500</span><span class="spec">tracking +0.22em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">The odd, slightly mechanical R and S give it character without a costume. Closest in spirit to the current callsign labels.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Instrument Sans 600" style="--f:'Instrument Sans';--w:600;--t:0.2em">
+        <div class="meta"><span class="name">Instrument Sans 600</span><span class="spec">tracking +0.20em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Cleaner and more neutral than Space Grotesk. If the wordmark should disappear into the product, this is the one.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Geist 600" style="--f:'Geist';--w:600;--t:0.18em">
+        <div class="meta"><span class="name">Geist 600</span><span class="spec">tracking +0.18em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Sibling of the Geist Mono already on the site, so the wordmark and the labels come from one family. Very Vercel though.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Host Grotesk 500" style="--f:'Host Grotesk';--w:500;--t:0.24em">
+        <div class="meta"><span class="name">Host Grotesk 500</span><span class="spec">tracking +0.24em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Rounder counters, softer than the others in this row. Sits between the callsign voice and the Everyday direction below.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> safest direction, and it plays with the existing site with zero friction. Risk is that it is anonymous. Tracked caps in a neutral grotesk is what every SaaS logo looked like from 2019 to 2023.</div>
+  </div>
+</section>
+
+<!-- ============ B. WINGSPAN ============ -->
+<section id="b">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">02</span> · Wingspan</span><h2>Wide letters, arms out</h2></div>
+      <p>Extended caps read as flight, aerospace, and hardware badges. It is the most physical way to say Icarus without drawing a wing. Tracking stays tight because the letters are already wide; the width does the work.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Archivo Expanded 700" style="--f:'Archivo';--w:700;--wdth:125;--t:0.04em">
+        <div class="meta"><span class="name">Archivo Expanded 700</span><span class="spec">wdth 125 · tracking +0.04em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Variable width axis, so we can tune from 100 to 125 and pick the exact wingspan. Sturdy, confident, not shouty.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Archivo Expanded 500" style="--f:'Archivo';--w:500;--wdth:125;--t:0.1em">
+        <div class="meta"><span class="name">Archivo Expanded 500</span><span class="spec">wdth 125 · tracking +0.10em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Same face, lighter. Loses the badge feel and gains elegance. This is where Wingspan and Callsign meet.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Syncopate 700" style="--f:'Syncopate';--w:700;--t:0.06em">
+        <div class="meta"><span class="name">Syncopate 700</span><span class="spec">tracking +0.06em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Very wide, very geometric. The C and S become near-circles. Strong at hero size, gets heavy at nav size.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Saira Expanded 600" style="--f:'Saira';--w:600;--wdth:125;--t:0.08em">
+        <div class="meta"><span class="name">Saira Expanded 600</span><span class="spec">wdth 125 · tracking +0.08em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Squarer corners, more motorsport than aerospace. Sits closest to the Valorant world of the group while staying tasteful.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Krona One" style="--f:'Krona One';--w:400;--t:0.02em">
+        <div class="meta"><span class="name">Krona One</span><span class="spec">tracking +0.02em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">A single heavy wide weight. Blocky and warm, almost a wordmark on its own. Only one weight, so the system can't lean on it elsewhere.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Unbounded 600" style="--f:'Unbounded';--w:600;--t:0.02em">
+        <div class="meta"><span class="name">Unbounded 600</span><span class="spec">tracking +0.02em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Wide with personality: the R and S have a little curl. Memorable, and the one most likely to be either loved or hated.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> this is where I'd start. Wide caps carry the myth (wings, flight) through geometry instead of illustration, and Archivo's width axis means one family can serve the wordmark at 125 and body copy at 100.</div>
+  </div>
+</section>
+
+<!-- ============ C. ASCENT ============ -->
+<section id="c">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">03</span> · Ascent</span><h2>Tall, condensed, vertical</h2></div>
+      <p>Condensed caps are the native tongue of esports and of Valorant itself. It says "competitive" instantly. The danger is that it says it in the same voice as every tournament overlay, so the version that works has to be restrained: one weight, no slant, no stencil cuts.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Barlow Condensed 700" style="--f:'Barlow Condensed';--w:700;--t:0.06em">
+        <div class="meta"><span class="name">Barlow Condensed 700</span><span class="spec">tracking +0.06em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.25">Icarus</span></div>
+        <div class="foot"><span class="why">Slightly rounded, industrial. The most grown-up condensed on Google Fonts. Reads as "kit" rather than "overlay".</span>
+          <span class="small"><span class="wm" style="--s:0.24">Icarus</span><span class="wm" style="--s:0.15">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Big Shoulders Display 800" style="--f:'Big Shoulders Display';--w:800;--t:0.05em">
+        <div class="meta"><span class="name">Big Shoulders Display 800</span><span class="spec">tracking +0.05em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.3">Icarus</span></div>
+        <div class="foot"><span class="why">Sporty and sharp with distinctive angled terminals. Feels like a team crest. Strongest personality in this row.</span>
+          <span class="small"><span class="wm" style="--s:0.24">Icarus</span><span class="wm" style="--s:0.15">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Oswald 600" style="--f:'Oswald';--w:600;--t:0.08em">
+        <div class="meta"><span class="name">Oswald 600</span><span class="spec">tracking +0.08em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.2">Icarus</span></div>
+        <div class="foot"><span class="why">The classic gothic condensed. Reliable and legible, but it is everywhere.</span>
+          <span class="small"><span class="wm" style="--s:0.24">Icarus</span><span class="wm" style="--s:0.15">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Bebas Neue" style="--f:'Bebas Neue';--w:400;--t:0.1em">
+        <div class="meta"><span class="name">Bebas Neue</span><span class="spec">tracking +0.10em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.35">Icarus</span></div>
+        <div class="foot"><span class="why">Caps only by design, so the case question answers itself. Also the single most used font in gaming. Included as a reference point.</span>
+          <span class="small"><span class="wm" style="--s:0.26">Icarus</span><span class="wm" style="--s:0.16">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> Barlow Condensed is the only one I'd defend. Condensed caps put Icarus next to Valorant's own type, which is either the point or the problem. It helps users recognise the world, but it also makes Icarus look like a fan project rather than a tool.</div>
+  </div>
+</section>
+
+<!-- ============ D. EVERYDAY ============ -->
+<section id="d">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">04</span> · Everyday</span><h2>Soft geometric, the tool you open daily</h2></div>
+      <p>The site's own words: "honestly just nice to use every day". Onest and Marlin Soft are already this voice. Caps in a soft geometric are friendlier than a grotesk and less costume than a serif. This is the continuity option: change the case and tracking, keep the family.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Onest 700" style="--f:'Onest';--w:700;--t:0.1em">
+        <div class="meta"><span class="name">Onest 700</span><span class="spec">tracking +0.10em · what we have, in caps</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">The current display face, uppercased and opened up. Zero new fonts to ship. The baseline every other card must beat.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Outfit 700" style="--f:'Outfit';--w:700;--t:0.08em">
+        <div class="meta"><span class="name">Outfit 700</span><span class="spec">tracking +0.08em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Pure geometric: perfect circle C, sharp A. Modern and clean, a little Futura. Reads well small.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Sora 700" style="--f:'Sora';--w:700;--t:0.06em">
+        <div class="meta"><span class="name">Sora 700</span><span class="spec">tracking +0.06em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Wider and squarer than Outfit. Has a bit of the Wingspan feel without going full extended.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Manrope 800" style="--f:'Manrope';--w:800;--t:0.08em">
+        <div class="meta"><span class="name">Manrope 800</span><span class="spec">tracking +0.08em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Semi-rounded, very readable. The friendliest one here. Might be too soft for a tactical tool.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> Onest in caps is genuinely fine and costs nothing. If none of the bolder directions earn their keep, this is the honest fallback, and it's better than what's there now.</div>
+  </div>
+</section>
+
+<!-- ============ E. MYTH ============ -->
+<section id="e">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">05</span> · Myth</span><h2>Serif caps, the Greek in the name</h2></div>
+      <p>Icarus is a story before it is a product. A serif wordmark over a brutally functional dark UI is a real contrast, and contrast is what makes a brand memorable. The site's copy already leans this way: "closer to the sun", "touch the sun". The trap is the temple-and-toga look, so the serif has to be sharp and modern, not carved in marble.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Instrument Serif" style="--f:'Instrument Serif';--w:400;--t:0.12em">
+        <div class="meta"><span class="name">Instrument Serif 400</span><span class="spec">tracking +0.12em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.1">Icarus</span></div>
+        <div class="foot"><span class="why">Condensed, high contrast, very current. Editorial rather than classical. The one serif that doesn't feel like a costume against the zinc UI.</span>
+          <span class="small"><span class="wm" style="--s:0.24">Icarus</span><span class="wm" style="--s:0.15">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Cormorant Garamond 600" style="--f:'Cormorant Garamond';--w:600;--t:0.16em">
+        <div class="meta"><span class="name">Cormorant Garamond 600</span><span class="spec">tracking +0.16em</span></div>
+        <div class="stage"><span class="wm" style="--s:1.1">Icarus</span></div>
+        <div class="foot"><span class="why">Old-style Garamond with tall, elegant caps. Beautiful large. Thins out badly at 11px, so the app would need a different treatment small.</span>
+          <span class="small"><span class="wm" style="--s:0.24">Icarus</span><span class="wm" style="--s:0.15">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Fraunces 600 soft" style="--f:'Fraunces';--w:600;--opsz:144;--soft-ax:60;--wonk:0;--t:0.08em">
+        <div class="meta"><span class="name">Fraunces 600</span><span class="spec">opsz 144 · SOFT 60 · tracking +0.08em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">A "wonky" old-style with soft, rounded serifs. Warm and a bit playful, which is a strange and interesting tone for a strat tool.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Bodoni Moda 600" style="--f:'Bodoni Moda';--w:600;--opsz:96;--t:0.14em">
+        <div class="meta"><span class="name">Bodoni Moda 600</span><span class="spec">opsz 96 · tracking +0.14em</span></div>
+        <div class="stage"><span class="wm">Icarus</span></div>
+        <div class="foot"><span class="why">Hairline serifs and heavy verticals. Fashion-house energy. Gorgeous on a splash, fragile everywhere else.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Cinzel 600" style="--f:'Cinzel';--w:600;--t:0.12em">
+        <div class="meta"><span class="name">Cinzel 600</span><span class="spec">tracking +0.12em · reference only</span></div>
+        <div class="stage"><span class="wm" style="--s:0.95">Icarus</span></div>
+        <div class="foot"><span class="why">The literal Roman-inscription face. Here so we can see the cliff edge: this is the temple look we should stay away from.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> Instrument Serif is the one real contender. It would give Icarus a wordmark nobody else in the Valorant tooling space has, and it pairs surprisingly well with the mono callsigns. It does force a two-font system: serif for the name, sans for everything else.</div>
+  </div>
+</section>
+
+<!-- ============ F. TERMINAL ============ -->
+<section id="f">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">06</span> · Terminal</span><h2>Mono caps, icarus.exe</h2></div>
+      <p>Take the callsign idea to its end: the wordmark is literally set in the label face. Local-first, open source, MIT, a file on your machine. The mono says all of that. The question is whether the name of the product should sound like its metadata.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Geist Mono 600" style="--f:'Geist Mono';--w:600;--t:0.26em">
+        <div class="meta"><span class="name">Geist Mono 600</span><span class="spec">tracking +0.26em · already on the site</span></div>
+        <div class="stage"><span class="wm" style="--s:0.9">Icarus</span></div>
+        <div class="foot"><span class="why">The exact face the callsigns use today. One font for wordmark and labels, the tightest possible system.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="JetBrains Mono 700" style="--f:'JetBrains Mono';--w:700;--t:0.2em">
+        <div class="meta"><span class="name">JetBrains Mono 700</span><span class="spec">tracking +0.20em</span></div>
+        <div class="stage"><span class="wm" style="--s:0.9">Icarus</span></div>
+        <div class="foot"><span class="why">Taller, more assertive mono. Heavier weight holds up better at hero size than Geist Mono does.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card" data-name="Space Mono 700" style="--f:'Space Mono';--w:700;--t:0.18em">
+        <div class="meta"><span class="name">Space Mono 700</span><span class="spec">tracking +0.18em</span></div>
+        <div class="stage"><span class="wm" style="--s:0.9">Icarus</span></div>
+        <div class="foot"><span class="why">Quirky, retro-futurist. Pairs naturally with Space Grotesk from direction 01. Most personality of the monos.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+      <div class="card warn" data-name="Orbitron 700" style="--f:'Orbitron';--w:700;--t:0.12em">
+        <div class="meta"><span class="name">Orbitron 700</span><span class="spec">the thing DESIGN.md warns about</span></div>
+        <div class="stage"><span class="wm" style="--s:0.9">Icarus</span></div>
+        <div class="foot"><span class="why">Sci-fi squared caps. This is the "generic gamer overlay" in one font. Shown so the line is visible: Chakra Petch, Teko, Rajdhani and Audiowide all live on this side of it.</span>
+          <span class="small"><span class="wm" style="--s:0.21">Icarus</span><span class="wm" style="--s:0.13">Icarus</span><button class="pin">PIN</button></span></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> mono works as a secondary treatment (footer, title bar, version strings) but I'd hesitate to make it the primary wordmark. A tool used mid-thought should feel fast and human, and mono reads as machine.</div>
+  </div>
+</section>
+
+<!-- ============ G. LETTERFORM IDEAS ============ -->
+<section id="g" class="ideas">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">07</span> · Letterform ideas</span><h2>Small moves inside the word</h2></div>
+      <p>These are treatments, not fonts. Each one is shown on Archivo Expanded as a neutral base, but most would work on any of the directions above. The good ones give the wordmark a reason to exist beyond typing the name. The rule: one move, never two.</p>
+    </div>
+    <div class="grid">
+      <div class="card" data-name="Sun in the C" data-fixed>
+        <div class="meta"><span class="name">The sun in the C</span></div>
+        <div class="stage"><span class="wm fixed sunC">I<span class="c">C</span>ARUS</span></div>
+        <div class="foot"><span class="why">A single violet dot sitting in the aperture of the C. The sun he flew toward. Also the one place violet is allowed in the wordmark: it's a point, not a wash.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Crossbar-less A" data-fixed>
+        <div class="meta"><span class="name">The A with no crossbar</span></div>
+        <div class="stage"><span class="wm fixed noA">IC<span class="a">A</span>RUS</span></div>
+        <div class="foot"><span class="why">Remove the bar and the A becomes a peak, a wing, or a fall depending on your mood. Cheap, distinctive, and it survives at every size.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Mark as I" data-fixed>
+        <div class="meta"><span class="name">The mark is the I</span></div>
+        <div class="stage"><span class="wm fixed markI"><svg><use href="#mark"/></svg>CARUS</span></div>
+        <div class="foot"><span class="why">The flame-wing mark stands in for the I. Ties mark and wordmark into one object. Needs the mark to be a bit narrower than it is today to sit right.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="ICARVS" data-fixed>
+        <div class="meta"><span class="name">ICARVS</span></div>
+        <div class="stage"><span class="wm fixed">ICARVS</span></div>
+        <div class="foot"><span class="why">Roman V for U. Instantly classical without a serif. Some people will read it as a typo. That's either the charm or the problem.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Flight path" data-fixed>
+        <div class="meta"><span class="name">Flight path underline</span></div>
+        <div class="stage"><span class="wm fixed path">ICARUS<svg viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 8 C 30 8, 55 2, 88 3" fill="none" stroke="#7c3aed" stroke-width="1.6" stroke-dasharray="3 2.4" vector-effect="non-scaling-stroke"/><circle cx="92" cy="3" r="2.6" fill="#7c3aed" vector-effect="non-scaling-stroke"/></svg></span></div>
+        <div class="foot"><span class="why">The dashed movement line users draw on maps, under the name. The brand borrows from the product's own pen. Works as an animated reveal on the site.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Stacked lockup" data-fixed>
+        <div class="meta"><span class="name">Stacked lockup</span></div>
+        <div class="stage"><span class="wm fixed stack">ICARUS<span class="sub dim">Strats</span></span></div>
+        <div class="foot"><span class="why">Name up top, "STRATS" as a mono callsign beneath. Solves the "Icarus Strats" vs "Icarus" naming question: one is the wordmark, the other is the label.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Version tag" data-fixed>
+        <div class="meta"><span class="name">Version tag</span></div>
+        <div class="stage"><span class="wm fixed tag" style="font-size:38px">ICARUS<span class="v"><b>v</b>4.6.1</span></span></div>
+        <div class="foot"><span class="why">The version rides alongside in mono. Only for the title bar and about screen, but it shows how the wordmark and the callsign voice coexist.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Horizon" data-fixed>
+        <div class="meta"><span class="name">Horizon</span></div>
+        <div class="stage"><span class="wm fixed horizon"><span class="rule"></span>ICARUS<span class="dot"></span></span></div>
+        <div class="foot"><span class="why">A hairline leading in, an ember dot after. Wordmark as a line of flight with the sun at the end. Quiet, and it uses the map ember instead of violet.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Interpunct" data-fixed>
+        <div class="meta"><span class="name">Interpunct</span></div>
+        <div class="stage"><span class="wm fixed dots" style="--t:0.02em;font-size:36px">I<span class="d">·</span>C<span class="d">·</span>A<span class="d">·</span>R<span class="d">·</span>U<span class="d">·</span>S</span></div>
+        <div class="foot"><span class="why">Letters separated by dots, like the site's own "FREE · MIT · V4.6.1". Very tactical. Probably too much for the primary mark, good for a footer.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="The fall" data-fixed>
+        <div class="meta"><span class="name">The fall</span></div>
+        <div class="stage"><span class="wm fixed fall"><span style="transform:translateY(-0.14em)">I</span><span style="transform:translateY(-0.09em)">C</span><span style="transform:translateY(-0.03em)">A</span><span style="transform:translateY(0.03em)">R</span><span style="transform:translateY(0.09em)">U</span><span style="transform:translateY(0.14em)">S</span></span></div>
+        <div class="foot"><span class="why">Each letter a step lower than the last. It's the story in one gesture. It's also a joke the brand can only tell once, and it breaks alignment in a nav.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Outline" data-fixed>
+        <div class="meta"><span class="name">Outline with one solid</span></div>
+        <div class="stage"><span class="wm fixed outline">IC<span class="fill">A</span>RUS</span></div>
+        <div class="foot"><span class="why">Hollow letters with one filled. Wireframe is the language of the app's map view. Risky at small sizes; hero and splash only.</span><button class="pin">PIN</button></div>
+      </div>
+      <div class="card" data-name="Boxed" data-fixed>
+        <div class="meta"><span class="name">Boxed</span></div>
+        <div class="stage"><span class="wm fixed boxed" style="font-size:38px">ICARUS</span></div>
+        <div class="foot"><span class="why">A thin keyline around the word. Badge, plate, stencil. Reads clearly as a logo rather than as a heading, which matters on a page full of headings.</span><button class="pin">PIN</button></div>
+      </div>
+    </div>
+    <div class="lean"><b>Read on it:</b> the sun-in-the-C, the crossbar-less A, and the flight-path underline are the three I'd actually push further. Each is one move, each has a reason from the story or the product, and each survives being shrunk.</div>
+  </div>
+</section>
+
+<!-- ============ H. IN CONTEXT ============ -->
+<section id="h" class="ctx">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="callsign"><span class="num">08</span> · In context</span><h2>Where the word actually lives</h2></div>
+      <p>Click any card above and these mocks re-render with that face. Selected: <b id="ctxName">Space Grotesk 500</b>. A wordmark that only works at 84px is a poster, not a brand.</p>
+    </div>
+    <div class="grid">
+      <div class="mock">
+        <div class="lab"><span class="callsign">Site header · 18px</span><span class="callsign" style="color:var(--dim)">icarusstrats.com</span></div>
+        <div class="nav">
+          <div class="l"><svg><use href="#mark"/></svg><span class="ctxwm" style="font-size:18px">Icarus</span></div>
+          <div class="links"><span>Features</span><span>Roadmap</span><span>Community</span></div>
+          <span class="btn">Download</span>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="lab"><span class="callsign">App title bar · 12px</span><span class="callsign" style="color:var(--dim)">windows</span></div>
+        <div class="titlebar">
+          <span class="ctxwm" style="font-size:12px;color:var(--soft)">Icarus</span>
+          <span class="sep">·</span><span>Ascent</span><span class="sep">·</span><span>B Push</span>
+          <span style="margin-left:auto" class="callsign">v4.6.1</span>
+        </div>
+        <div class="board"></div>
+      </div>
+      <div class="mock">
+        <div class="lab"><span class="callsign">Splash / installer</span><span class="callsign" style="color:var(--dim)">mark + word</span></div>
+        <div class="splash">
+          <svg><use href="#mark"/></svg>
+          <span class="ctxwm" style="font-size:34px">Icarus</span>
+          <span class="callsign">Valorant strategy planner</span>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="lab"><span class="callsign">Hero, name in running copy</span><span class="callsign" style="color:var(--dim)">site</span></div>
+        <div class="hero">
+          <span class="callsign">// Free · MIT · local-first</span>
+          <h3>The strategy board<br>that actually flies.</h3>
+          <p><span class="ctxwm">Icarus</span> is a free, open-source strategy board for VALORANT. Local-first, fast, and honestly just nice to use every day.</p>
+        </div>
+      </div>
+    </div>
+    <div class="note">The hero test matters: the current site sets the name inline in body copy. If the wordmark face is far from the body face (a serif, a wide grotesk), the name in prose should stay in body type and only the standalone wordmark gets the treatment.</div>
+  </div>
+</section>
+
+<div class="tray" id="tray"><div class="wrap" id="trayItems"></div></div>
+<div class="hint">PIN cards to compare them side by side</div>
+
+<script>
+  const root = document.documentElement;
+  // case
+  document.querySelectorAll('#caseSeg button').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('#caseSeg button').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+    document.querySelectorAll('.wm:not(.fixed)').forEach(el => el.style.setProperty('--tt', b.dataset.tt));
+    root.style.setProperty('--ctx-transform', b.dataset.tt);
+  }));
+  // tracking
+  const track = document.getElementById('track'), trackOut = document.getElementById('trackOut');
+  track.addEventListener('input', () => {
+    const v = parseFloat(track.value);
+    root.style.setProperty('--wm-track-nudge', v + 'em');
+    trackOut.textContent = (v >= 0 ? '+' : '') + v.toFixed(2) + 'em';
+  });
+  // size
+  document.getElementById('size').addEventListener('input', e => root.style.setProperty('--wm-size', e.target.value + 'px'));
+  // ink
+  document.querySelectorAll('.sw').forEach(s => s.addEventListener('click', () => {
+    document.querySelectorAll('.sw').forEach(x => x.classList.remove('on'));
+    s.classList.add('on');
+    root.style.setProperty('--wm-color', s.dataset.c);
+  }));
+  // active card -> context
+  const ctxName = document.getElementById('ctxName');
+  function activate(card) {
+    if (card.hasAttribute('data-fixed')) return;
+    document.querySelectorAll('.card.active').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    const cs = getComputedStyle(card);
+    root.style.setProperty('--ctx-font', cs.getPropertyValue('--f'));
+    root.style.setProperty('--ctx-weight', cs.getPropertyValue('--w') || 600);
+    root.style.setProperty('--ctx-track', (cs.getPropertyValue('--t') || '0em'));
+    root.style.setProperty('--ctx-wdth', cs.getPropertyValue('--wdth') || 100);
+    ctxName.textContent = card.dataset.name;
+  }
+  document.querySelectorAll('.card').forEach(card => card.addEventListener('click', e => {
+    if (e.target.closest('.pin')) return;
+    activate(card);
+  }));
+  // pin -> tray
+  const tray = document.getElementById('tray'), trayItems = document.getElementById('trayItems');
+  const pinned = new Map();
+  function renderTray() {
+    trayItems.innerHTML = '';
+    pinned.forEach((card, name) => {
+      const item = document.createElement('div'); item.className = 'item' + (card.closest('.ideas') ? ' ideas' : '');
+      item.setAttribute('style', card.getAttribute('style') || '');
+      const wm = card.querySelector('.stage .wm').cloneNode(true);
+      wm.style.setProperty('--s', '1'); if (!card.closest('.ideas')) wm.style.fontSize = '';
+      const lab = document.createElement('span'); lab.className = 'callsign'; lab.textContent = name;
+      item.append(wm, lab); trayItems.append(item);
+    });
+    if (pinned.size) {
+      const clear = document.createElement('button'); clear.className = 'clear callsign'; clear.textContent = 'Clear';
+      clear.addEventListener('click', () => { pinned.clear(); document.querySelectorAll('.pin.on').forEach(p => p.classList.remove('on')); renderTray(); });
+      trayItems.append(clear);
+    }
+    tray.classList.toggle('open', pinned.size > 0);
+  }
+  document.querySelectorAll('.pin').forEach(p => p.addEventListener('click', () => {
+    const card = p.closest('.card'), name = card.dataset.name;
+    if (pinned.has(name)) { pinned.delete(name); p.classList.remove('on'); }
+    else { pinned.set(name, card); p.classList.add('on'); }
+    renderTray();
+  }));
+  activate(document.querySelector('#a .card'));
+</script>
+</body>
+</html>

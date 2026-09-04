@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Icarus wordmark · preview</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wdth,wght@50..125,100..900&family=Geist+Mono:wght@700&display=swap">
+<style>
+  body { margin:0; background:#09090b; color:#fafafa; font-family: Inter, system-ui, sans-serif; padding: 40px; }
+  .callsign { font: 700 11px/1 "Geist Mono", monospace; letter-spacing:.18em; text-transform:uppercase; color:#71717a; display:block; margin: 28px 0 12px; }
+  .row { display:flex; align-items:center; gap: 40px; flex-wrap: wrap; }
+  .svg { color:#fafafa; display:inline-block; }
+  .svg img, .svg object { display:block; }
+  .html { font-family: Saira; font-weight: 600; font-variation-settings: "wdth" 125; letter-spacing: .08em; text-transform: uppercase; line-height:1; }
+  .card { background:#111114; border:1px solid #27272a; border-radius:14px; padding: 28px; }
+  .grid { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .light { background:#fafafa; color:#09090b; }
+</style></head><body>
+<span class="callsign">Lockup · SVG · 560px wide</span>
+<div class="card"><img src="icarus-wordmark.svg" style="width:560px"></div>
+
+<span class="callsign">SVG lockup vs. live Saira from Google Fonts (should match letter for letter)</span>
+<div class="card row">
+  <img src="icarus-wordmark-plain.svg" style="height:64px"><span class="html" style="font-size:64px">Icarus</span>
+</div>
+
+<span class="callsign">Variants</span>
+<div class="grid">
+  <div class="card"><img src="icarus-wordmark-violet.svg" style="width:100%"></div>
+  <div class="card"><img src="icarus-wordmark-plain.svg" style="width:100%"></div>
+  <div class="card light"><img src="icarus-wordmark-on-light.svg" style="width:100%"></div>
+  <div class="card light"><img src="icarus-wordmark-plain-on-light.svg" style="width:100%"></div>
+</div>
+
+<span class="callsign">Size ladder · lockup then plain</span>
+<div class="card row" style="gap:48px">
+  <img src="icarus-wordmark.svg" style="height:24px"><img src="icarus-wordmark.svg" style="height:18px"><img src="icarus-wordmark.svg" style="height:14px"><img src="icarus-wordmark.svg" style="height:12px">
+</div>
+<div class="card row" style="gap:48px;margin-top:12px">
+  <img src="icarus-wordmark-plain.svg" style="height:24px"><img src="icarus-wordmark-plain.svg" style="height:18px"><img src="icarus-wordmark-plain.svg" style="height:14px"><img src="icarus-wordmark-plain.svg" style="height:12px">
+</div>
+</body></html>

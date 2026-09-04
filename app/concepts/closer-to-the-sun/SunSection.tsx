@@ -9,6 +9,7 @@ import versionInfo from "@/app/data/versionInfo";
 import DitherFire from "../_shared/DitherFire";
 import ProgressButton from "../_shared/ProgressButton";
 import { palette } from "../_shared/tokens";
+import Wordmark from "@/app/components/Wordmark";
 
 /**
  * The payoff. The final section IS the DitherFire field: visible as a faint
@@ -150,15 +151,14 @@ export default function SunSection() {
                 >
                     {/* The wordmark: real text in the stack, revealed by the
                         landing — same 480ms as the traveler's crossfade. */}
-                    <motion.p
-                        className="callsign mb-5"
-                        style={{ fontSize: 12, letterSpacing: "0.24em", color: palette.muted }}
+                    <motion.div
+                        className="mb-6"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: markShown ? 1 : 0 }}
                         transition={{ duration: 0.48, ease: "easeOut" }}
                     >
-                        Icarus
-                    </motion.p>
+                        <Wordmark height={28} variant="plain" />
+                    </motion.div>
                     <h2
                         className="font-display"
                         style={{
