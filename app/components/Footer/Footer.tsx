@@ -2,6 +2,7 @@
 
 import SocialButton from "@/app/components/ui/SocialButton";
 import { ACCENT } from "@/app/constants";
+import Wordmark, { wordmarkAspect } from "@/app/components/Wordmark";
 
 const Footer = () => {
     const year = new Date().getFullYear();
@@ -17,16 +18,7 @@ const Footer = () => {
                 {/* Top row: brand + links */}
                 <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
                     <div>
-                        <div className="flex items-center gap-3">
-                            <img
-                                width={28}
-                                height={28}
-                                className="rounded-md"
-                                src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
-                                alt="Icarus logo small"
-                            />
-                            <span className="font-display text-lg font-semibold">Icarus</span>
-                        </div>
+                        <Wordmark height={20} />
                         <p className="mt-3 text-sm max-w-sm" style={{ color: "#a1a1aa" }}>
                             A local-first Valorant strategy planner — built so the gap between an idea and
                             the board is zero.
@@ -56,20 +48,24 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Decorative wordmark */}
+                {/* Decorative wordmark: the lockup as a mask so the ghost gradient paints through it. */}
                 <div
                     aria-hidden
-                    className="mt-12 select-none text-center font-display font-semibold tracking-[-0.04em] leading-none"
+                    className="mt-12 mx-auto select-none"
                     style={{
-                        fontSize: "clamp(60px, 14vw, 200px)",
-                        background: `linear-gradient(180deg, rgba(255,255,255,0.05), rgba(124,58,237,0.0))`,
-                        WebkitBackgroundClip: "text",
-                        backgroundClip: "text",
-                        color: "transparent",
+                        width: "min(100%, 1100px)",
+                        aspectRatio: String(wordmarkAspect("lockup")),
+                        background: "linear-gradient(180deg, rgba(255,255,255,0.05), rgba(124,58,237,0.0))",
+                        WebkitMaskImage: "url(/brand/icarus-wordmark.svg)",
+                        maskImage: "url(/brand/icarus-wordmark.svg)",
+                        WebkitMaskSize: "contain",
+                        maskSize: "contain",
+                        WebkitMaskRepeat: "no-repeat",
+                        maskRepeat: "no-repeat",
+                        WebkitMaskPosition: "center",
+                        maskPosition: "center",
                     }}
-                >
-                    ICARUS
-                </div>
+                />
             </div>
         </footer>
     );

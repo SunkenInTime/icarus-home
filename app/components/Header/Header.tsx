@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
 import { ACCENT, ACCENT_HOVER } from "@/app/constants";
+import Wordmark from "@/app/components/Wordmark";
 
 const Header = () => {
     const pathname = usePathname();
@@ -27,31 +28,11 @@ const Header = () => {
             >
                 <div className="mx-auto max-w-6xl px-6">
                     <nav className="flex h-16 items-center justify-between" aria-label="Main">
-                        <Link href="/" className="flex items-center gap-3">
-                            <span
-                                className="relative flex h-8 w-8 items-center justify-center rounded-md overflow-hidden"
-                                style={{
-                                    background: "#0d0d10",
-                                    border: "1px solid #27272a",
-                                    boxShadow: "inset 0 0 0 1px rgba(124,58,237,0.18)",
-                                }}
-                            >
-                                <img
-                                    width={28}
-                                    height={28}
-                                    className="rounded-sm"
-                                    src="https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN"
-                                    alt="Icarus logo"
-                                />
+                        <Link href="/" className="flex items-center gap-3" aria-label="Icarus home">
+                            <Wordmark height={18} />
+                            <span className="callsign hidden sm:inline" style={{ fontSize: 9, color: ACCENT }}>
+                                BETA
                             </span>
-                            <div className="flex items-center gap-2 leading-none">
-                                <span className="font-display text-lg font-semibold tracking-tight">
-                                    Icarus
-                                </span>
-                                <span className="callsign hidden sm:inline" style={{ fontSize: 9, color: ACCENT }}>
-                                    BETA
-                                </span>
-                            </div>
                         </Link>
 
                         <div className="hidden md:flex items-center gap-1 text-sm">
