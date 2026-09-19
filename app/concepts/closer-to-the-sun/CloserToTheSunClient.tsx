@@ -231,7 +231,7 @@ const ARROW_WAVE = Array.from({ length: 9 }, (_, frame) => {
  */
 const REVEAL = { headline: 60, body: 170, actions: 250, board: 340 } as const;
 
-const HEADLINE_WORDS = ["The", "strategy", "board", "that", "actually", "flies."] as const;
+const HEADLINE_WORDS = ["The", "free", "VALORANT", "strategy", "board."] as const;
 /** Per-word cascade. Tight enough that the body can still land underneath it. */
 const WORD_STEP = 45;
 
@@ -338,7 +338,7 @@ function Hero({ swings }: { swings: BigSwings }) {
             {/* Positioned, so the copy paints over the sun rather than under it. */}
             <div className="relative mx-auto w-full max-w-[1160px] px-6 pb-8 pt-24">
                 <h1
-                    className={`font-display max-w-[15ch] ${perWord ? "" : "rise-in"}`}
+                    className={`font-display mx-auto max-w-[15ch] text-center ${perWord ? "" : "rise-in"}`}
                     style={{
                         fontSize: "clamp(40px, 6.2vw, 80px)",
                         lineHeight: 1.02,
@@ -350,15 +350,15 @@ function Hero({ swings }: { swings: BigSwings }) {
                     <Headline perWord={perWord} underline={Boolean(swings.drawnUnderline)} />
                 </h1>
                 <p
-                    className="rise-in mt-6 max-w-xl text-[16.5px] leading-[1.6]"
+                    className="rise-in mx-auto mt-6 max-w-xl text-center text-[16.5px] leading-[1.6]"
                     style={{ color: palette.muted, animationDelay: `${REVEAL.body}ms` }}
                 >
-                    Icarus Strats is a free, open-source strategy board for VALORANT — local-first,
-                    fast, and honestly just nice to use every day.
+                    Map out executes and share strats your team can follow. Works offline,
+                    with no account or paid tier.
                 </p>
 
                 <div
-                    className="rise-in mt-8 flex flex-wrap items-center gap-4"
+                    className="rise-in mt-8 flex flex-wrap items-center justify-center gap-4"
                     style={{ animationDelay: `${REVEAL.actions}ms` }}
                 >
                     <span className="inline-flex" onPointerEnter={warmForABeat} onFocus={warmForABeat}>
