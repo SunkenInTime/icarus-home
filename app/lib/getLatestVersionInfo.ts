@@ -26,14 +26,15 @@ const SEMVER_TAG_PATTERN =
     /^v?(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?$/;
 
 function parseTag(tag: GitHubTag): ParsedTag | null {
-    const match = SEMVER_TAG_PATTERN.exec(tag.name);
+    const version = tag.name.replace(/^desktop-stable-v/, "").replace(/\+\d+$/, "");
+    const match = SEMVER_TAG_PATTERN.exec(version);
 
     if (!match) {
         return null;
     }
 
     return {
-        normalized: tag.name.replace(/^v/, ""),
+        normalized: version.replace(/^v/, ""),
         major: Number(match[1]),
         minor: Number(match[2]),
         patch: Number(match[3]),

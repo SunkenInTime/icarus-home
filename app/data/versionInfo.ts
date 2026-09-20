@@ -18,12 +18,12 @@ export type VersionInfo = {
 };
 
 const versionInfo: VersionInfo = {
-    version: "3.2.3",
-    released: "March 5, 2026",
+    version: "4.6.2",
+    released: "September 20, 2026",
     platforms: {
         windows: {
-            url: "https://sunkenintime.github.io/icarus/downloads/windows/stable/icarus-setup-latest.exe",
-            size: "31 MB",
+            url: "https://github.com/SunkenInTime/icarus/releases/latest/download/icarus-setup.exe",
+            size: "115 MB",
             preferredLabel: "Installer",
             preferredReason: "Preferred for faster updates than the Microsoft Store.",
             secondaryUrl:
