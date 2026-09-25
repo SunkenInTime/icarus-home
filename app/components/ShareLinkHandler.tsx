@@ -173,7 +173,7 @@ export default function ShareLinkHandler() {
                 />
 
                 <p
-                    className="mt-7 font-mono text-[10px] uppercase tracking-[0.26em]"
+                    className="mt-7 text-[12px] font-medium"
                     style={{ color: "#a78bfa" }}
                 >
                     Icarus Share
@@ -199,7 +199,7 @@ export default function ShareLinkHandler() {
                 >
                     <div className="flex items-center justify-between gap-4">
                         <span
-                            className="font-mono text-[10px] uppercase tracking-[0.22em]"
+                            className="text-[12px] font-medium"
                             style={{ color: "#71717a" }}
                         >
                             Share code

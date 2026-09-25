@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Renyxx hand-off archive, rebuilt from brand/kit
+brand/icarus-brand-kit.zip

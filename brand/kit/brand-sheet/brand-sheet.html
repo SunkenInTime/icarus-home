@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Icarus · brand sheet</title>
+<style>
+  @font-face { font-family: "Saira"; src: url("../fonts/Saira[wdth,wght].ttf") format("truetype"); font-weight: 100 900; font-stretch: 50% 125%; }
+  @font-face { font-family: "Onest"; src: url("../fonts/Onest[wght].ttf") format("truetype"); font-weight: 100 900; }
+  @font-face { font-family: "Inter"; src: url("../fonts/Inter[opsz,wght].ttf") format("truetype"); font-weight: 100 900; }
+  @font-face { font-family: "Geist"; src: url("../fonts/Geist[wght].ttf") format("truetype"); font-weight: 100 900; }
+  @font-face { font-family: "Geist Mono"; src: url("../fonts/GeistMono[wght].ttf") format("truetype"); font-weight: 100 900; }
+
+  /* Values from icarus-release/lib/const/settings.dart and icarus-home-main/app/concepts/_shared/tokens.ts. */
+  :root {
+    --bg: #09090b; --sidebar: #141114; --card: #18181b; --raised: #27272a; --border: #27272a; --input: #3f3f46;
+    --fg: #fafafa; --muted: #a1a1aa; --dim: #71717a;
+    --violet: #7c3aed; --violet-deep: #4c1d95; --lavender: #c4b5fd;
+    --shadow-card: 0 4px 12px rgba(0,0,0,0.54); --shadow-menu: 0 8px 24px rgba(0,0,0,0.28);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); }
+  body { width: 1600px; font-family: Inter, system-ui, sans-serif; font-weight: 500; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+  .page { padding: 56px 64px 64px; display: grid; gap: 40px; }
+
+  /* The site's small label above a heading: 12px Inter, dim, sentence case. Nothing in Icarus is set in caps. */
+  .label { font: 500 12px/1 Inter, system-ui, sans-serif; color: var(--dim); }
+  h2 { font-family: Onest, sans-serif; font-weight: 700; font-size: 28px; letter-spacing: -.015em; line-height: 1.08; margin: 0 0 16px; }
+  p { margin: 0; color: var(--muted); }
+  .rule { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+  .head { display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 28px; }
+  .head .label { margin-bottom: 14px; display: block; }
+  .head img { height: 64px; display: block; }
+  .head .meta { text-align: right; color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+  .grid { display: grid; gap: 16px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: repeat(3, 1fr); }
+  .cols-4 { grid-template-columns: repeat(4, 1fr); }
+  .cols-6 { grid-template-columns: repeat(6, 1fr); }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+  .card.bg { background: var(--bg); }
+  .card.light { background: #fafafa; color: var(--bg); }
+  .card .label { display: block; margin-bottom: 14px; position: relative; }
+  .card > p { position: relative; }
+  .center { display: flex; align-items: center; justify-content: center; min-height: 180px; }
+  .center img { display: block; }
+
+  .swatch { border-radius: 12px; border: 1px solid var(--border); overflow: hidden; }
+  .swatch .chip { height: 72px; }
+  .swatch .info { padding: 10px 12px; background: var(--card); }
+  .swatch .hex { font: 400 12px/1 "Geist Mono", monospace; }
+  .swatch .name { color: var(--muted); font-size: 12px; margin-top: 5px; }
+
+  .type-row { display: grid; grid-template-columns: 200px 1fr 280px; align-items: baseline; gap: 24px; padding: 18px 0; border-top: 1px solid var(--border); }
+  .type-row:first-of-type { border-top: 0; padding-top: 0; }
+  .type-row .spec { color: var(--muted); font-size: 12px; line-height: 1.5; }
+  .saira { font-family: Saira; font-stretch: 125%; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; font-size: 40px; line-height: 1; }
+  .onest { font-family: Onest; font-weight: 700; font-size: 44px; letter-spacing: -.02em; line-height: 1.02; }
+  .inter { font-family: Inter; font-weight: 500; font-size: 16.5px; line-height: 1.6; color: var(--muted); max-width: 40ch; }
+  .geist { font-family: Geist; font-weight: 500; font-size: 20px; line-height: 1.4; }
+  .mono { font: 400 13px/1.4 "Geist Mono", monospace; color: var(--fg); }
+
+  /* Site buttons: flat. */
+  .sbtn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 20px; border-radius: 8px; font-family: Inter; font-weight: 600; font-size: 14px; color: #fff; background: var(--violet); border: 1px solid transparent; }
+  .sbtn.ghost { background: transparent; border-color: rgba(255,255,255,.14); color: var(--fg); }
+  .sbtn.discord { background: #5865f2; }
+  /* App buttons: raised, lit from above. */
+  .abtn { display: inline-flex; align-items: center; height: 36px; padding: 0 16px; border-radius: 8px; font-family: Geist; font-weight: 600; font-size: 14px; color: #f9fafb;
+    background: linear-gradient(#8b48f0, #7532e2); box-shadow: inset 0 1px 0 rgba(255,255,255,.14), inset 0 -1px 0 rgba(0,0,0,.30), 0 1px 0 rgba(0,0,0,.45); }
+  .abtn.zinc { color: var(--fg); background: linear-gradient(#333338, #232326); }
+  .schip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; background: var(--card); border: 1px solid var(--border); box-shadow: var(--shadow-card); font-size: 12px; color: var(--fg); }
+  .schip i { width: 10px; height: 10px; border-radius: 2px; background: var(--lavender); display: inline-block; }
+  .frame { border-radius: 16px; border: 1px solid rgba(255,255,255,.1); overflow: hidden; background: var(--bg); }
+  .frame img { display: block; width: 100%; }
+
+  .site-dots { background-color: var(--bg); background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 16px 16px; }
+  .app-dots { background-color: var(--bg); background-image: radial-gradient(circle at center, #2a2a2f 1px, transparent 1.2px), radial-gradient(closest-side, #18181b, #09090b); background-size: 14px 14px, 100% 100%; }
+  canvas.dither { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; position: relative; }
+  .motif { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .motif img { width: 120px; height: 120px; display: block; }
+  .motif span { font-size: 12px; color: var(--dim); }
+
+  .slide { width: 270px; height: 337px; border-radius: 12px; border: 1px solid var(--border); position: relative; padding: 22px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; background: var(--bg); }
+  .slide > :not(.panel):not(.dither):not(.mk) { position: relative; z-index: 1; }
+  .slide img.mk { position: absolute; top: 18px; left: 20px; height: 22px; z-index: 2; }
+  .slide .label { margin-bottom: 10px; display: block; }
+  .slide h3 { font-family: Onest; font-weight: 700; font-size: 24px; letter-spacing: -.02em; line-height: 1.02; margin: 0 0 10px; color: var(--fg); }
+  .slide p { font-size: 12px; color: var(--muted); }
+  .slide .cta { margin-top: 12px; align-self: flex-start; height: 32px; font-size: 12px; padding: 0 12px; }
+  .slide .panel { position: absolute; inset: 56px 22px 182px; border-radius: 16px; border: 1px solid rgba(255,255,255,.1); background: var(--card); overflow: hidden; }
+  .slide .panel img { display: block; width: 100%; }
+
+  .sun-demo { position: relative; height: 640px; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; background: var(--bg); }
+  .sun-demo canvas.sun { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .sun-demo .horizon { position: absolute; left: 0; right: 0; top: 0; height: 38%; background: linear-gradient(180deg, var(--bg) 0%, transparent 100%); }
+  .sun-demo .comet { position: absolute; left: 8%; top: 5%; width: 120px; opacity: .38; transform: rotate(6deg); }
+  .sun-demo .feather { position: absolute; left: 58%; top: 22%; width: 44px; opacity: .85; transform: rotate(-12deg); }
+  .sun-demo .pool { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; background: radial-gradient(closest-side, rgba(9,9,11,.68), rgba(9,9,11,.25) 70%, transparent); }
+  .sun-h { font-family: Onest; font-weight: 700; font-size: 76px; line-height: 1; letter-spacing: -.02em; color: var(--fg); }
+  .sun-foot { display: flex; gap: 28px; margin-top: 64px; font-size: 13px; color: var(--muted); }
+  .dotstrip { display: flex; gap: 6px; align-items: center; }
+  .dont { display: grid; gap: 8px; color: var(--muted); font-size: 13px; position: relative; }
+  .dont span { color: var(--fg); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div>
+      <span class="label">Icarus brand sheet · v5 · 2026-09-25</span>
+      <img src="../logo/wordmark/icarus-wordmark.svg" alt="Icarus">
+    </div>
+    <div class="meta">The free VALORANT strategy board.<br>Works offline, with no account or paid tier.<br>icarusstrats.com</div>
+  </div>
+
+  <section>
+    <h2>Logo</h2>
+    <div class="grid cols-4">
+      <div class="card bg"><span class="label">Mark, white. The default.</span><div class="center"><img src="../logo/mark/icarus-mark.svg" style="height:140px"></div></div>
+      <div class="card bg"><span class="label">Mark, violet. Hero moments only.</span><div class="center"><img src="../logo/mark/icarus-mark-violet.svg" style="height:140px"></div></div>
+      <div class="card light"><span class="label">Mark on light.</span><div class="center"><img src="../logo/mark/icarus-mark-on-light.svg" style="height:140px"></div></div>
+      <div class="card bg"><span class="label">App icon, as shipped.</span><div class="center"><img src="../logo/mark/icarus-app-icon.svg" style="height:140px"></div></div>
+    </div>
+    <div class="grid cols-2" style="margin-top:16px">
+      <div class="card bg"><span class="label">Primary lockup.</span><div class="center" style="min-height:120px"><img src="../logo/wordmark/icarus-wordmark.svg" style="width:80%"></div></div>
+      <div class="card bg"><span class="label">Violet mark lockup. Hero moments only.</span><div class="center" style="min-height:120px"><img src="../logo/wordmark/icarus-wordmark-violet.svg" style="width:80%"></div></div>
+      <div class="card bg"><span class="label">Plain lockup. The site uses it at 28px above “Touch the sun.” Use it under about 14px too.</span><div class="center" style="min-height:120px; gap:36px"><img src="../logo/wordmark/icarus-wordmark-plain.svg" style="height:28px"><img src="../logo/wordmark/icarus-wordmark.svg" style="height:14px"><img src="../logo/wordmark/icarus-wordmark-plain.svg" style="height:12px"></div></div>
+      <div class="card"><span class="label">Rules</span>
+        <div class="dont">
+          <div><span>Clear space</span> equal to the mark's height on every side.</div>
+          <div><span>Colors</span> white, violet #7c3aed, or near-black. Nothing else.</div>
+          <div><span>Never</span> outline, shadow, gradient, rotate, or set “Icarus” in another font beside it.</div>
+          <div><span>The only capitals</span> are the wordmark and VALORANT as Riot writes it. Everything else is sentence case.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Color</h2>
+    <p class="rule" style="margin-bottom:16px">Violet is the one command color. It marks the current action, selection, and primary command, and nothing else. One violet element per slide. Hover never changes a color and never adds a gradient.</p>
+    <div class="grid cols-4">
+      <div class="swatch"><div class="chip" style="background:#09090b"></div><div class="info"><div class="hex">#09090b</div><div class="name">Background, every page and the canvas · zinc-950</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#18181b"></div><div class="info"><div class="hex">#18181b</div><div class="name">Card, panel, dialog · zinc-900</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#27272a"></div><div class="info"><div class="hex">#27272a</div><div class="name">Border, raised chip · zinc-800</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#3f3f46"></div><div class="info"><div class="hex">#3f3f46</div><div class="name">Field edge · zinc-700</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#fafafa"></div><div class="info"><div class="hex">#fafafa</div><div class="name">Text, white logo · zinc-50</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#a1a1aa"></div><div class="info"><div class="hex">#a1a1aa</div><div class="name">Muted: site body copy, app secondary text · zinc-400</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#71717a"></div><div class="info"><div class="hex">#71717a</div><div class="name">Dim: small labels, version lines, footers · zinc-500</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#141114"></div><div class="info"><div class="hex">#141114</div><div class="name">App sidebar surface</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#7c3aed"></div><div class="info"><div class="hex">#7c3aed</div><div class="name">Violet · fills, buttons, the mark · violet-700</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#4c1d95"></div><div class="info"><div class="hex">#4c1d95</div><div class="name">Deep violet · selection, dark end of the halftone · violet-900</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#c4b5fd"></div><div class="info"><div class="hex">#c4b5fd</div><div class="name">Lavender · chip icons, bright end of the halftone · violet-300</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#8b5cf6"></div><div class="info"><div class="hex">#8b5cf6</div><div class="name">Violet ink, app only · thin lines and small text · violet-500</div></div></div>
+    </div>
+    <div class="grid cols-4" style="margin-top:16px">
+      <div class="swatch"><div class="chip" style="background:#3a7e5d"></div><div class="info"><div class="hex">#3a7e5d</div><div class="name">Ally · game meaning only</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#772727"></div><div class="info"><div class="hex">#772727</div><div class="name">Enemy · game meaning only</div></div></div>
+      <div class="swatch"><div class="chip" style="background:#ff9800"></div><div class="info"><div class="hex">#ff9800</div><div class="name">Favorite · game meaning only</div></div></div>
+      <div class="swatch"><div class="chip" style="background:linear-gradient(90deg,#271406 0 34%,#b27c40 34% 67%,#f08234 67%)"></div><div class="info"><div class="hex">#271406 · #b27c40 · #f08234</div><div class="name">Map ember ramp · never decoration</div></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Type</h2>
+    <div class="card">
+      <div class="type-row"><div class="label">Saira, wordmark only</div><div class="saira">Icarus</div><div class="spec">wdth 125 · wght 600 · caps · tracking 0.08em. Outlined in the SVGs.</div></div>
+      <div class="type-row"><div class="label">Onest 700, display</div><div class="onest">The free VALORANT strategy board.</div><div class="spec">Headline 40–80px, line-height 1.02, tracking −0.02em. Section heads 28–44px, line-height 1.08, tracking −0.015em. Claim titles 26px.</div></div>
+      <div class="type-row"><div class="label">Inter 500, body</div><div class="inter">Map out executes and share strats your team can follow. Works offline, with no account or paid tier.</div><div class="spec">Body 15.5px / 1.7 in muted. Hero subline 16.5px / 1.6. The small label above a heading is 12px, dim, sentence case, like the labels on this sheet.</div></div>
+      <div class="type-row"><div class="label">Geist, app UI</div><div class="geist">My Library &nbsp;·&nbsp; New Strategy &nbsp;·&nbsp; Ascent, Attack &nbsp;·&nbsp; Page 1</div><div class="spec">400–600. Five roles: headline 20/500, title 16/600, body 14/400, label 12/600, micro 10/600. Use it when a post mocks up app UI.</div></div>
+      <div class="type-row"><div class="label">Geist Mono 400, code</div><div class="mono">icarusstrats.com/s/7aa45ff5</div><div class="spec">Share codes and links on the share page, 13px. Never for labels, never uppercase.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Buttons and surfaces</h2>
+    <div class="grid cols-3">
+      <div class="card"><span class="label">Site buttons, flat</span>
+        <div class="row" style="margin-bottom:14px"><span class="sbtn">Download</span><span class="sbtn ghost">View source</span><span class="sbtn discord">Join the Discord</span></div>
+        <p class="rule">42px tall, 8px radius, 14px weight 600. Flat violet; the ghost has a 1px border at white 14%. Discord's blurple is for the Discord button only. No gradient, no shadow, no hover color.</p>
+      </div>
+      <div class="card"><span class="label">App buttons, raised</span>
+        <div class="row" style="margin-bottom:14px"><span class="abtn">New Strategy</span><span class="abtn zinc">Selected tab</span><span class="schip"><i></i>share codes</span></div>
+        <p class="rule">In the app a primary or selected surface is lit from above: fill lighter at the top, 1px white 14% inside the top edge, 1px black 30% inside the bottom, 1px shadow beneath. Site chips: card fill, 1px border, card shadow, lavender icon. Hover stays flat everywhere.</p>
+      </div>
+      <div class="card"><span class="label">Radii and shadows</span>
+        <div class="row" style="margin-bottom:14px">
+          <span style="width:40px;height:40px;border-radius:8px;background:var(--raised)"></span>
+          <span style="width:40px;height:40px;border-radius:12px;background:var(--raised)"></span>
+          <span style="width:40px;height:40px;border-radius:16px;background:var(--raised)"></span>
+          <span style="width:40px;height:40px;border-radius:22px;background:var(--raised)"></span>
+          <span style="width:40px;height:40px;border-radius:8px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-card)"></span>
+          <span style="width:40px;height:40px;border-radius:8px;background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-menu)"></span>
+        </div>
+        <p class="rule">8 controls and chips, 12 panels, 16 cards and footage frames, 22 dialogs. Depth is tonal with 1px #27272a borders. Two shadows exist: card foreground 0 4px 12px black 54%, menu lift 0 8px 24px black 28%.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Textures</h2>
+    <div class="grid cols-3">
+      <div class="card site-dots" style="min-height:200px"><span class="label">Site backdrop</span><p class="rule">A dot grid: 1px dots at white 6% on a 16px pitch, over #09090b. Every section of the homepage sits on it.</p></div>
+      <div class="card app-dots" style="min-height:200px"><span class="label">App canvas</span><p class="rule">The editor background: a finer dot grid on #09090b with a soft radial lift to #18181b at the center.</p></div>
+      <div class="card bg" style="min-height:200px"><canvas class="dither" data-progress="0.6" data-light="0.5,0.55"></canvas><span class="label">Torchlight</span><p class="rule">The torch behind the extras: the same lattice as the sun, lit from one point. Dot size and color both follow the light. The site's own shader, never a gradient.</p></div>
+    </div>
+  </section>
+
+
+  <section>
+    <h2>The sun</h2>
+    <p class="rule" style="margin-bottom:16px">The page ends inside the sun, and this is the piece the rest of the brand points at. It is a halftone: a lattice of dots on a 9px cell. Each dot's size and color follow how much light reaches it, so the dark sky is tiny deep-violet dots, the hot center is fat lavender and near-white dots, and where the field cools the dots go silver instead. Scrolling toward the section heats it from 0 to 0.75; the real download finishes it to 1. The same shader lights the app's update dialog.</p>
+    <div class="sun-demo">
+      <canvas class="sun" data-progress="0.78" data-time="7"></canvas>
+      <div class="horizon"></div>
+      <img class="comet" src="../motifs/comet.png" alt="">
+      <img class="feather" src="../motifs/feather.png" alt="">
+      <div class="pool">
+        <img src="../logo/wordmark/icarus-wordmark-plain.svg" style="height:28px; margin-bottom:24px" alt="Icarus">
+        <div class="sun-h">Touch the sun.</div>
+        <span class="sbtn" style="margin-top:36px">Download</span>
+        <span class="label" style="margin-top:20px; font-size:10px; color:var(--muted)">v4.6.2 · September 20, 2026</span>
+        <div class="sun-foot"><span>GitHub</span><span>Discord</span><span style="color:var(--dim)">·</span><span style="color:var(--dim)">MIT, all the way down</span></div>
+      </div>
+    </div>
+    <div class="grid cols-2" style="margin-top:16px">
+      <div class="card"><span class="label">One rule, drawn ten times: light sets size and color together</span>
+        <div class="dotstrip" data-ramp="violet"></div>
+        <p class="rule" style="margin-top:12px">Intensity 0.1 to 1.0 on the violet ramp: radius grows with the square root of the light, color climbs #1e0a4a → #7c3aed → #c4b5fd → #f5f3ff, and opacity rises from 35% to full. At rest every cell keeps a faint base dot so the lattice never disappears.</p>
+      </div>
+      <div class="card"><span class="label">The cool layer</span>
+        <div class="dotstrip" data-ramp="silver"></div>
+        <p class="rule" style="margin-top:12px">A second noise field drifts through the first on a silver ramp #252530 → #7a7a8a → #e8e7f2. Each dot belongs to whichever field is hotter, so the sun is violet where it burns and silver where it cools. Progress pushes ownership toward violet.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Motifs</h2>
+    <p class="rule" style="margin-bottom:16px">Hand-drawn white line art, used faint and off to the side, never as illustration: the sun at 17% in the hero corner, the wing at 6% behind the community section, the paper plane at 50%, the comet at 38%, one feather drifting. The myth lives in the headlines and the two big visuals; everything else talks about the product.</p>
+    <div class="grid cols-6">
+      <div class="motif"><img src="../motifs/sun.png"><span>sun</span></div>
+      <div class="motif"><img src="../motifs/wing.png"><span>wing</span></div>
+      <div class="motif"><img src="../motifs/feather.png"><span>feather</span></div>
+      <div class="motif"><img src="../motifs/paper-plane.png"><span>paper plane</span></div>
+      <div class="motif"><img src="../motifs/comet.png"><span>comet</span></div>
+      <div class="motif"><img src="../motifs/torch.png"><span>torch</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Voice and a slide</h2>
+    <div class="grid" style="grid-template-columns: 1fr 302px 302px; gap: 24px">
+      <div class="card">
+        <span class="label">Voice</span>
+        <p style="font-family:Onest; font-weight:700; font-size:26px; letter-spacing:-.015em; line-height:1.08; color:var(--fg); margin-bottom:14px">Plain, short, sure of itself.</p>
+        <p class="rule">We talk to a player whose idea is still hot. Feature copy names what the thing does, in the player's words, the way the site does: “One code hands your five-stack the whole strat.” “Fixes ship while the meta is still warm.” “For when the pen isn't enough.” Name the map, the agent, the round. Show the board.</p>
+        <p class="rule" style="margin-top:12px">Never: revolutionary, seamless, game-changing, exclamation marks, emoji in headlines, capitals for emphasis, a light-mode version.</p>
+      </div>
+      <div class="slide site-dots">
+        <img class="mk" src="../logo/mark/icarus-mark.svg">
+        <div class="panel"><img src="../app/editor.png"></div>
+        <span class="label">4.6.3 · new</span>
+        <h3>Format your strategy notes.</h3>
+        <p>Bold, headings, and lists in the text tool. Type Markdown shortcuts or use the format bar.</p>
+        <span class="sbtn cta">Download</span>
+      </div>
+      <div class="slide">
+        <canvas class="dither" data-progress="0.5" data-light="0.5,0.42"></canvas>
+        <img class="mk" src="../logo/mark/icarus-mark.svg">
+        <span class="label">Local-first</span>
+        <h3>Yours, even offline.</h3>
+        <p>Your playbook lives on your machine, not on somebody's server. No account, no paid tier.</p>
+        <span class="label" style="margin-top:12px; color:var(--lavender)">icarusstrats.com</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="dither.js"></script>
+<script src="sun.js"></script>
+</body>
+</html>

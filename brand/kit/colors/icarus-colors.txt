@@ -1,0 +1,37 @@
+[surfaces]
+#09090b  background         The canvas and every page. Zinc-950.
+#141114  sidebar            The app's sidebar surface.
+#18181b  card               Panels, cards, dialogs. Zinc-900.
+#27272a  raised             Raised chips, borders, muted fills. Zinc-800.
+#3f3f46  input              Field edges, one step above border. Zinc-700.
+
+[text]
+#fafafa  foreground         Text and the white logo. Zinc-50.
+#a1a1aa  muted              Body copy on the site, secondary text in the app, resting icons. Zinc-400.
+#71717a  dim                Small labels above headings, version lines, footers. Zinc-500.
+
+[violet]
+#7c3aed  violet             Fills, buttons, the violet mark. Violet-700.
+#8b5cf6  violetInk          App only: thin lines, glyphs, small text on dark, where the fill is too dark to read. Violet-500.
+#4c1d95  violetDeep         Text selection; the dark end of the halftone ramp. Violet-900.
+#c4b5fd  lavender           Site only: icon tint in chips, the bright end of the halftone ramp. Violet-300.
+#f9fafb  primaryForeground  Text on violet fills.
+
+[tactical]
+#3a7e5d  ally               Ally markers. Game meaning only.
+#772727  enemy              Enemy markers. Game meaning only.
+#ff9800  favorite           Favorite star. Game meaning only.
+#ef4444  destructive        Delete, errors. Red-500.
+#271406  mapBase            Map ember base. Never decoration.
+#b27c40  mapDetail          Map bronze detail.
+#f08234  mapHighlight       Map orange highlight.
+
+[pen]
+#fafafa  white              Pen color 1, default.
+#ef4444  red                Pen color 2.
+#3b82f6  blue               Pen color 3.
+#eab308  yellow             Pen color 4.
+#22c55e  green              Pen color 5.
+
+[halftone ramp]
+#1e0a4a  #7c3aed  #c4b5fd  #f5f3ff  The site's DitherFire/DitherLight shaders color each dot on this ramp by light intensity; the sun also mixes toward a silver ramp (#252530 -> #7a7a8a -> #e8e7f2).

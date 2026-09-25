@@ -35,28 +35,15 @@
 
 :root {
   --bg: #09090b;
-  --surface: #0d0d10;
-  --card: #111114;
-  --card-raised: #161619;
   --border-hard: #27272a;
-  --border-soft: rgba(255, 255, 255, 0.07);
   --accent: #7c3aed;
-  --accent-hover: #6d28d9;
   --accent-deep: #4c1d95;
-  --accent-glow: rgba(124, 58, 237, 0.35);
   --ring: rgba(124, 58, 237, 0.55);
   --text: #fafafa;
-  --text-soft: #d4d4d8;
   --text-muted: #a1a1aa;
-  --text-dim: #71717a;
 }
 
 @theme inline {
-  --color-background: var(--bg);
-  --color-foreground: var(--text);
-  --color-accent: var(--accent);
-  --color-card: var(--card);
-  --color-border: var(--border-hard);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-onest: var(--font-onest);
@@ -122,35 +109,19 @@ body {
   font-family: "ABC Favorit Mono", var(--font-geist-mono), ui-monospace, monospace;
 }
 
-/* Tactical mono callsign label */
+/* Small label above a heading: plain, muted, sentence case. Nothing on the
+   site or in the app is set in capitals except the wordmark. */
 .callsign {
-  font-family: "ABC Favorit Mono", var(--font-geist-mono), ui-monospace, monospace;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-family: var(--font-inter), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
 /* ────── Animations shared across variants ────── */
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-
-@keyframes pulseDot {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.4); }
-}
-
 @keyframes blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
 }
 
 @keyframes drift {
@@ -176,82 +147,9 @@ body {
   animation-name: sun-ray-length-redraw;
 }
 
-@keyframes scanline {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 0.35; }
-  90% { opacity: 0.35; }
-  100% { transform: translateY(100%); opacity: 0; }
-}
-
-.tactical-grid {
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 48px 48px;
-}
-
 .tactical-dots {
   background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 16px 16px;
-}
-
-/* Hairline dividers used as map-rule decorations */
-.hairline-x::before,
-.hairline-x::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 255, 255, 0.08) 20%,
-    rgba(255, 255, 255, 0.08) 80%,
-    transparent
-  );
-}
-.hairline-x::before { top: 0; }
-.hairline-x::after { bottom: 0; }
-
-/* Blueprint dot grid (V4) */
-.blueprint-grid {
-  background-image:
-    linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px),
-    linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
-}
-
-/* Film grain overlay (V5) */
-.film-grain {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.9'/></svg>");
-}
-
-/* Halftone dots used in V5 hero overlays */
-.halftone {
-  background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1.4px);
-  background-size: 6px 6px;
-}
-
-/* Marquee */
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.marquee-track {
-  animation: marquee 38s linear infinite;
-}
-
-/* Soft glow text */
-.glow-violet {
-  text-shadow: 0 0 24px rgba(124, 58, 237, 0.45), 0 0 1px rgba(124, 58, 237, 0.6);
 }
 
 /* Focus ring */

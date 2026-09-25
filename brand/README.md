@@ -1,7 +1,7 @@
 # Icarus wordmark
 
-Decided 2026-09-03. All caps, Saira at width 125 / weight 600, tracked 0.08em, letters outlined.
-The mark stands in for the A at 112% of cap height, widened 12% to sit with the wide letters.
+Decided 2026-09-03, proportion fixed 2026-09-25. All caps, Saira at width 125 / weight 600, tracked 0.08em, letters outlined.
+The mark stands in for the A at 120% of cap height in its natural proportion. It used to be 112% and stretched 12% wider to fill the A's slot; the stretch flattened the flame, so the mark now stands taller instead.
 
 | file | use |
 | --- | --- |

@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "sources": [
+      "icarus-release/lib/const/settings.dart (Settings.tacticalVioletTheme)",
+      "icarus-home-main/app/concepts/_shared/tokens.ts (the homepage's palette, lifted from the same theme)"
+    ],
+    "rule": "Violet is the one command color: current action, selection, focus, primary command, nothing else. Hover stays flat. Nothing is set in capitals except the wordmark and VALORANT."
+  },
+  "surfaces": {
+    "background": {
+      "hex": "#09090b",
+      "use": "The canvas and every page. Zinc-950."
+    },
+    "sidebar": {
+      "hex": "#141114",
+      "use": "The app's sidebar surface."
+    },
+    "card": {
+      "hex": "#18181b",
+      "use": "Panels, cards, dialogs. Zinc-900."
+    },
+    "raised": {
+      "hex": "#27272a",
+      "use": "Raised chips, borders, muted fills. Zinc-800."
+    },
+    "input": {
+      "hex": "#3f3f46",
+      "use": "Field edges, one step above border. Zinc-700."
+    }
+  },
+  "text": {
+    "foreground": {
+      "hex": "#fafafa",
+      "use": "Text and the white logo. Zinc-50."
+    },
+    "muted": {
+      "hex": "#a1a1aa",
+      "use": "Body copy on the site, secondary text in the app, resting icons. Zinc-400."
+    },
+    "dim": {
+      "hex": "#71717a",
+      "use": "Small labels above headings, version lines, footers. Zinc-500."
+    }
+  },
+  "violet": {
+    "violet": {
+      "hex": "#7c3aed",
+      "use": "Fills, buttons, the violet mark. Violet-700."
+    },
+    "violetInk": {
+      "hex": "#8b5cf6",
+      "use": "App only: thin lines, glyphs, small text on dark, where the fill is too dark to read. Violet-500."
+    },
+    "violetDeep": {
+      "hex": "#4c1d95",
+      "use": "Text selection; the dark end of the halftone ramp. Violet-900."
+    },
+    "lavender": {
+      "hex": "#c4b5fd",
+      "use": "Site only: icon tint in chips, the bright end of the halftone ramp. Violet-300."
+    },
+    "primaryForeground": {
+      "hex": "#f9fafb",
+      "use": "Text on violet fills."
+    }
+  },
+  "tactical": {
+    "ally": {
+      "hex": "#3a7e5d",
+      "use": "Ally markers. Game meaning only."
+    },
+    "enemy": {
+      "hex": "#772727",
+      "use": "Enemy markers. Game meaning only."
+    },
+    "favorite": {
+      "hex": "#ff9800",
+      "use": "Favorite star. Game meaning only."
+    },
+    "destructive": {
+      "hex": "#ef4444",
+      "use": "Delete, errors. Red-500."
+    },
+    "mapBase": {
+      "hex": "#271406",
+      "use": "Map ember base. Never decoration."
+    },
+    "mapDetail": {
+      "hex": "#b27c40",
+      "use": "Map bronze detail."
+    },
+    "mapHighlight": {
+      "hex": "#f08234",
+      "use": "Map orange highlight."
+    }
+  },
+  "pen": {
+    "white": {
+      "hex": "#fafafa",
+      "use": "Pen color 1, default."
+    },
+    "red": {
+      "hex": "#ef4444",
+      "use": "Pen color 2."
+    },
+    "blue": {
+      "hex": "#3b82f6",
+      "use": "Pen color 3."
+    },
+    "yellow": {
+      "hex": "#eab308",
+      "use": "Pen color 4."
+    },
+    "green": {
+      "hex": "#22c55e",
+      "use": "Pen color 5."
+    }
+  },
+  "halftoneRamp": {
+    "note": "The site's DitherFire/DitherLight shaders color each dot on this ramp by light intensity; the sun also mixes toward a silver ramp (#252530 -> #7a7a8a -> #e8e7f2).",
+    "stops": [
+      "#1e0a4a",
+      "#7c3aed",
+      "#c4b5fd",
+      "#f5f3ff"
+    ]
+  }
+}

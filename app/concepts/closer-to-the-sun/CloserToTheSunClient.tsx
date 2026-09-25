@@ -421,7 +421,7 @@ function Hero({ swings }: { swings: BigSwings }) {
                         />
                     </svg>
                     <span className="callsign" style={{ color: palette.muted }}>
-                        up
+                        Up
                     </span>
                 </div>
             </div>
@@ -455,7 +455,7 @@ function Claims() {
             <div className="mx-auto max-w-[1160px] px-6">
                 <h2 className="sr-only">Why use Icarus</h2>
                 <p className="callsign" style={{ color: palette.dim }}>
-                    why icarus
+                    Why Icarus
                 </p>
                 <div className="mt-8 grid gap-10 sm:grid-cols-3">
                     {CLAIMS.map((claim) => (
@@ -490,7 +490,7 @@ function AgentBar() {
 
             <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
                 <div>
-                    <SectionHeading label="the agent bar">
+                    <SectionHeading label="The agent bar">
                         Agents at your side.
                         <br />
                         <span style={{ color: palette.muted }}>Not under your canvas.</span>
@@ -531,7 +531,7 @@ function LocalFirst() {
                 />
 
                 <div>
-                    <SectionHeading label="local-first">
+                    <SectionHeading label="Local-first">
                         Yours, even offline.
                     </SectionHeading>
                     <p
@@ -581,7 +581,7 @@ function Community() {
             </div>
 
             <div className="relative mx-auto max-w-[760px] px-6 text-center">
-                <SectionHeading label="community">
+                <SectionHeading label="Community">
                     Built in the open, steered by players.
                 </SectionHeading>
                 <p

@@ -43,7 +43,7 @@ def mark_path(sx, sy, tx, ty):
     for p in MARK_PATHS: parse_path(p, tp)
     return pen.getCommands()
 
-def build(kind, mark_fill, fill="#fafafa", mark_scale_y=1.12, widen=1.12):
+def build(kind, mark_fill, fill="#fafafa", mark_scale_y=1.20, widen=1.0):
     """kind: 'lockup' (mark as A) or 'plain'"""
     x = 0
     els = []
@@ -74,7 +74,7 @@ def build(kind, mark_fill, fill="#fafafa", mark_scale_y=1.12, widen=1.12):
     vb_x, vb_y, vb_w, vb_h = -pad, -(top + pad), total_w + 2 * pad, (top - bottom) + 2 * pad
     body = "\n    ".join(els)
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb_x:.0f} {vb_y:.0f} {vb_w:.0f} {vb_h:.0f}" fill="{fill}" role="img" aria-label="Icarus">
-  <!-- Icarus wordmark. Letters: Saira (OFL) at wdth 125 / wght 600, tracked 0.08em, outlined. Mark = the A, {int(mark_scale_y*100)}% cap height, widened {int((widen-1)*100)}%. For inline use, replace the fills with currentColor. -->
+  <!-- Icarus wordmark. Letters: Saira (OFL) at wdth 125 / wght 600, tracked 0.08em, outlined. Mark = the A, {int(mark_scale_y*100)}% cap height, natural proportion (widen {widen:g}). For inline use, replace the fills with currentColor. -->
   <g transform="scale(1 -1)">
     {body}
   </g>
