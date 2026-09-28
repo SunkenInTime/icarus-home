@@ -92,7 +92,7 @@ export default async function Home() {
                     __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c"),
                 }}
             />
-            <SunHome />
+            <SunHome versionInfo={latestVersion} />
         </>
     );
 }

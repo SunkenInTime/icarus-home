@@ -18,8 +18,8 @@ export type VersionInfo = {
 };
 
 const versionInfo: VersionInfo = {
-    version: "4.6.2",
-    released: "September 20, 2026",
+    version: "4.6.3",
+    released: "September 22, 2026",
     platforms: {
         windows: {
             url: "https://github.com/SunkenInTime/icarus/releases/latest/download/icarus-setup.exe",
