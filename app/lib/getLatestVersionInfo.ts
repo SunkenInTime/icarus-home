@@ -13,13 +13,13 @@ type GitHubRelease = {
     published_at: string;
 };
 
-function formatReleaseDate(date: string) {
+function formatReleaseDate(date: Date) {
     return new Intl.DateTimeFormat("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
         timeZone: "UTC",
-    }).format(new Date(date));
+    }).format(date);
 }
 
 async function getLatestRelease(): Promise<GitHubRelease | null> {
@@ -42,14 +42,16 @@ async function getLatestRelease(): Promise<GitHubRelease | null> {
 
 export async function getLatestVersionInfo(): Promise<VersionInfo> {
     const release = await getLatestRelease();
-    const version = release && RELEASE_TAG_PATTERN.exec(release.tag_name)?.[1];
-    if (!release || !version) {
+    const version = RELEASE_TAG_PATTERN.exec(release?.tag_name ?? "")?.[1];
+    // A missing or malformed date would throw while formatting, or show 1970.
+    const publishedAt = new Date(release?.published_at ?? "");
+    if (!version || Number.isNaN(publishedAt.getTime())) {
         return fallbackVersionInfo;
     }
 
     return {
         ...fallbackVersionInfo,
         version,
-        released: formatReleaseDate(release.published_at),
+        released: formatReleaseDate(publishedAt),
     };
 }
