@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 
-import versionInfo from "@/app/data/versionInfo";
+import versionInfo, { type VersionInfo } from "@/app/data/versionInfo";
 import ProgressButton from "../_shared/ProgressButton";
 import { easing, palette } from "../_shared/tokens";
 
@@ -625,8 +625,11 @@ function Community() {
 
 export default function CloserToTheSunClient({
     swings = SHIPPED_SWINGS,
+    versionInfo: latestVersionInfo = versionInfo,
 }: {
     swings?: BigSwings;
+    /** The release the Download button serves; concept pages use the fallback. */
+    versionInfo?: VersionInfo;
 }) {
     return (
         <div className="min-h-screen" style={{ background: palette.bg, color: palette.fg }}>
@@ -648,7 +651,7 @@ export default function CloserToTheSunClient({
                 <LocalFirst />
                 <Community />
                 <TorchlitExtras />
-                <SunSection />
+                <SunSection versionInfo={latestVersionInfo} />
             </main>
         </div>
     );

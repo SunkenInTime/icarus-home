@@ -1,131 +1,57 @@
 import fallbackVersionInfo, { VersionInfo } from "@/app/data/versionInfo";
 
-type GitHubTag = {
-    name: string;
+// The release GitHub marks Latest is the one the Download button's
+// releases/latest link serves, so its tag and date describe that installer.
+const GITHUB_LATEST_RELEASE_URL =
+    "https://api.github.com/repos/SunkenInTime/icarus/releases/latest";
+
+// Desktop release tags look like desktop-stable-v4.6.3+103.
+const RELEASE_TAG_PATTERN = /^(?:desktop-stable-)?v?(\d+\.\d+\.\d+)(?:\+\d+)?$/;
+
+type GitHubRelease = {
+    tag_name: string;
+    published_at: string;
 };
 
-type GitHubRepository = {
-    pushed_at: string;
-};
-
-type ParsedTag = {
-    normalized: string;
-    major: number;
-    minor: number;
-    patch: number;
-    prerelease?: string;
-};
-
-const GITHUB_REPO_URL =
-    "https://api.github.com/repos/SunkenInTime/icarus";
-
-const GITHUB_TAGS_URL =
-    "https://api.github.com/repos/SunkenInTime/icarus/tags?per_page=20";
-
-const SEMVER_TAG_PATTERN =
-    /^v?(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?$/;
-
-function parseTag(tag: GitHubTag): ParsedTag | null {
-    const version = tag.name.replace(/^desktop-stable-v/, "").replace(/\+\d+$/, "");
-    const match = SEMVER_TAG_PATTERN.exec(version);
-
-    if (!match) {
-        return null;
-    }
-
-    return {
-        normalized: version.replace(/^v/, ""),
-        major: Number(match[1]),
-        minor: Number(match[2]),
-        patch: Number(match[3]),
-        prerelease: match[4],
-    };
-}
-
-function compareTags(a: ParsedTag, b: ParsedTag) {
-    if (a.major !== b.major) {
-        return b.major - a.major;
-    }
-
-    if (a.minor !== b.minor) {
-        return b.minor - a.minor;
-    }
-
-    if (a.patch !== b.patch) {
-        return b.patch - a.patch;
-    }
-
-    if (!a.prerelease && b.prerelease) {
-        return -1;
-    }
-
-    if (a.prerelease && !b.prerelease) {
-        return 1;
-    }
-
-    return (a.prerelease ?? "").localeCompare(b.prerelease ?? "", undefined, {
-        numeric: true,
-    });
-}
-
-function formatReleaseDate(date: string) {
+function formatReleaseDate(date: Date) {
     return new Intl.DateTimeFormat("en-US", {
         month: "long",
         day: "numeric",
         year: "numeric",
         timeZone: "UTC",
-    }).format(new Date(date));
+    }).format(date);
 }
 
-async function fetchGitHubJson<T>(url: string): Promise<T> {
-    const response = await fetch(url, {
-        headers: {
-            Accept: "application/vnd.github+json",
-            "User-Agent": "icarus-home",
-        },
-        next: { revalidate: 3600 },
-    });
-
-    if (!response.ok) {
-        throw new Error(`GitHub request failed with ${response.status}`);
-    }
-
-    return (await response.json()) as T;
-}
-
-async function getLatestVersion(): Promise<string | null> {
+async function getLatestRelease(): Promise<GitHubRelease | null> {
     try {
-        const tags = await fetchGitHubJson<GitHubTag[]>(GITHUB_TAGS_URL);
-        const latestTag = tags
-            .map(parseTag)
-            .filter((tag): tag is ParsedTag => tag !== null)
-            .sort(compareTags)[0];
-
-        return latestTag?.normalized ?? null;
-    } catch {
-        return null;
-    }
-}
-
-async function getLastUpdateDate(): Promise<string | null> {
-    try {
-        const repository = await fetchGitHubJson<GitHubRepository>(GITHUB_REPO_URL);
-
-        return formatReleaseDate(repository.pushed_at);
+        const response = await fetch(GITHUB_LATEST_RELEASE_URL, {
+            headers: {
+                Accept: "application/vnd.github+json",
+                "User-Agent": "icarus-home",
+            },
+            next: { revalidate: 3600 },
+        });
+        if (!response.ok) {
+            return null;
+        }
+        return (await response.json()) as GitHubRelease;
     } catch {
         return null;
     }
 }
 
 export async function getLatestVersionInfo(): Promise<VersionInfo> {
-    const [version, released] = await Promise.all([
-        getLatestVersion(),
-        getLastUpdateDate(),
-    ]);
+    const release = await getLatestRelease();
+    const version = RELEASE_TAG_PATTERN.exec(release?.tag_name ?? "")?.[1];
+    // A missing or malformed date would throw while formatting, or show 1970.
+    const publishedAt = new Date(release?.published_at ?? "");
+    if (!version || Number.isNaN(publishedAt.getTime())) {
+        return fallbackVersionInfo;
+    }
 
     return {
         ...fallbackVersionInfo,
-        version: version ?? fallbackVersionInfo.version,
-        released: released ?? fallbackVersionInfo.released,
+        version,
+        released: formatReleaseDate(publishedAt),
     };
 }

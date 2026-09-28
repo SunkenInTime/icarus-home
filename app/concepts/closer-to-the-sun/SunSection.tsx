@@ -5,7 +5,8 @@ import Image from "next/image";
 import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 
-import versionInfo from "@/app/data/versionInfo";
+import type { VersionInfo } from "@/app/data/versionInfo";
+import fallbackVersionInfo from "@/app/data/versionInfo";
 import DitherFire from "../_shared/DitherFire";
 import ProgressButton from "../_shared/ProgressButton";
 import { palette } from "../_shared/tokens";
@@ -19,7 +20,7 @@ import Wordmark from "@/app/components/Wordmark";
  * way to 1.0 — completing the download completes the sun.
  */
 
-const win = versionInfo.platforms.windows;
+const win = fallbackVersionInfo.platforms.windows;
 
 function DriftingFeather() {
     // Once per visit: a single feather detaches near the top of the sun and
@@ -57,7 +58,7 @@ function DriftingFeather() {
     );
 }
 
-export default function SunSection() {
+export default function SunSection({ versionInfo }: { versionInfo: VersionInfo }) {
     const sectionRef = useRef<HTMLElement>(null);
     const reduceMotion = useReducedMotion();
     const featherArmed = useInView(sectionRef, { once: true, margin: "-25% 0px" });

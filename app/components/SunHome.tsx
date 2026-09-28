@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import CloserToTheSunClient from "@/app/concepts/closer-to-the-sun/CloserToTheSunClient";
 import ShareLinkHandler from "@/app/components/ShareLinkHandler";
+import type { VersionInfo } from "@/app/data/versionInfo";
 
 /**
  * Production homepage — the "Closer to the Sun" design promoted from
@@ -26,7 +27,7 @@ function hasShareCodeInUrl() {
     return segments.some((segment) => segment.toLowerCase() === "share");
 }
 
-export default function SunHome() {
+export default function SunHome({ versionInfo }: { versionInfo: VersionInfo }) {
     const [shareMode, setShareMode] = useState(false);
 
     useEffect(() => {
@@ -41,5 +42,5 @@ export default function SunHome() {
         return <ShareLinkHandler />;
     }
 
-    return <CloserToTheSunClient />;
+    return <CloserToTheSunClient versionInfo={versionInfo} />;
 }
