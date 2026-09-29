@@ -8,7 +8,8 @@ const ICARUS_LOGO_URL =
     "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN";
 
 // The web app opens a strategy link read-only for anyone, account or not,
-// so a reader without the desktop app can still see what was shared.
+// so a reader without the desktop app can still see what was shared. A
+// folder link there still asks the reader to sign in.
 const WEB_APP_ORIGIN = "https://beta.icarusstrats.com";
 
 const SHARE_CODE_PATTERN =
@@ -199,8 +200,8 @@ export default function ShareLinkHandler() {
                 </h1>
                 <p className="mt-4 max-w-sm text-sm leading-6" style={{ color: "#a1a1aa" }}>
                     This link opens in the Icarus desktop app. Keep this page open if your
-                    browser asks for permission. No app? View it in your browser, no
-                    account needed.
+                    browser asks for permission. No app? Open it in your browser: shared
+                    strategies need no account.
                 </p>
 
                 <div
