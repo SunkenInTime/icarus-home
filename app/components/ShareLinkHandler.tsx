@@ -7,12 +7,18 @@ import { FaArrowRight, FaCheck, FaCopy } from "react-icons/fa";
 const ICARUS_LOGO_URL =
     "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN";
 
+// The web app opens a strategy link read-only for anyone, account or not,
+// so a reader without the desktop app can still see what was shared. A
+// folder link there still asks the reader to sign in.
+const WEB_APP_ORIGIN = "https://beta.icarusstrats.com";
+
 const SHARE_CODE_PATTERN =
     /^ICR-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}-[2-9A-HJ-NP-Z]{4}$/;
 
 type ShareLink = {
     code: string;
     deepLink: string;
+    webLink: string;
 };
 
 type CopyState = "idle" | "copied" | "manual";
@@ -65,6 +71,13 @@ function deepLinkForCode(code: string) {
     return `icarus://share?code=${encodeURIComponent(code)}`;
 }
 
+function webLinkForCode(code: string) {
+    return `${WEB_APP_ORIGIN}/share/${encodeURIComponent(code)}`;
+}
+
+const NOT_OPENED_STATUS =
+    "If Icarus did not open, view it in your browser or copy the code into the app.";
+
 export default function ShareLinkHandler() {
     const [shareLink, setShareLink] = useState<ShareLink | null>(null);
     const [status, setStatus] = useState("Opening shared strategy in Icarus.");
@@ -78,7 +91,7 @@ export default function ShareLinkHandler() {
 
         const deepLink = deepLinkForCode(code);
         const renderTimer = window.setTimeout(() => {
-            setShareLink({ code, deepLink });
+            setShareLink({ code, deepLink, webLink: webLinkForCode(code) });
         }, 0);
 
         const redirectTimer = window.setTimeout(() => {
@@ -86,7 +99,7 @@ export default function ShareLinkHandler() {
         }, 650);
 
         const fallbackTimer = window.setTimeout(() => {
-            setStatus("If Icarus did not open, copy the code and open it from inside the app.");
+            setStatus(NOT_OPENED_STATUS);
         }, 1800);
 
         return () => {
@@ -186,8 +199,9 @@ export default function ShareLinkHandler() {
                     Opening shared strategy
                 </h1>
                 <p className="mt-4 max-w-sm text-sm leading-6" style={{ color: "#a1a1aa" }}>
-                    This link is for the Icarus desktop app. Keep this page open if your
-                    browser asks for permission.
+                    This link opens in the Icarus desktop app. Keep this page open if your
+                    browser asks for permission. No app? Open it in your browser: shared
+                    strategies need no account.
                 </p>
 
                 <div
@@ -229,9 +243,7 @@ export default function ShareLinkHandler() {
                         href={shareLink.deepLink}
                         onClick={() => {
                             window.setTimeout(() => {
-                                setStatus(
-                                    "If Icarus did not open, copy the code and open it from inside the app.",
-                                );
+                                setStatus(NOT_OPENED_STATUS);
                             }, 900);
                         }}
                         className="inline-flex flex-1 items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-medium"
@@ -257,6 +269,18 @@ export default function ShareLinkHandler() {
                         {copyLabel}
                     </button>
                 </div>
+
+                <a
+                    href={shareLink.webLink}
+                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md border px-3.5 py-2.5 text-sm font-medium"
+                    style={{
+                        borderColor: "rgba(255,255,255,0.12)",
+                        color: "#fafafa",
+                    }}
+                >
+                    View in your browser
+                    <FaArrowRight aria-hidden size={11} />
+                </a>
 
                 <Link
                     href="/"
