@@ -99,7 +99,7 @@ export default function ProgressButton({
                         left: 0,
                         width: `${percent}%`,
                         background: "linear-gradient(to bottom, #8f56f0, #732cec)",
-                        boxShadow: "inset 0 1px rgba(255,255,255,0.14), inset 0 -1px rgba(0,0,0,0.3)",
+                        boxShadow: "inset 0 1px rgba(255,255,255,0.14)",
                         transition: "width 120ms ease-out",
                     }}
                 />
