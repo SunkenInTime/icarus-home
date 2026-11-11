@@ -373,8 +373,7 @@ function Hero({ swings }: { swings: BigSwings }) {
                         href={GITHUB_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex h-[42px] items-center gap-2 rounded-lg border px-5 text-[14px] font-semibold transition-colors hover:border-white/30 hover:bg-white/[0.04]"
-                        style={{ borderColor: "rgba(255,255,255,0.14)", color: palette.fg }}
+                        className="icarus-button icarus-button-outline"
                     >
                         <FaGithub aria-hidden />
                         View source
@@ -597,8 +596,7 @@ function Community() {
                         href={DISCORD_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex h-[42px] items-center gap-2 rounded-lg px-5 text-[14px] font-semibold transition-colors"
-                        style={{ background: "#5865F2", color: "#fff" }}
+                        className="icarus-button icarus-button-primary"
                     >
                         <FaDiscord aria-hidden />
                         Join the Discord
@@ -607,8 +605,7 @@ function Community() {
                         href={GITHUB_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex h-[42px] items-center gap-2 rounded-lg border px-5 text-[14px] font-semibold transition-colors hover:border-white/30 hover:bg-white/[0.04]"
-                        style={{ borderColor: "rgba(255,255,255,0.14)", color: palette.fg }}
+                        className="icarus-button icarus-button-outline"
                     >
                         <FaGithub aria-hidden />
                         Open an issue

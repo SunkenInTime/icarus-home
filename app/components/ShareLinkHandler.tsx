@@ -246,8 +246,7 @@ export default function ShareLinkHandler() {
                                 setStatus(NOT_OPENED_STATUS);
                             }, 900);
                         }}
-                        className="inline-flex flex-1 items-center justify-center gap-2 rounded-md px-3.5 py-2.5 text-sm font-medium"
-                        style={{ background: "#fafafa", color: "#0a0a0a" }}
+                        className="icarus-button icarus-button-primary icarus-button-responsive-wide flex-1"
                     >
                         Open in Icarus
                         <FaArrowRight aria-hidden size={11} />
@@ -255,11 +254,7 @@ export default function ShareLinkHandler() {
                     <button
                         type="button"
                         onClick={copyShareCode}
-                        className="inline-flex flex-1 items-center justify-center gap-2 rounded-md border px-3.5 py-2.5 text-sm font-medium transition-colors hover:bg-white/[0.04]"
-                        style={{
-                            borderColor: "rgba(255,255,255,0.12)",
-                            color: "#fafafa",
-                        }}
+                        className="icarus-button icarus-button-outline icarus-button-responsive-wide flex-1"
                     >
                         {copyState === "copied" ? (
                             <FaCheck aria-hidden size={12} />
@@ -272,11 +267,7 @@ export default function ShareLinkHandler() {
 
                 <a
                     href={shareLink.webLink}
-                    className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md border px-3.5 py-2.5 text-sm font-medium"
-                    style={{
-                        borderColor: "rgba(255,255,255,0.12)",
-                        color: "#fafafa",
-                    }}
+                    className="icarus-button icarus-button-outline icarus-button-wide mt-2 w-full"
                 >
                     View in your browser
                     <FaArrowRight aria-hidden size={11} />
