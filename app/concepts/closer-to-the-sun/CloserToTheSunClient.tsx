@@ -367,13 +367,14 @@ function Hero({ swings }: { swings: BigSwings }) {
                             label="Download"
                             downloadingLabel={(percent) => `Downloading… ${percent}%`}
                             doneLabel="Check your downloads"
+                            className="icarus-button-lg"
                         />
                     </span>
                     <a
                         href={GITHUB_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="icarus-button icarus-button-outline"
+                        className="icarus-button icarus-button-outline icarus-button-lg"
                     >
                         <FaGithub aria-hidden />
                         View source
@@ -596,7 +597,7 @@ function Community() {
                         href={DISCORD_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="icarus-button icarus-button-primary"
+                        className="icarus-button icarus-button-discord icarus-button-lg"
                     >
                         <FaDiscord aria-hidden />
                         Join the Discord
@@ -605,7 +606,7 @@ function Community() {
                         href={GITHUB_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="icarus-button icarus-button-outline"
+                        className="icarus-button icarus-button-outline icarus-button-lg"
                     >
                         <FaGithub aria-hidden />
                         Open an issue

@@ -135,7 +135,7 @@ export default function HackathonPage() {
                 <div className="flex flex-col sm:flex-row gap-3 pt-1">
                   <a
                     href="#download"
-                    className="icarus-button icarus-button-primary"
+                    className="icarus-button icarus-button-primary icarus-button-lg"
                   >
                     <FaDownload aria-hidden />
                     Download hackathon build
@@ -143,7 +143,7 @@ export default function HackathonPage() {
 
                   <a
                     href="#vote"
-                    className="icarus-button icarus-button-outline"
+                    className="icarus-button icarus-button-outline icarus-button-lg"
                   >
                     Vote for Hackbot
                   </a>

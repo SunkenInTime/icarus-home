@@ -41,6 +41,10 @@
   --accent: #7c3aed;
   --accent-raised-top: #8f56f0;
   --accent-raised-bottom: #732cec;
+  /* Discord's blurple, raised by the same +6% / -3% lightness steps. */
+  --discord: #5865f2;
+  --discord-raised-top: #747ff4;
+  --discord-raised-bottom: #4a58f1;
   --accent-deep: #4c1d95;
   --ring: #8b5cf6;
   --text: #fafafa;
@@ -172,6 +176,27 @@ body {
   box-shadow: none;
 }
 
+/* Discord keeps its own blue: the app raises its Discord accent the same way. */
+.icarus-button-discord {
+  background-color: var(--discord);
+  background-image: linear-gradient(
+    to bottom,
+    var(--discord-raised-top),
+    var(--discord-raised-bottom)
+  );
+  color: #ffffff;
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.14),
+    inset 0 -1px rgba(0, 0, 0, 0.3),
+    0 1px rgba(0, 0, 0, 0.45);
+}
+
+.icarus-button-discord:hover:not(:disabled):not([aria-disabled="true"]) {
+  background-color: color-mix(in srgb, var(--discord) 90%, var(--bg));
+  background-image: none;
+  box-shadow: none;
+}
+
 .icarus-button-secondary {
   background-color: var(--control-surface);
   color: var(--text);
@@ -230,6 +255,20 @@ body {
   min-height: 36px;
   height: 36px;
   padding: 0 12px;
+}
+
+/* Shad's large size, for the page's main calls to action. */
+.icarus-button-lg {
+  min-height: 44px;
+  height: 44px;
+  padding: 0 32px;
+}
+
+/* On a phone the wide padding would push a pair of actions onto two rows. */
+@media (max-width: 639px) {
+  .icarus-button-lg {
+    padding: 0 16px;
+  }
 }
 
 .icarus-button-icon-sm {
