@@ -1007,6 +1007,7 @@ function DownloadSection() {
                         downloadingLabel={(p) => `Downloading… ${p}%`}
                         doneLabel="In your downloads. Go rescue."
                         onProgress={onProgress}
+                        className="icarus-button-wide"
                         style={{ width: "100%" }}
                     />
                     <p

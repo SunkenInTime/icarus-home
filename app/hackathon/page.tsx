@@ -10,7 +10,7 @@ import GlassDeviceFrame from "@/app/components/ui/GlassDeviceFrame";
 import Header from "@/app/components/Header/Header";
 import Footer from "@/app/components/Footer/Footer";
 
-import { BG, DOT, VIGNETTE, BORDER_SOFT, RING, ACCENT, ACCENT_HOVER, TEXT_SOFT, PREVIEW_IMG } from "@/app/constants";
+import { BG, DOT, VIGNETTE, BORDER_SOFT, RING, TEXT_SOFT, PREVIEW_IMG } from "@/app/constants";
 import { AnimationVariants } from "@/app/types/AnimationVariants";
 
 type Platform = "windows" | "mac" | "linux";
@@ -133,37 +133,20 @@ export default function HackathonPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-1">
-                  <motion.a
+                  <a
                     href="#download"
-                    className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                    style={{
-                      backgroundColor: ACCENT,
-                      color: "#fff",
-                      WebkitTapHighlightColor: "transparent",
-                    }}
-                    whileHover={{ scale: 1.03, y: -1 }}
-                    whileTap={{ scale: 0.97, y: 0 }}
-                    onMouseOver={(e) => (e.currentTarget.style.backgroundColor = ACCENT_HOVER)}
-                    onMouseOut={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
+                    className="icarus-button icarus-button-primary icarus-button-lg"
                   >
                     <FaDownload aria-hidden />
                     Download hackathon build
-                  </motion.a>
+                  </a>
 
-                  <motion.a
+                  <a
                     href="#vote"
-                    className="inline-flex items-center justify-center rounded-md px-5 py-2.5 text-sm font-medium text-white/90 focus-visible:outline-none focus-visible:ring-2"
-                    style={{
-                      border: `1px solid ${BORDER_SOFT}`,
-                      background: "rgba(255,255,255,0.02)",
-                      backdropFilter: "blur(6px)",
-                      borderColor: RING,
-                    }}
-                    whileHover={{ y: -1, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}
-                    whileTap={{ y: 0, scale: 0.98 }}
+                    className="icarus-button icarus-button-outline icarus-button-lg"
                   >
                     Vote for Hackbot
-                  </motion.a>
+                  </a>
                 </div>
               </motion.div>
 
@@ -242,31 +225,19 @@ export default function HackathonPage() {
                   <p className="mt-2 text-gray-400">{platform.size} • Experimental</p>
 
                   <div className="mt-6 space-y-3">
-                    <motion.a
+                    <a
                       data-retn-click
                       data-retn-name="Hackathon download click"
                       href={disabled ? undefined : platform.url}
-                      className="inline-flex w-full items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                      style={{
-                        backgroundColor: disabled ? "rgba(255,255,255,0.10)" : ACCENT,
-                        color: disabled ? "rgba(255,255,255,0.70)" : "#fff",
-                        cursor: disabled ? "not-allowed" : "pointer",
-                        WebkitTapHighlightColor: "transparent",
-                      }}
-                      whileHover={!disabled ? { scale: 1.02, y: -1 } : undefined}
-                      whileTap={!disabled ? { scale: 0.97, y: 0 } : undefined}
-                      onMouseOver={(e) => {
-                        if (!disabled) e.currentTarget.style.backgroundColor = ACCENT_HOVER;
-                      }}
-                      onMouseOut={(e) => {
-                        if (!disabled) e.currentTarget.style.backgroundColor = ACCENT;
-                      }}
+                      className={`icarus-button icarus-button-wide w-full ${
+                        disabled ? "icarus-button-secondary" : "icarus-button-primary"
+                      }`}
                       aria-disabled={disabled}
                       tabIndex={disabled ? -1 : 0}
                     >
                       <FaDownload aria-hidden />
                       {disabled ? "Download link coming soon" : platform.label}
-                    </motion.a>
+                    </a>
                     <p className="text-center text-xs text-gray-500">
                       Hackathon-only build • Expect breakage • By downloading, you agree to our{" "}
                       <a href="/tos" className="text-[#7B61FF] hover:underline">
@@ -313,24 +284,15 @@ export default function HackathonPage() {
                 </p>
               </div>
 
-              <motion.a
+              <a
                 href={undefined}
-                className="inline-flex items-center justify-center gap-2 rounded-md px-5 py-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                style={{
-                  border: `1px solid ${BORDER_SOFT}`,
-                  background: "rgba(255,255,255,0.03)",
-                  backdropFilter: "blur(6px)",
-                  borderColor: RING,
-                  color: "#fff",
-                  cursor: "not-allowed",
-                  opacity: 0.7,
-                }}
+                className="icarus-button icarus-button-outline"
                 aria-disabled
                 tabIndex={-1}
               >
                 <FaVoteYea aria-hidden />
                 Vote link coming soon
-              </motion.a>
+              </a>
             </div>
           </div>
         </SectionShell>

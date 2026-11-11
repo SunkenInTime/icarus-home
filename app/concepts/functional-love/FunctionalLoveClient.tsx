@@ -628,6 +628,7 @@ function GiftShop() {
                         downloadingLabel={(p) => `Downloading… ${p}%`}
                         doneLabel="In your downloads. Go draw."
                         onProgress={onProgress}
+                        className="icarus-button-wide"
                         style={{ width: "100%" }}
                     />
                     <p

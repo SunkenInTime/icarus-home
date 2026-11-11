@@ -77,24 +77,15 @@ export default function ProgressButton({
         <button
             type="button"
             onClick={begin}
-            className={className}
+            data-state={downloading ? "busy" : phase}
+            className={`icarus-button ${
+                phase === "idle" ? "icarus-button-primary" : "icarus-button-secondary"
+            } ${className ?? ""}`}
             style={{
                 position: "relative",
                 overflow: "hidden",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                height: 42,
-                padding: "0 22px",
-                borderRadius: 8,
-                border: "1px solid transparent",
-                background: downloading ? palette.raised : palette.violet,
                 color: phase === "idle" ? "#f9fafb" : palette.fg,
-                fontSize: 14,
-                fontWeight: 600,
                 cursor: phase === "idle" ? "pointer" : "default",
-                transition: "background 200ms ease",
                 ...style,
             }}
         >
@@ -107,7 +98,8 @@ export default function ProgressButton({
                         bottom: 0,
                         left: 0,
                         width: `${percent}%`,
-                        background: palette.violet,
+                        background: "linear-gradient(to bottom, #8f56f0, #732cec)",
+                        boxShadow: "inset 0 1px rgba(255,255,255,0.14), inset 0 -1px rgba(0,0,0,0.3)",
                         transition: "width 120ms ease-out",
                     }}
                 />

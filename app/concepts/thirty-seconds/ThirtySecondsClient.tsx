@@ -312,6 +312,7 @@ function NextRound() {
                         downloadingLabel={(p) => `Downloading… ${p}%`}
                         doneLabel="In your downloads. Call the play."
                         onProgress={onProgress}
+                        className="icarus-button-wide"
                         style={{ width: "100%" }}
                     />
                     <p className="callsign mt-3.5" style={{ fontSize: 11, color: palette.dim }}>

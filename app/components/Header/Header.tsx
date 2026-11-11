@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { motion } from "framer-motion";
 import { FaArrowRight } from "react-icons/fa";
 
-import { ACCENT, ACCENT_HOVER } from "@/app/constants";
+import { ACCENT } from "@/app/constants";
 import Wordmark from "@/app/components/Wordmark";
 
 const Header = () => {
@@ -35,7 +34,7 @@ const Header = () => {
                             </span>
                         </Link>
 
-                        <div className="hidden md:flex items-center gap-1 text-sm">
+                        <div className="hidden lg:flex items-center gap-1 text-sm">
                             {[
                                 ["Features", homeSection("#features")],
                                 ["Compare", homeSection("#compare")],
@@ -44,31 +43,23 @@ const Header = () => {
                                 ["Community", homeSection("#community")],
                                 ["Hackathon", "/hackathon"],
                             ].map(([label, href]) => (
-                                <motion.a
+                                <a
                                     key={label}
                                     href={href}
-                                    className="rounded-md px-3 py-1.5 text-sm transition-colors"
-                                    style={{ color: "#d4d4d8" }}
-                                    whileHover={{ backgroundColor: "rgba(124,58,237,0.10)", color: "#fff" }}
-                                    whileTap={{ scale: 0.97 }}
+                                    className="icarus-button icarus-button-ghost icarus-button-sm"
                                 >
                                     {label}
-                                </motion.a>
+                                </a>
                             ))}
                         </div>
 
-                        <motion.a
+                        <a
                             href={downloadHref}
-                            className="inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-sm font-medium"
-                            style={{ backgroundColor: ACCENT, color: "#fff" }}
-                            whileHover={{ scale: 1.03, y: -1 }}
-                            whileTap={{ scale: 0.97, y: 0 }}
-                            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = ACCENT_HOVER)}
-                            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = ACCENT)}
+                            className="icarus-button icarus-button-primary"
                         >
                             <span>Get Icarus</span>
                             <FaArrowRight aria-hidden size={11} />
-                        </motion.a>
+                        </a>
                     </nav>
                 </div>
             </div>

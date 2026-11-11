@@ -406,6 +406,7 @@ function DownloadCard() {
                         downloadingLabel={(p) => `Downloading… ${p}%`}
                         doneLabel="In your downloads folder"
                         onProgress={setProgress}
+                        className="icarus-button-wide"
                         style={{ width: "100%" }}
                     />
                 </div>
