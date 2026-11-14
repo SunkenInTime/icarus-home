@@ -223,7 +223,7 @@ export default function SunSection({ versionInfo }: { versionInfo: VersionInfo }
                     <span aria-hidden style={{ color: palette.dim }}>
                         ·
                     </span>
-                    <span style={{ color: palette.dim }}>MIT, all the way down</span>
+                    <span style={{ color: palette.dim }}>Apache 2.0, all the way down</span>
                 </div>
             </div>
         </section>

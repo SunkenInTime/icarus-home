@@ -438,7 +438,7 @@ const CLAIMS = [
     },
     {
         title: "Free",
-        body: "MIT-licensed, no accounts, no premium tier. The best one happens to cost nothing.",
+        body: "Apache-licensed, no accounts, no premium tier. The best one happens to cost nothing.",
     },
     {
         title: "Yours",

@@ -2,7 +2,7 @@
 
 > Icarus Strats is a free, open-source VALORANT strategy planner for Windows. It gives players and teams a fast, local-first board for tactics, lineups, map notes, and multi-step plays.
 
-Icarus stores strategies on the user's device. It does not require an account, and the local planner has no premium tier. Players can export a strategy as a file or share it with a code. The project is MIT-licensed and developed in public.
+Icarus stores strategies on the user's device. It does not require an account, and the local planner has no premium tier. Players can export a strategy as a file or share it with a code. The project is Apache-licensed and developed in public.
 
 ## When to use Icarus
 
