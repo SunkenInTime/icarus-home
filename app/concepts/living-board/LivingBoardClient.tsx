@@ -128,7 +128,7 @@ export default function LivingBoardClient() {
                             className="callsign mt-5"
                             style={{ color: palette.dim, pointerEvents: "auto", width: "fit-content" }}
                         >
-                            Free · MIT · No accounts · v{versionInfo.version}
+                            Free · Apache 2.0 · No accounts · v{versionInfo.version}
                         </p>
 
                         <div

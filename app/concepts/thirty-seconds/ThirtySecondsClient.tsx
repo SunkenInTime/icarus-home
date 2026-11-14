@@ -244,7 +244,7 @@ function Debrief() {
                             }
                         </p>
                         <p style={{ margin: "12px 0 0" }}>
-                            {"Free and MIT-licensed, source and all. Optional Pro sync is coming for teams that want their playbook to follow them — the local board stays free either way."}
+                            {"Free and Apache-licensed, source and all. Optional Pro sync is coming for teams that want their playbook to follow them — the local board stays free either way."}
                         </p>
                     </div>
                 </div>
@@ -319,7 +319,7 @@ function NextRound() {
                         {`v${versionInfo.version} · ${win.size} · ${versionInfo.released}`}
                     </p>
                     <p style={{ margin: "6px 0 0", fontSize: 12.5, color: palette.muted }}>
-                        {"Free · MIT · No accounts"}
+                        {"Free · Apache 2.0 · No accounts"}
                     </p>
 
                     <div

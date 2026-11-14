@@ -24,7 +24,7 @@ const Footer = () => {
                             the board is zero.
                         </p>
                         <div className="callsign mt-4" style={{ color: "#52525b" }}>
-                            BUILT BY DARA · OPEN SOURCE · MIT
+                            BUILT BY DARA · OPEN SOURCE · APACHE 2.0
                         </div>
                     </div>
 

@@ -968,7 +968,7 @@ function DownloadSection() {
                 <Callsign>{"the rescue continues"}</Callsign>
                 <SectionHeading>Rescue the rest of them.</SectionHeading>
                 <BodyCopy>
-                    {`Icarus is free, MIT-licensed, and ${win.size} — smaller than your screenshots folder. Download it, drag the chaos in, and hand your five-stack something they can actually follow.`}
+                    {`Icarus is free, Apache-licensed, and ${win.size} — smaller than your screenshots folder. Download it, drag the chaos in, and hand your five-stack something they can actually follow.`}
                 </BodyCopy>
             </div>
 
@@ -1023,7 +1023,7 @@ function DownloadSection() {
                         {`v${versionInfo.version} · ${win.size} · ${versionInfo.released}`}
                     </p>
                     <p style={{ margin: "6px 0 0", fontSize: 12.5, color: palette.muted }}>
-                        {"Free · MIT · No accounts"}
+                        {"Free · Apache 2.0 · No accounts"}
                     </p>
 
                     <div

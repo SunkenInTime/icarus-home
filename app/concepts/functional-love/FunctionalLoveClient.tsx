@@ -644,7 +644,7 @@ function GiftShop() {
                         {`v${versionInfo.version} · ${win.size} · ${versionInfo.released}`}
                     </p>
                     <p style={{ margin: "6px 0 0", fontSize: 12.5, color: palette.muted }}>
-                        {"Free · MIT · No accounts"}
+                        {"Free · Apache 2.0 · No accounts"}
                     </p>
 
                     <div

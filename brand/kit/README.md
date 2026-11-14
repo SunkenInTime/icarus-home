@@ -12,10 +12,10 @@ How the homepage says it:
 
 - Headline: **The free VALORANT strategy board.**
 - Under it: **Map out executes and share strats your team can follow. Works offline, with no account or paid tier.**
-- The three claims: **Fast** (native desktop, 60fps canvas), **Free** (MIT-licensed, no accounts, no premium tier), **Yours** (local-first, your playbook lives on your machine).
+- The three claims: **Fast** (native desktop, 60fps canvas), **Free** (Apache-licensed, no accounts, no premium tier), **Yours** (local-first, your playbook lives on your machine).
 - Section heads: "Agents at your side. Not under your canvas.", "Yours, even offline.", "Built in the open, steered by players."
 - The download section: "Touch the sun." After the download: "Your wings. Your machine. Fly."
-- Footer: "MIT, all the way down".
+- Footer: "Apache 2.0, all the way down".
 
 The feel is a tactical workbench: dark, dense, map-first. Polish comes from order, not ornament. The map and the tactical objects on it are the hero; everything else is hardware around the bench.
 
@@ -107,7 +107,7 @@ How it works, because the rule matters more than the picture:
 - A second, cool field drifts through the first on a silver ramp `#252530` → `#7a7a8a` → `#e8e7f2`. Each dot belongs to whichever field is hotter, so the sun is violet where it burns and silver where it cools. It is never a flat grain of one purple.
 - At rest every cell keeps a faint base dot, so the lattice never disappears; it only dims.
 - Heat is meaningful, not decorative: scrolling toward the section warms it from 0 to 0.75, pointing at Download leans it violet for a beat, and the real download finishes it to 1. When the download completes: "Your wings. Your machine. Fly."
-- The composition: a horizon fade from the background at the top, a comet at 38% opacity above, one feather drifting down, then in a dark radial pool the plain wordmark at 28px, "Touch the sun." in Onest 700 at up to 76px, the flat violet Download button, a 10px version line, and the footer links inside the sun: GitHub, Discord, "MIT, all the way down".
+- The composition: a horizon fade from the background at the top, a comet at 38% opacity above, one feather drifting down, then in a dark radial pool the plain wordmark at 28px, "Touch the sun." in Onest 700 at up to 76px, the flat violet Download button, a 10px version line, and the footer links inside the sun: GitHub, Discord, "Apache 2.0, all the way down".
 - The hero foreshadows it with a 340px hairline of the same field along the top edge, cold.
 
 `brand-sheet/sun.js` is the site's DitherFire shader verbatim, and `brand-sheet/dither.js` is DitherLight, the single-source torch version. Use them, or reproduce the rule above by hand. It is never a smooth gradient, a blur, or a glow.
