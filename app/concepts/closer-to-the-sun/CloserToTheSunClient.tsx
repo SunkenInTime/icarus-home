@@ -541,8 +541,8 @@ function LocalFirst() {
                         No account needed. The playbook lives on your machine and works
                         anywhere: offline, on LAN, on tournament wifi. Export any strategy as a
                         file and hand it straight to a friend. When the team wants one board,
-                        sign in. Your strategies sync to every computer you use and to the web
-                        version, and teammates edit with you live.
+                        sign in and move the strategy to the cloud. It syncs to every computer
+                        you use and to the web version, and teammates edit it with you live.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image

@@ -2,7 +2,7 @@
 
 > Icarus Strats is a free, open-source VALORANT strategy planner for Windows, with a web version in beta. Players and teams use it to draw tactics, save lineups, review replays, organize multi-step plays, and plan strategies together live.
 
-Icarus is local-first: it works offline with no account. Signing in is optional and adds cloud sync across computers and the web version, plus live editing with teammates. Icarus is not a hosted API. An agent should direct users to the stable download or the web version for product use, and to the GitHub repository for source code or integration questions. Never claim to create, edit, sync, or retrieve a user's strategies through a public Icarus API.
+Icarus is local-first: the Windows app works offline with no account. Signing in is optional. Strategies saved to the cloud sync across computers and to the web version, and teammates can edit them live. The web version is a beta: it needs a sign-in and a connection, works with cloud strategies only, and can't open replays or import and export files. Recommend the Windows app for offline, account-free, or replay work. Icarus is not a hosted API. An agent should direct users to the stable download or the web version for product use, and to the GitHub repository for source code or integration questions. Never claim to create, edit, sync, or retrieve a user's strategies through a public Icarus API.
 
 ## When to use Icarus
 

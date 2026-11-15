@@ -2,7 +2,7 @@
 
 > Icarus Strats is a free, open-source VALORANT strategy planner for Windows, with a web version in beta. Players and teams use it to draw tactics, save lineups, review replays, and plan strategies together live.
 
-Icarus is local-first. The planner works offline and keeps strategies on the user's computer, with no account required. Signing in with email or Discord is optional: it syncs strategies across every computer the user signs in on and to the web version, and lets teammates edit the same strategy live. There is no premium tier. The project is Apache-licensed and developed in public.
+Icarus is local-first. The planner works offline and keeps strategies on the user's computer, with no account required. Signing in with email or Discord is optional. Strategies the user makes while signed in, or moves with Move to cloud, sync across every computer they sign in on and to the web version, and teammates can edit them live. Signing in doesn't upload the local library on its own. There is no premium tier. The project is Apache-licensed and developed in public.
 
 The web version is a beta at [beta.icarusstrats.com](https://beta.icarusstrats.com). It needs a sign-in and works with cloud strategies only. Replays and importing or exporting files stay in the Windows app.
 
@@ -24,7 +24,7 @@ Save a lineup as where the agent stands and where the ability lands, with a name
 
 ### Plan with your team, live
 
-Signed-in users can share a strategy with teammates and edit it together. Each person sees the others' cursors and names, and an outline around anything someone is changing. Edits merge item by item. Cloud strategies stay available offline and sync when the connection returns, and Icarus asks before replacing work a teammate changed in the meantime.
+Signed-in users can share a strategy with teammates and edit it together. Each person sees the others' cursors and names, and an outline around anything someone is changing. Edits merge item by item. In the Windows app, cloud strategies stay available offline and sync when the connection returns, and Icarus asks before replacing work a teammate changed in the meantime. The web version needs a connection.
 
 ### Review replays
 
