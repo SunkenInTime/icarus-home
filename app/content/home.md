@@ -20,7 +20,7 @@ Draw directly on VALORANT maps, place circles, rectangles, and zones, and place 
 
 ### Save lineups
 
-Save a lineup as where the agent stands and where the ability lands, with a name, notes, images, and a YouTube link for each throw. One standing spot can link to several landings.
+Save a lineup as where the agent stands and where the ability lands, with a name, notes, images, and a YouTube link for each throw. One standing spot can link to several landings. See [Save Valorant lineups in Icarus](https://icarusstrats.com/lineups.md).
 
 ### Plan with your team, live
 
