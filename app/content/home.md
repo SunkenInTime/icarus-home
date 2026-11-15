@@ -38,6 +38,7 @@ Use folders, keyboard shortcuts, and multiple pages for the separate steps of on
 
 - [Download Icarus for Windows](https://icarusstrats.com/#download)
 - [Open the web version (beta)](https://beta.icarusstrats.com)
+- [Save Valorant lineups in Icarus](https://icarusstrats.com/lineups.md)
 - [View the source code](https://github.com/SunkenInTime/icarus)
 - [Join the Icarus Discord](https://discord.gg/PN2uKwCqYB)
 - [Read the terms of service](https://icarusstrats.com/tos.md)

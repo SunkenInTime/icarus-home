@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { absoluteUrl } from "@/app/seo";
 
-const lastModified = new Date("2026-08-22T00:00:00.000Z");
+const lastModified = new Date("2026-11-15T00:00:00.000Z");
 
 const routes = [
   {
@@ -10,6 +10,12 @@ const routes = [
     changeFrequency: "weekly",
     priority: 1,
     images: [absoluteUrl("/og-image.png"), absoluteUrl("/board-preview.png")],
+  },
+  {
+    path: "/lineups",
+    changeFrequency: "monthly",
+    priority: 0.8,
+    images: [absoluteUrl("/lineups/lineups-on-bind.png"), absoluteUrl("/lineups/lineups-one-spot.png")],
   },
   {
     path: "/tos",
