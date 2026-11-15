@@ -66,7 +66,7 @@ const FAQ = [
     },
     {
         question: "Do I need an account?",
-        answer: "No. Lineups save to your computer and work offline. Sign in only if you want your strategies to sync across computers and to the web version, or to edit them live with teammates.",
+        answer: "No. In the Windows app, lineups save to your computer and work offline. Sign in and move a strategy to the cloud only if you want it on your other computers and the web version, or want to edit it live with teammates.",
     },
     {
         question: "Can I browse other people's lineups?",
@@ -74,7 +74,7 @@ const FAQ = [
     },
     {
         question: "Does it run on Mac or Linux?",
-        answer: "The app is for Windows. The web version runs in any browser once you sign in, and keeps the lineups you sync to the cloud.",
+        answer: "The app is for Windows. The web version runs in a browser once you sign in, and shows the strategies you keep in the cloud, lineups included.",
     },
 ] as const;
 
@@ -170,7 +170,7 @@ export default async function LineupsPage() {
                     <Body className="mt-6 max-w-xl text-[16.5px]">
                         Icarus keeps each lineup on the map: where you stand, where the ability lands,
                         and the clip, screenshots and notes you need to land it again. It&rsquo;s free,
-                        and it works offline.
+                        and the Windows app works offline.
                     </Body>
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                         <a href={downloadUrl} className="icarus-button icarus-button-primary icarus-button-lg">

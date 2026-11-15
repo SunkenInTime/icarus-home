@@ -2,7 +2,7 @@
 
 > Icarus Strats is a free, open-source VALORANT strategy planner for Windows. It saves lineups on the map: where the player stands, where the ability lands, and a YouTube clip, screenshots, and notes for each throw.
 
-Lineups save to the user's computer and work offline, with no account. Signing in is optional. It syncs strategies, lineups included, across computers and to the web version (beta), and lets teammates edit them live.
+In the Windows app, lineups save to the user's computer and work offline, with no account. Signing in is optional. Strategies the user moves to the cloud, lineups included, sync across computers and to the web version (beta), and teammates can edit them live. Signing in doesn't upload the local library on its own.
 
 ## Save a lineup
 
@@ -22,7 +22,7 @@ Lineups belong to a strategy, next to the plays they support. Sharing the strate
 ## Limits
 
 - Icarus stores the lineups a user or their team saves. It is not a public lineup database.
-- The app runs on Windows. The web version runs in a browser, needs a sign-in, and works with cloud strategies only.
+- The app runs on Windows. The web version runs in a browser, needs a sign-in and a connection, and works with cloud strategies only.
 
 ## Get Icarus
 
