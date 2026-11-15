@@ -2,14 +2,14 @@
 
 import type { IconType } from "react-icons";
 import {
+    FaFilm,
     FaFolderOpen,
     FaHashtag,
-    FaKeyboard,
     FaLayerGroup,
     FaPlus,
     FaRegClone,
     FaShapes,
-    FaSyncAlt,
+    FaUsers,
 } from "react-icons/fa";
 
 import { palette, shadow } from "../_shared/tokens";
@@ -20,12 +20,12 @@ export type Extra = { tag: string; detail: string; icon: IconType };
 
 export const EXTRAS: Extra[] = [
     { tag: "custom folders", detail: "Recolor and organize them your way.", icon: FaFolderOpen },
-    { tag: "keybinds", detail: "For everything you do twice.", icon: FaKeyboard },
+    { tag: "live planning", detail: "Sign in and your team edits one board together.", icon: FaUsers },
     { tag: "multiple lineups", detail: "Per agent, per map, per mood.", icon: FaLayerGroup },
     { tag: "custom shapes", detail: "For when the pen isn't enough.", icon: FaShapes },
     { tag: "the pages bar", detail: "One strategy, many pages — every sequence gets its own beat.", icon: FaRegClone },
     { tag: "share codes", detail: "One code hands your five-stack the whole strat.", icon: FaHashtag },
-    { tag: "auto-updates", detail: "Fixes ship while the meta is still warm.", icon: FaSyncAlt },
+    { tag: "replays", detail: "Watch your matches on the map and capture any moment.", icon: FaFilm },
     { tag: "and more", detail: "We stopped listing.", icon: FaPlus },
 ];
 

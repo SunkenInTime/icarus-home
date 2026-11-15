@@ -438,11 +438,11 @@ const CLAIMS = [
     },
     {
         title: "Free",
-        body: "Apache-licensed, no accounts, no premium tier. The best one happens to cost nothing.",
+        body: "Apache-licensed, no account needed, no premium tier. The best one happens to cost nothing.",
     },
     {
         title: "Yours",
-        body: "Local-first. Your playbook lives on your machine, not on somebody's server.",
+        body: "Local-first. Your playbook lives on your machine, and goes to the cloud only if you put it there.",
     },
 ] as const;
 
@@ -538,9 +538,11 @@ function LocalFirst() {
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        No accounts. No servers. The playbook lives on your machine and works
-                        anywhere — offline, on LAN, on tournament wifi. And nothing is locked
-                        in: export any strategy as a file and hand it straight to a friend.
+                        No account needed. The playbook lives on your machine and works
+                        anywhere: offline, on LAN, on tournament wifi. Export any strategy as a
+                        file and hand it straight to a friend. When the team wants one board,
+                        sign in. Your strategies sync to every computer you use and to the web
+                        version, and teammates edit with you live.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image
