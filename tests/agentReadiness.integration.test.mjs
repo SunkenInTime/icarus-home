@@ -97,7 +97,7 @@ test("public agent-ready endpoints behave correctly", async (t) => {
   });
 
   await t.test("canonical URLs negotiate Markdown and advertise cache variance", async () => {
-    for (const pathname of ["/", "/tos"]) {
+    for (const pathname of ["/", "/lineups", "/tos"]) {
       const response = await fetch(`${origin}${pathname}`, {
         headers: { Accept: "text/markdown, text/html;q=0.8" },
       });
@@ -198,6 +198,7 @@ test("public agent-ready endpoints behave correctly", async (t) => {
     const sitemapBody = await sitemap.text();
     assert.match(sitemapBody, /<loc>https:\/\/icarusstrats\.com\/<\/loc>/);
     assert.match(sitemapBody, /<loc>https:\/\/icarusstrats\.com\/tos<\/loc>/);
+    assert.match(sitemapBody, /<loc>https:\/\/icarusstrats\.com\/lineups<\/loc>/);
 
     assert.equal(manifest.status, 200);
     assert.equal((await manifest.json()).short_name, "Icarus Strats");

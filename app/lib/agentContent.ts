@@ -3,6 +3,7 @@ import path from "node:path";
 
 const CONTENT_FILES = {
   "/": "home.md",
+  "/lineups": "lineups.md",
   "/tos": "tos.md",
 } as const;
 
