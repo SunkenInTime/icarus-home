@@ -10,6 +10,16 @@ import { absoluteUrl, siteConfig } from "@/app/seo";
 export const revalidate = 3600;
 
 const title = "Save Valorant Lineups";
+// The share picture is the first frame of the share video, so apps that play
+// link-preview videos and apps that don't show the same card.
+const shareImage = {
+    url: "/og/lineups-v1.png",
+    width: 1200,
+    height: 630,
+    alt: "Agents, abilities, smokes and pen strokes from the Icarus board around the line: The free VALORANT strategy board.",
+};
+// A full URL: Next leaves video paths as written, unlike image paths.
+const shareVideo = { url: absoluteUrl("/og/lineups-v1.mp4"), type: "video/mp4", width: 1200, height: 630 };
 const description =
     "Save your VALORANT lineups on the map in Icarus: where you stand, where the ability lands, and the clip, screenshots and notes for each throw. Free and open source.";
 
@@ -28,7 +38,8 @@ export const metadata: Metadata = {
         siteName: siteConfig.name,
         title: `${title} | ${siteConfig.name}`,
         description,
-        images: [{ url: "/lineups/lineups-on-bind.png", alt: "Lineups on Bind in Icarus" }],
+        images: [shareImage],
+        videos: [shareVideo],
     },
     twitter: {
         card: "summary_large_image",
@@ -36,7 +47,7 @@ export const metadata: Metadata = {
         creator: "@daradoescode",
         title: `${title} | ${siteConfig.name}`,
         description,
-        images: ["/lineups/lineups-on-bind.png"],
+        images: [shareImage.url],
     },
 };
 

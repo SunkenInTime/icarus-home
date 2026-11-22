@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Onest } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import { siteConfig } from "@/app/seo";
+import { absoluteUrl, siteConfig } from "@/app/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +67,9 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     locale: "en_US",
     images: [siteConfig.ogImage],
+    // Next resolves image paths against metadataBase but leaves video paths
+    // as written, and a link-preview bot can't follow a relative one.
+    videos: [{ ...siteConfig.ogVideo, url: absoluteUrl(siteConfig.ogVideo.url) }],
   },
   twitter: {
     card: "summary_large_image",

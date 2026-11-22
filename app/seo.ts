@@ -33,6 +33,15 @@ export const siteConfig = {
     height: 630,
     alt: "The Icarus strategy board with an Ascent default drawn on the map",
   },
+  // Plays in the apps that support a link-preview video (iMessage, Discord).
+  // It opens and closes on ogImage, which every other app shows. The file is
+  // versioned by name because apps cache it by URL.
+  ogVideo: {
+    url: "/og/home-v1.mp4",
+    type: "video/mp4",
+    width: 1200,
+    height: 630,
+  },
   author: {
     name: "Dara Adedeji",
     url: "https://x.com/daradoescode",
