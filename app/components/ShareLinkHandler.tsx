@@ -89,7 +89,8 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
     const [shareLink, setShareLink] = useState<ShareLink | null>(null);
     const [handoff, setHandoff] = useState<HandoffState>("opening");
     const [copyState, setCopyState] = useState<CopyState>("idle");
-    const retryTimer = useRef(0);
+    // One give-up timer, shared by the first attempt and every retry.
+    const unopenedTimer = useRef(0);
 
     useEffect(() => {
         const code = extractCodeFromUrl();
@@ -106,15 +107,14 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
             window.location.href = deepLink;
         }, 650);
 
-        const fallbackTimer = window.setTimeout(() => {
+        unopenedTimer.current = window.setTimeout(() => {
             setHandoff("unopened");
         }, 1800);
 
         return () => {
             window.clearTimeout(renderTimer);
             window.clearTimeout(redirectTimer);
-            window.clearTimeout(fallbackTimer);
-            window.clearTimeout(retryTimer.current);
+            window.clearTimeout(unopenedTimer.current);
         };
     }, []);
 
@@ -144,13 +144,14 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
     // The link itself fires the deep link; this only shows the attempt.
     function retryInIcarus() {
         setHandoff("opening");
-        window.clearTimeout(retryTimer.current);
-        retryTimer.current = window.setTimeout(() => setHandoff("unopened"), 1800);
+        window.clearTimeout(unopenedTimer.current);
+        unopenedTimer.current = window.setTimeout(() => setHandoff("unopened"), 1800);
     }
 
     return (
         <section
             aria-labelledby="share-title"
+            aria-live="polite"
             className="fixed inset-0 z-50 flex flex-col overflow-y-auto"
             style={{ background: palette.bg, color: palette.fg }}
         >
@@ -162,7 +163,7 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
                 </div>
             </header>
 
-            <main className="relative flex flex-1 items-center overflow-hidden py-10 lg:py-16">
+            <main className="relative flex flex-[1_0_auto] items-center overflow-hidden py-10 lg:py-16">
                 <div
                     aria-hidden
                     className="tactical-dots absolute inset-0"
@@ -175,7 +176,7 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
                 {/* The homepage sun, warm for as long as the link is opening. */}
                 <AnimatedSun warm={opening} />
 
-                <div className="relative mx-auto w-full max-w-[1160px] px-6" aria-live="polite">
+                <div className="relative mx-auto w-full max-w-[1160px] px-6">
                     <h1
                         id="share-title"
                         className="font-display"
@@ -197,41 +198,28 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
                             : "The desktop app may not be installed on this device. This link opens read-only in your browser, no account needed."}
                     </p>
 
-                    {/* The primary action is whichever one can work next. */}
+                    {/* The primary action is whichever one can work next. Both links
+                        stay the same elements, so one that has keyboard focus keeps
+                        its destination when the state changes; only the look and
+                        the visual order swap. */}
                     <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:gap-4">
-                        {opening ? (
-                            <>
-                                <a
-                                    href={shareLink.deepLink}
-                                    onClick={retryInIcarus}
-                                    className="icarus-button icarus-button-primary icarus-button-lg icarus-button-responsive-wide"
-                                >
-                                    Open in Icarus
-                                </a>
-                                <a
-                                    href={shareLink.webLink}
-                                    className="icarus-button icarus-button-secondary icarus-button-lg icarus-button-responsive-wide"
-                                >
-                                    View in browser
-                                </a>
-                            </>
-                        ) : (
-                            <>
-                                <a
-                                    href={shareLink.webLink}
-                                    className="icarus-button icarus-button-primary icarus-button-lg icarus-button-responsive-wide"
-                                >
-                                    View in browser
-                                </a>
-                                <a
-                                    href={shareLink.deepLink}
-                                    onClick={retryInIcarus}
-                                    className="icarus-button icarus-button-secondary icarus-button-lg icarus-button-responsive-wide"
-                                >
-                                    Try opening Icarus again
-                                </a>
-                            </>
-                        )}
+                        <a
+                            href={shareLink.deepLink}
+                            onClick={retryInIcarus}
+                            className={`icarus-button icarus-button-lg icarus-button-responsive-wide ${
+                                opening ? "icarus-button-primary" : "icarus-button-secondary order-last"
+                            }`}
+                        >
+                            {opening ? "Open in Icarus" : "Try opening Icarus again"}
+                        </a>
+                        <a
+                            href={shareLink.webLink}
+                            className={`icarus-button icarus-button-lg icarus-button-responsive-wide ${
+                                opening ? "icarus-button-secondary" : "icarus-button-primary"
+                            }`}
+                        >
+                            View in browser
+                        </a>
                     </div>
                 </div>
             </main>
