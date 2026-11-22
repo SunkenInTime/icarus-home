@@ -353,8 +353,8 @@ function Hero({ swings }: { swings: BigSwings }) {
                     className="rise-in mx-auto mt-6 max-w-xl text-center text-[16.5px] leading-[1.6]"
                     style={{ color: palette.muted, animationDelay: `${REVEAL.body}ms` }}
                 >
-                    Map out executes and share strats your team can follow. Works offline,
-                    with no account or paid tier.
+                    Draw executes, save lineups, and review replays on a fast desktop board.
+                    Keep your playbook offline with no account, or plan live with your team.
                 </p>
 
                 <div
@@ -391,7 +391,7 @@ function Hero({ swings }: { swings: BigSwings }) {
                 >
                     <Image
                         src="/board-preview.png"
-                        alt="The Icarus strategy board: a VALORANT map with drawn tactics, agents, and folders"
+                        alt="The Icarus strategy board showing an Ascent attack setup with agents, abilities, drawn paths, and notes"
                         width={2048}
                         height={1280}
                         priority
@@ -434,15 +434,15 @@ function Hero({ swings }: { swings: BigSwings }) {
 const CLAIMS = [
     {
         title: "Fast",
-        body: "Native desktop, 60fps canvas. The pen draws the second you do — you feel the board, not the software.",
+        body: "Native desktop app with a 165fps+ canvas. Draw paths, drop util, and flip through pages without lag or stutter.",
     },
     {
         title: "Free",
-        body: "Apache-licensed, no account needed, no premium tier. The best one happens to cost nothing.",
+        body: "Open source under Apache 2.0, with no ads and no paywall. Save your whole playbook without a subscription or strat cap.",
     },
     {
         title: "Yours",
-        body: "Local-first. Your playbook lives on your machine, and goes to the cloud only if you put it there.",
+        body: "Local-first by default. Your playbook stays on your PC and works offline. Only the strats you move to the cloud ever sync.",
     },
 ] as const;
 
@@ -493,16 +493,16 @@ function AgentBar() {
                     <SectionHeading label="The agent bar">
                         Agents at your side.
                         <br />
-                        <span style={{ color: palette.muted }}>Not under your canvas.</span>
+                        <span style={{ color: palette.muted }}>Not under the map.</span>
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Every other board buries agents in a bottom tray. Icarus mounts them on
-                        the side of the map, so you grab, drop, and swap agents without breaking
-                        your drawing flow. Right-click any agent for its full ability list — the
-                        abilities live on the map too.
+                        Most boards cram the whole roster into a strip at the bottom. Icarus
+                        keeps agents right beside the map, so you can drop a comp or swap a pick
+                        without losing your place. Right-click any agent to pull up their full
+                        kit and place abilities straight on the map.
                     </p>
                 </div>
 
@@ -538,11 +538,12 @@ function LocalFirst() {
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        No account needed. The playbook lives on your machine and works
-                        anywhere: offline, on LAN, on tournament wifi. Export any strategy as a
-                        file and hand it straight to a friend. When the team wants one board,
-                        sign in and move the strategy to the cloud. It syncs to every computer
-                        you use and to the web version, and teammates edit it with you live.
+                        Open Icarus and start drawing with no account. Your playbook stays on
+                        your PC and works offline, at a LAN, or on shaky tournament wifi. Export
+                        any strat as an .ica file to drop in Discord, or sign in and move it to
+                        the cloud when your team wants one shared board. Cloud strats sync to
+                        your other PCs and the web beta, and teammates can edit them with you
+                        live.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image
@@ -590,9 +591,10 @@ function Community() {
                     className="mx-auto mt-5 max-w-lg text-[15.5px] leading-[1.7]"
                     style={{ color: palette.muted }}
                 >
-                    Icarus ships from feedback. Tell us what&rsquo;s broken or missing in the
-                    Discord and it usually lands within a version or two — updates ship in
-                    days, not quarters.
+                    Icarus is built in public with the players, IGLs, and coaches who use it
+                    every week. Drop a bug report or feature request in the Discord, vote on
+                    what comes next, or open an issue on GitHub. Most of the app&rsquo;s best
+                    updates started as a message there.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                     <a

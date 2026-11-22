@@ -6,10 +6,10 @@ import {
     FaFolderOpen,
     FaHashtag,
     FaLayerGroup,
-    FaPlus,
     FaRegClone,
     FaShapes,
     FaUsers,
+    FaVideo,
 } from "react-icons/fa";
 
 import { palette, shadow } from "../_shared/tokens";
@@ -19,14 +19,14 @@ import { palette, shadow } from "../_shared/tokens";
 export type Extra = { tag: string; detail: string; icon: IconType };
 
 export const EXTRAS: Extra[] = [
-    { tag: "custom folders", detail: "Recolor and organize them your way.", icon: FaFolderOpen },
-    { tag: "live planning", detail: "Sign in and your team edits one board together.", icon: FaUsers },
-    { tag: "multiple lineups", detail: "Per agent, per map, per mood.", icon: FaLayerGroup },
-    { tag: "custom shapes", detail: "For when the pen isn't enough.", icon: FaShapes },
-    { tag: "the pages bar", detail: "One strategy, many pages — every sequence gets its own beat.", icon: FaRegClone },
-    { tag: "share codes", detail: "One code hands your five-stack the whole strat.", icon: FaHashtag },
-    { tag: "replays", detail: "Watch your matches on the map and capture any moment.", icon: FaFilm },
-    { tag: "and more", detail: "We stopped listing.", icon: FaPlus },
+    { tag: "folders", detail: "Sort your playbook by map, comp, or side, and color-code it your way.", icon: FaFolderOpen },
+    { tag: "live planning", detail: "Edit the same board together with live cursors and instant sync.", icon: FaUsers },
+    { tag: "lineups", detail: "Pin where you stand and where util lands, with clips, screenshots, and notes.", icon: FaLayerGroup },
+    { tag: "shapes & zones", detail: "Mark site control and clear areas with circles, boxes, and floor zones.", icon: FaShapes },
+    { tag: "multi-page strats", detail: "Step through the default, execute, and post-plant on separate pages.", icon: FaRegClone },
+    { tag: "share links", detail: "Send a link or code to your five-stack. Anyone can view it in the browser.", icon: FaHashtag },
+    { tag: "2d replays", detail: "Watch .vrf replays on the map and capture any round moment as a page.", icon: FaFilm },
+    { tag: "mp4 export", detail: "Export multi-page strats as animated videos ready for team Discord.", icon: FaVideo },
 ];
 
 export function ChipFace({ extra }: { extra: Extra }) {
