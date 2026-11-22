@@ -91,6 +91,7 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
     const [copyState, setCopyState] = useState<CopyState>("idle");
     // One give-up timer, shared by the first attempt and every retry.
     const unopenedTimer = useRef(0);
+    const codeRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
         const code = extractCodeFromUrl();
@@ -135,6 +136,10 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
             await navigator.clipboard.writeText(shareLink.code);
             setCopyState("copied");
         } catch {
+            // No clipboard access: select the code so Ctrl+C finishes the job.
+            if (codeRef.current) {
+                window.getSelection()?.selectAllChildren(codeRef.current);
+            }
             setCopyState("manual");
         }
 
@@ -247,6 +252,7 @@ export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string 
                     >
                         <div className="min-w-0">
                             <code
+                                ref={codeRef}
                                 className="font-mono block select-all break-all font-medium leading-[1.3]"
                                 style={{ fontSize: "clamp(17px, 1.7vw, 22px)" }}
                             >
