@@ -442,7 +442,7 @@ const CLAIMS = [
     },
     {
         title: "Yours",
-        body: "Local-first by default. Your playbook stays on your PC and works offline. Only the strats you move to the cloud ever sync.",
+        body: "Local-first by default. With no account, your playbook stays on your PC and works offline. Signing in never uploads your local strats on its own.",
     },
 ] as const;
 
@@ -540,10 +540,8 @@ function LocalFirst() {
                     >
                         Open Icarus and start drawing with no account. Your playbook stays on
                         your PC and works offline, at a LAN, or on shaky tournament wifi. Export
-                        any strat as an .ica file to drop in Discord, or sign in and move it to
-                        the cloud when your team wants one shared board. Cloud strats sync to
-                        your other PCs and the web beta, and teammates can edit them with you
-                        live.
+                        any strat as an .ica file to drop in Discord or keep as a backup. When
+                        your team wants one shared board, sign in and move it to the cloud.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image
@@ -561,7 +559,44 @@ function LocalFirst() {
     );
 }
 
-/* ── 5 · Community: built from feedback ────────────────────────── */
+/* ── 5 · Live cloud planning: one board, the whole team ────────── */
+
+function LiveCloud() {
+    return (
+        <section id="live-cloud" className="relative py-24 sm:py-32">
+            {/* Flight path banks left through live cloud planning. */}
+            <span data-flight-anchor aria-hidden className="absolute left-[10%] top-[28%] h-2 w-2" />
+
+            <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+                <div>
+                    <SectionHeading label="Live cloud planning">
+                        One board.
+                        <br />
+                        <span style={{ color: palette.muted }}>Your whole team on it.</span>
+                    </SectionHeading>
+                    <p
+                        className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
+                        style={{ color: palette.muted }}
+                    >
+                        Sign in and every new strat saves to the cloud. It syncs to your other
+                        PCs and the web beta, and anyone you send an edit link can work on the
+                        same board at the same time. You see their cursor and name on the map,
+                        and what they draw shows up on your screen while you keep going. Lose
+                        your connection mid-scrim and the desktop app keeps your cloud strats
+                        open offline, then syncs when you&rsquo;re back.
+                    </p>
+                </div>
+
+                <DemoVideo
+                    src="/live-cursors-showcase.mp4"
+                    label="Two teammates editing the same Ascent strat live: one draws execute arrows into A site while the other, shown by a cursor labelled mika, draws a mid arrow and moves Harbor's wall"
+                />
+            </div>
+        </section>
+    );
+}
+
+/* ── 6 · Community: built from feedback ────────────────────────── */
 
 function Community() {
     return (
@@ -621,7 +656,7 @@ function Community() {
     );
 }
 
-/* ── 6 · Extras: found by torchlight (see TorchlitExtras) ──────── */
+/* ── 7 · Extras: found by torchlight (see TorchlitExtras) ──────── */
 
 /* ── Page ──────────────────────────────────────────────────────── */
 
@@ -651,6 +686,7 @@ export default function CloserToTheSunClient({
                     </>
                 )}
                 <LocalFirst />
+                <LiveCloud />
                 <Community />
                 <TorchlitExtras />
                 <SunSection versionInfo={latestVersionInfo} />

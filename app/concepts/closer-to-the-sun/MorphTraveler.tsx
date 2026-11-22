@@ -122,14 +122,15 @@ const SHAPES: Record<string, Shape> = {
 
 /** Stage order along the page; index = nearest flight anchor, clamped. */
 export const STAGES = [
-    "wing", // hero headline — the falling wing begins the journey
+    "wing", // hero headline: the falling wing begins the journey
     "dart", // why icarus
     "reticle", // agent bar
     "folder", // local-first
+    "reticle", // live cloud planning
     "heart", // community
     "comet", // extras (two anchors)
     "comet",
-    "logo", // the sun — the traveler resolves into the Icarus mark
+    "logo", // the sun: the traveler resolves into the Icarus mark
 ] as const;
 
 const MORPH_MS = 480;

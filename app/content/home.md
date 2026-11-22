@@ -2,7 +2,7 @@
 
 > Icarus Strats is a free, open-source VALORANT strategy planner for Windows, with a web version in beta. Players, IGLs, and coaches use it to draw executes, save lineups, review match replays, and plan strategies together live.
 
-Icarus is local-first. The Windows desktop app works offline and keeps your playbook on your own PC, with no account, no ads, and no paid tier. Signing in with email or Discord is optional. Strategies you create while signed in, or move with Move to cloud, sync across every computer you sign in on and to the web beta, and teammates can edit them with you live. Signing in does not upload your local library on its own. The project is Apache 2.0 licensed and built in public with the community.
+Icarus is local-first. The Windows desktop app works offline and keeps your playbook on your own PC, with no account, no ads, and no paid tier. Signing in with email or Discord is optional. Once you sign in, every new strategy saves to the cloud, and you can move older ones there with Move to cloud. Cloud strategies sync across every computer you sign in on and to the web beta, and teammates can edit the same board with you live. Signing in does not upload your local library on its own, and the Windows app can still export any strategy, local or cloud, as an `.ica` file. The project is Apache 2.0 licensed and built in public with the community.
 
 The web version is in beta at [beta.icarusstrats.com](https://beta.icarusstrats.com). It requires a sign-in and works with cloud strategies only (view-only share links open without an account). Replays and importing or exporting `.ica` files stay in the Windows app.
 
@@ -24,7 +24,7 @@ Pin lineups right on the map with your standing spot, landing spot, name, notes,
 
 ### Plan with your team, live
 
-Signed-in users can share a cloud strategy with teammates and edit it together. Everyone sees each other's live cursors and names, plus an outline around anything someone is changing. Edits merge item by item. In the Windows app, cloud strategies stay available offline and sync when the connection returns, and Icarus asks before overwriting work a teammate changed in the meantime. The web beta needs an active connection.
+Cloud planning works today. Signed-in users can send teammates an edit link to a cloud strategy and work on the same board at the same time. Everyone sees each other's live cursors and names, plus an outline around anything someone is changing. Edits merge item by item. In the Windows app, cloud strategies stay available offline and sync when the connection returns, and Icarus asks before overwriting work a teammate changed in the meantime. The web beta needs an active connection.
 
 ### Review replays
 
