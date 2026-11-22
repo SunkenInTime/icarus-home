@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { FaArrowRight, FaCheck, FaCopy } from "react-icons/fa";
+import { LuCheck, LuCopy, LuDownload } from "react-icons/lu";
 
-const ICARUS_LOGO_URL =
-    "https://l7y6qjyp5m.ufs.sh/f/usun6XPoM0UC5l0lqgyKoUQXBjdA4sgHc3Dqt8pWIzr2e0iN";
+import Wordmark from "@/app/components/Wordmark";
+import { AnimatedSun } from "@/app/concepts/closer-to-the-sun/CloserToTheSunClient";
+import { palette } from "@/app/concepts/_shared/tokens";
 
 // The web app opens a strategy link read-only for anyone, account or not,
 // so a reader without the desktop app can still see what was shared. A
@@ -75,13 +76,20 @@ function webLinkForCode(code: string) {
     return `${WEB_APP_ORIGIN}/share/${encodeURIComponent(code)}`;
 }
 
-const NOT_OPENED_STATUS =
-    "If Icarus did not open, view it in your browser or copy the code into the app.";
+/** "opening" while the deep link is being tried, "unopened" once Icarus has not answered. */
+type HandoffState = "opening" | "unopened";
 
-export default function ShareLinkHandler() {
+const COPY_LABEL: Record<CopyState, string> = {
+    idle: "Copy code",
+    copied: "Copied",
+    manual: "Select code",
+};
+
+export default function ShareLinkHandler({ downloadUrl }: { downloadUrl: string }) {
     const [shareLink, setShareLink] = useState<ShareLink | null>(null);
-    const [status, setStatus] = useState("Opening shared strategy in Icarus.");
+    const [handoff, setHandoff] = useState<HandoffState>("opening");
     const [copyState, setCopyState] = useState<CopyState>("idle");
+    const retryTimer = useRef(0);
 
     useEffect(() => {
         const code = extractCodeFromUrl();
@@ -99,31 +107,24 @@ export default function ShareLinkHandler() {
         }, 650);
 
         const fallbackTimer = window.setTimeout(() => {
-            setStatus(NOT_OPENED_STATUS);
+            setHandoff("unopened");
         }, 1800);
 
         return () => {
             window.clearTimeout(renderTimer);
             window.clearTimeout(redirectTimer);
             window.clearTimeout(fallbackTimer);
+            window.clearTimeout(retryTimer.current);
         };
     }, []);
-
-    const copyLabel = useMemo(() => {
-        if (copyState === "copied") {
-            return "Copied";
-        }
-
-        if (copyState === "manual") {
-            return "Select code";
-        }
-
-        return "Copy code";
-    }, [copyState]);
 
     if (!shareLink) {
         return null;
     }
+
+    const opening = handoff === "opening";
+    const [prefix, ...groups] = shareLink.code.split("-");
+    const isShareCode = SHARE_CODE_PATTERN.test(shareLink.code);
 
     async function copyShareCode() {
         if (!shareLink) {
@@ -140,146 +141,167 @@ export default function ShareLinkHandler() {
         window.setTimeout(() => setCopyState("idle"), 1600);
     }
 
+    // The link itself fires the deep link; this only shows the attempt.
+    function retryInIcarus() {
+        setHandoff("opening");
+        window.clearTimeout(retryTimer.current);
+        retryTimer.current = window.setTimeout(() => setHandoff("unopened"), 1800);
+    }
+
     return (
         <section
             aria-labelledby="share-title"
-            aria-live="polite"
-            className="fixed inset-0 z-50 flex min-h-screen items-center justify-center overflow-hidden px-5 py-10 text-white"
-            style={{ background: "#08080a" }}
+            className="fixed inset-0 z-50 flex flex-col overflow-y-auto"
+            style={{ background: palette.bg, color: palette.fg }}
         >
-            <div
-                aria-hidden
-                className="absolute inset-0"
-                style={{
-                    background:
-                        "radial-gradient(520px 320px at 50% 22%, rgba(124,58,237,0.22), transparent 72%)",
-                }}
-            />
-            <div
-                aria-hidden
-                className="absolute inset-0 opacity-[0.08]"
-                style={{
-                    backgroundImage:
-                        "linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)",
-                    backgroundSize: "56px 56px",
-                    maskImage:
-                        "linear-gradient(180deg, transparent 0%, black 22%, black 72%, transparent 100%)",
-                    WebkitMaskImage:
-                        "linear-gradient(180deg, transparent 0%, black 22%, black 72%, transparent 100%)",
-                }}
-            />
+            <header className="relative z-10 shrink-0" style={{ borderBottom: "1px solid #1d1d20" }}>
+                <div className="mx-auto flex h-16 max-w-[1160px] items-center px-6">
+                    <Link href="/" aria-label="Icarus home">
+                        <Wordmark height={18} />
+                    </Link>
+                </div>
+            </header>
 
-            <div
-                className="relative mx-auto flex w-full max-w-md flex-col items-center text-center"
-            >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                    src={ICARUS_LOGO_URL}
-                    alt="Icarus logo"
-                    width={72}
-                    height={72}
-                    className="h-[72px] w-[72px] rounded-2xl"
+            <main className="relative flex flex-1 items-center overflow-hidden py-10 lg:py-16">
+                <div
+                    aria-hidden
+                    className="tactical-dots absolute inset-0"
                     style={{
-                        boxShadow:
-                            "0 24px 70px -24px rgba(124,58,237,0.9), 0 0 0 1px rgba(255,255,255,0.12)",
+                        maskImage: "linear-gradient(180deg, #000 0%, #000 55%, transparent 100%)",
+                        WebkitMaskImage:
+                            "linear-gradient(180deg, #000 0%, #000 55%, transparent 100%)",
                     }}
                 />
+                {/* The homepage sun, warm for as long as the link is opening. */}
+                <AnimatedSun warm={opening} />
 
-                <p
-                    className="mt-7 text-[12px] font-medium"
-                    style={{ color: "#a78bfa" }}
-                >
-                    Icarus Share
-                </p>
-                <h1
-                    id="share-title"
-                    className="mt-3 font-onest text-[34px] font-semibold leading-[1.05] sm:text-[44px]"
-                    style={{ letterSpacing: 0 }}
-                >
-                    Opening shared strategy
-                </h1>
-                <p className="mt-4 max-w-sm text-sm leading-6" style={{ color: "#a1a1aa" }}>
-                    This link opens in the Icarus desktop app. Keep this page open if your
-                    browser asks for permission. No app? Open it in your browser: shared
-                    strategies need no account.
-                </p>
-
-                <div
-                    className="mt-8 w-full rounded-lg border p-4 text-left"
-                    style={{
-                        borderColor: "rgba(255,255,255,0.10)",
-                        background: "rgba(255,255,255,0.035)",
-                    }}
-                >
-                    <div className="flex items-center justify-between gap-4">
-                        <span
-                            className="text-[12px] font-medium"
-                            style={{ color: "#71717a" }}
-                        >
-                            Share code
-                        </span>
-                        <span
-                            className="h-1.5 w-1.5 rounded-full"
-                            style={{
-                                background: "#7c3aed",
-                                boxShadow: "0 0 14px rgba(124,58,237,0.8)",
-                            }}
-                        />
-                    </div>
-                    <code
-                        className="mt-3 block select-all overflow-hidden text-ellipsis whitespace-nowrap font-mono text-[13px]"
-                        style={{ color: "#fafafa" }}
-                    >
-                        {shareLink.code}
-                    </code>
-                </div>
-
-                <p className="mt-5 min-h-5 text-sm" style={{ color: "#d4d4d8" }}>
-                    {status}
-                </p>
-
-                <div className="mt-6 flex w-full flex-col gap-2 sm:flex-row">
-                    <a
-                        href={shareLink.deepLink}
-                        onClick={() => {
-                            window.setTimeout(() => {
-                                setStatus(NOT_OPENED_STATUS);
-                            }, 900);
+                <div className="relative mx-auto w-full max-w-[1160px] px-6" aria-live="polite">
+                    <h1
+                        id="share-title"
+                        className="font-display"
+                        style={{
+                            fontSize: "clamp(36px, 5.4vw, 64px)",
+                            lineHeight: 1.04,
+                            fontWeight: 700,
+                            letterSpacing: "-0.02em",
                         }}
-                        className="icarus-button icarus-button-primary icarus-button-responsive-wide flex-1"
                     >
-                        Open in Icarus
-                        <FaArrowRight aria-hidden size={11} />
-                    </a>
-                    <button
-                        type="button"
-                        onClick={copyShareCode}
-                        className="icarus-button icarus-button-outline icarus-button-responsive-wide flex-1"
+                        {opening ? "Opening in Icarus." : "Icarus didn\u2019t open."}
+                    </h1>
+                    <p
+                        className="mt-6 min-h-[4.8em] max-w-[34em] text-[16.5px] leading-[1.6] lg:min-h-[3.2em]"
+                        style={{ color: palette.muted }}
                     >
-                        {copyState === "copied" ? (
-                            <FaCheck aria-hidden size={12} />
+                        {opening
+                            ? "If your browser asks to open the desktop app, allow it."
+                            : "The desktop app may not be installed on this device. This link opens read-only in your browser, no account needed."}
+                    </p>
+
+                    {/* The primary action is whichever one can work next. */}
+                    <div className="mt-7 flex flex-col gap-2 sm:flex-row sm:gap-4">
+                        {opening ? (
+                            <>
+                                <a
+                                    href={shareLink.deepLink}
+                                    onClick={retryInIcarus}
+                                    className="icarus-button icarus-button-primary icarus-button-lg icarus-button-responsive-wide"
+                                >
+                                    Open in Icarus
+                                </a>
+                                <a
+                                    href={shareLink.webLink}
+                                    className="icarus-button icarus-button-secondary icarus-button-lg icarus-button-responsive-wide"
+                                >
+                                    View in browser
+                                </a>
+                            </>
                         ) : (
-                            <FaCopy aria-hidden size={12} />
+                            <>
+                                <a
+                                    href={shareLink.webLink}
+                                    className="icarus-button icarus-button-primary icarus-button-lg icarus-button-responsive-wide"
+                                >
+                                    View in browser
+                                </a>
+                                <a
+                                    href={shareLink.deepLink}
+                                    onClick={retryInIcarus}
+                                    className="icarus-button icarus-button-secondary icarus-button-lg icarus-button-responsive-wide"
+                                >
+                                    Try opening Icarus again
+                                </a>
+                            </>
                         )}
-                        {copyLabel}
-                    </button>
+                    </div>
                 </div>
+            </main>
 
-                <a
-                    href={shareLink.webLink}
-                    className="icarus-button icarus-button-outline icarus-button-wide mt-2 w-full"
-                >
-                    View in your browser
-                    <FaArrowRight aria-hidden size={11} />
-                </a>
+            <div
+                aria-hidden
+                className="relative h-px shrink-0 overflow-hidden"
+                style={{ background: palette.border }}
+            >
+                {opening && (
+                    <div
+                        className="share-seam-sweep absolute left-0 top-0 h-px w-[26%]"
+                        style={{
+                            background: "linear-gradient(90deg, transparent, #e4e4e7, transparent)",
+                        }}
+                    />
+                )}
+            </div>
 
-                <Link
-                    href="/"
-                    className="mt-6 text-xs transition-colors hover:text-white"
-                    style={{ color: "#71717a" }}
-                >
-                    Go to icarusstrats.com
-                </Link>
+            <div className="shrink-0 pb-6 lg:pb-14" style={{ background: "#0d0d10" }}>
+                <div className="mx-auto grid max-w-[1160px] px-6 lg:grid-cols-2">
+                    <div
+                        className="flex flex-col gap-4 border-b py-6 lg:min-h-[120px] lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:border-b-0 lg:border-r lg:py-8 lg:pr-10"
+                        style={{ borderColor: palette.border }}
+                    >
+                        <div className="min-w-0">
+                            <code
+                                className="font-mono block select-all break-all font-medium leading-[1.3]"
+                                style={{ fontSize: "clamp(17px, 1.7vw, 22px)" }}
+                            >
+                                {isShareCode ? (
+                                    <>
+                                        <span style={{ color: palette.dim }}>{prefix}-</span>
+                                        {groups.join("-")}
+                                    </>
+                                ) : (
+                                    shareLink.code
+                                )}
+                            </code>
+                            <p className="mt-1.5 text-sm leading-[1.6]" style={{ color: palette.muted }}>
+                                Paste this code into Icarus under Shared with Me.
+                            </p>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={copyShareCode}
+                            className="icarus-button icarus-button-outline icarus-button-sm shrink-0 lg:min-w-[124px]"
+                        >
+                            {copyState === "copied" ? (
+                                <LuCheck aria-hidden size={14} />
+                            ) : (
+                                <LuCopy aria-hidden size={14} />
+                            )}
+                            {COPY_LABEL[copyState]}
+                        </button>
+                    </div>
+
+                    <div className="flex flex-col gap-4 py-6 lg:min-h-[120px] lg:flex-row lg:items-center lg:justify-between lg:gap-6 lg:py-8 lg:pl-10">
+                        <p className="text-[15.5px] leading-[1.6] lg:max-w-[21em]" style={{ color: "#d4d4d8" }}>
+                            Icarus is a free, open-source VALORANT strategy board for Windows and web.
+                        </p>
+                        <a
+                            href={downloadUrl}
+                            className="icarus-button icarus-button-outline icarus-button-sm shrink-0"
+                        >
+                            <LuDownload aria-hidden size={14} />
+                            Download for Windows
+                        </a>
+                    </div>
+                </div>
             </div>
         </section>
     );

@@ -146,7 +146,7 @@ function getRayStyle(clipPath: string, index: number): React.CSSProperties {
     } as React.CSSProperties;
 }
 
-function AnimatedSun({ warm }: { warm: boolean }) {
+export function AnimatedSun({ warm }: { warm: boolean }) {
     return (
         <div
             data-animated-sun

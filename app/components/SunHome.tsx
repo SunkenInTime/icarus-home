@@ -39,7 +39,7 @@ export default function SunHome({ versionInfo }: { versionInfo: VersionInfo }) {
     }, []);
 
     if (shareMode) {
-        return <ShareLinkHandler />;
+        return <ShareLinkHandler downloadUrl={versionInfo.platforms.windows.url} />;
     }
 
     return <CloserToTheSunClient versionInfo={versionInfo} />;
