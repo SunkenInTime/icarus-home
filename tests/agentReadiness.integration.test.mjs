@@ -96,6 +96,32 @@ test("public agent-ready endpoints behave correctly", async (t) => {
     assert.match(response.headers.get("link") ?? "", /rel="describedby"/);
   });
 
+  await t.test("share cards name a picture and a video the site serves", async () => {
+    for (const pathname of ["/", "/lineups"]) {
+      const body = await (await fetch(`${origin}${pathname}`, { headers: { Accept: "text/html" } })).text();
+      const tag = (property) =>
+        new RegExp(`<meta property="${property}" content="([^"]+)"`).exec(body)?.[1] ?? "";
+
+      // Link-preview bots read these from other machines, so a relative
+      // path is a card with no picture or a video that never plays.
+      const image = tag("og:image");
+      const video = tag("og:video");
+      assert.match(image, /^https:\/\/icarusstrats\.com\/.+\.png$/, `${pathname} og:image`);
+      assert.match(video, /^https:\/\/icarusstrats\.com\/.+\.mp4$/, `${pathname} og:video`);
+      assert.equal(tag("og:video:type"), "video/mp4");
+
+      const picture = await fetch(`${origin}${new URL(image).pathname}`);
+      assert.equal(picture.status, 200);
+      assert.match(picture.headers.get("content-type") ?? "", /^image\/png/);
+
+      // iMessage asks for the first two bytes and only plays a video whose
+      // server answers 206.
+      const clip = await fetch(`${origin}${new URL(video).pathname}`, { headers: { Range: "bytes=0-1" } });
+      assert.equal(clip.status, 206);
+      assert.match(clip.headers.get("content-type") ?? "", /^video\/mp4/);
+    }
+  });
+
   await t.test("canonical URLs negotiate Markdown and advertise cache variance", async () => {
     for (const pathname of ["/", "/lineups", "/tos"]) {
       const response = await fetch(`${origin}${pathname}`, {
