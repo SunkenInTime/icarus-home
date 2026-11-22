@@ -354,7 +354,7 @@ function Hero({ swings }: { swings: BigSwings }) {
                     style={{ color: palette.muted, animationDelay: `${REVEAL.body}ms` }}
                 >
                     Draw executes, save lineups, and review replays on a fast desktop board.
-                    Keep your playbook offline with no account, or plan live with your team.
+                    Works offline with no account, or live in the cloud with your team.
                 </p>
 
                 <div
@@ -434,15 +434,15 @@ function Hero({ swings }: { swings: BigSwings }) {
 const CLAIMS = [
     {
         title: "Fast",
-        body: "Native desktop app with a 165fps+ canvas. Draw paths, drop util, and flip through pages without lag or stutter.",
+        body: "Native desktop, 165fps+ canvas. Draw, pan, and flip pages without browser lag.",
     },
     {
         title: "Free",
-        body: "Open source under Apache 2.0, with no ads and no paywall. Save your whole playbook without a subscription or strat cap.",
+        body: "Open source under Apache 2.0. No ads, no paywall, and no cap on your stratbook.",
     },
     {
         title: "Yours",
-        body: "Local-first by default. With no account, your playbook stays on your PC and works offline. Signing in never uploads your local strats on its own.",
+        body: "Works offline with no account. Your local strats stay on your PC, and signing in never uploads them behind your back.",
     },
 ] as const;
 
@@ -499,10 +499,8 @@ function AgentBar() {
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Most boards cram the whole roster into a strip at the bottom. Icarus
-                        keeps agents right beside the map, so you can drop a comp or swap a pick
-                        without losing your place. Right-click any agent to pull up their full
-                        kit and place abilities straight on the map.
+                        The whole roster sits right beside the map instead of crammed into a
+                        bottom strip. Drop a comp, right-click for their kit, and keep talking.
                     </p>
                 </div>
 
@@ -531,17 +529,16 @@ function LocalFirst() {
                 />
 
                 <div>
-                    <SectionHeading label="Local-first">
+                    <SectionHeading label="Offline first">
                         Yours, even offline.
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Open Icarus and start drawing with no account. Your playbook stays on
-                        your PC and works offline, at a LAN, or on shaky tournament wifi. Export
-                        any strat as an .ica file to drop in Discord or keep as a backup. When
-                        your team wants one shared board, sign in and move it to the cloud.
+                        Start drawing with no account. Your playbook lives on your PC, works
+                        offline or on tournament wifi, and exports to a single .ica file you
+                        can drop straight in Discord.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image
@@ -569,21 +566,16 @@ function LiveCloud() {
 
             <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
                 <div>
-                    <SectionHeading label="Live cloud planning">
-                        One board.
-                        <br />
-                        <span style={{ color: palette.muted }}>Your whole team on it.</span>
+                    <SectionHeading label="Cloud">
+                        Plan with your team, live.
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Sign in and every new strat saves to the cloud. It syncs to your other
-                        PCs and the web beta, and anyone you send an edit link can work on the
-                        same board at the same time. You see their cursor and name on the map,
-                        and what they draw shows up on your screen while you keep going. Lose
-                        your connection mid-scrim and the desktop app keeps your cloud strats
-                        open offline, then syncs when you&rsquo;re back.
+                        Sign in and every new strat saves to the cloud, synced across your PCs
+                        and the web beta. Send your team a link to build the round together with
+                        live cursors, and keep cloud strats open offline on desktop.
                     </p>
                 </div>
 
@@ -613,21 +605,16 @@ function Replays() {
 
                 <div>
                     <SectionHeading label="Replays">
-                        Every round, back on the map.
-                        <br />
-                        <span style={{ color: palette.muted }}>Pause it. Draw on it. Keep it.</span>
+                        Turn match replays into strats.
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Download a match from your career page in VALORANT and open the .vrf
-                        file in the Windows app. The whole game plays out on the 2D map: every
-                        player&rsquo;s position and sightline, utility as it goes down, and the
-                        killfeed as the fights happen. Pause on the moment the round turned,
-                        draw over it, and hit Capture to turn it into an editable strategy page
-                        with players, facing, and utility right where they were. Bring it to
-                        the post-scrim review or your next tournament prep.
+                        Open any VALORANT .vrf replay in the desktop app to watch the whole
+                        match with sightlines, util, and the killfeed. Pause where the round
+                        slipped away, draw the fix, and capture it straight into a strategy
+                        page.
                     </p>
                 </div>
             </div>
@@ -665,10 +652,8 @@ function Community() {
                     className="mx-auto mt-5 max-w-lg text-[15.5px] leading-[1.7]"
                     style={{ color: palette.muted }}
                 >
-                    Icarus is built in public with the players, IGLs, and coaches who use it
-                    every week. Drop a bug report or feature request in the Discord, vote on
-                    what comes next, or open an issue on GitHub. Most of the app&rsquo;s best
-                    updates started as a message there.
+                    Built in public with the players, IGLs, and coaches who run it every week.
+                    Most of the app&rsquo;s best features started as a message in the Discord.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                     <a
