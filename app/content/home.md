@@ -28,7 +28,7 @@ Cloud planning works today. Signed-in users can send teammates an edit link to a
 
 ### Review replays
 
-Open a VALORANT replay (`.vrf` file downloaded from your career page in VALORANT) in the Replays tab to watch the match on the map. Follow a player, see how each round ended, filter the killfeed, draw over the paused replay, and capture any moment directly as a strategy page.
+Open a VALORANT replay (`.vrf` file downloaded from your career page in VALORANT) in the Replays tab of the Windows app to watch the match play out on the map, with each player's view cone and the utility they use. Follow a player, see how each round ended, filter the killfeed, draw over the paused replay, and capture any moment directly as an editable strategy page.
 
 ### Organize and share
 

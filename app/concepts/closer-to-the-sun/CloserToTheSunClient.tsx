@@ -596,7 +596,46 @@ function LiveCloud() {
     );
 }
 
-/* ── 6 · Community: built from feedback ────────────────────────── */
+/* ── 6 · Replays: the match back on the map ────────────────────── */
+
+function Replays() {
+    return (
+        <section id="replays" className="relative py-24 sm:py-32">
+            {/* Flight path banks right through replays. */}
+            <span data-flight-anchor aria-hidden className="absolute right-[13%] top-[30%] h-2 w-2" />
+
+            <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+                <DemoVideo
+                    src="/replays-showcase.mp4"
+                    label="A real Lotus match replayed on the 2D map: the attackers hit A site, the replay pauses, a yellow arrow is drawn over the paused round, and Capture opens that moment as an editable strategy page"
+                    className="order-last md:order-first"
+                />
+
+                <div>
+                    <SectionHeading label="Replays">
+                        Every round, back on the map.
+                        <br />
+                        <span style={{ color: palette.muted }}>Pause it. Draw on it. Keep it.</span>
+                    </SectionHeading>
+                    <p
+                        className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
+                        style={{ color: palette.muted }}
+                    >
+                        Download a match from your career page in VALORANT and open the .vrf
+                        file in the Windows app. The whole game plays out on the 2D map: every
+                        player&rsquo;s position and sightline, utility as it goes down, and the
+                        killfeed as the fights happen. Pause on the moment the round turned,
+                        draw over it, and hit Capture to turn it into an editable strategy page
+                        with players, facing, and utility right where they were. Bring it to
+                        the post-scrim review or your next tournament prep.
+                    </p>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ── 7 · Community: built from feedback ────────────────────────── */
 
 function Community() {
     return (
@@ -656,7 +695,7 @@ function Community() {
     );
 }
 
-/* ── 7 · Extras: found by torchlight (see TorchlitExtras) ──────── */
+/* ── 8 · Extras: found by torchlight (see TorchlitExtras) ──────── */
 
 /* ── Page ──────────────────────────────────────────────────────── */
 
@@ -687,6 +726,7 @@ export default function CloserToTheSunClient({
                 )}
                 <LocalFirst />
                 <LiveCloud />
+                <Replays />
                 <Community />
                 <TorchlitExtras />
                 <SunSection versionInfo={latestVersionInfo} />
