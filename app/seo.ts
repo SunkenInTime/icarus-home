@@ -4,7 +4,7 @@ export const siteConfig = {
   url: "https://icarusstrats.com",
   title: "Icarus Strats - Free Open-Source VALORANT Strategy Planner",
   description:
-    "Free, open-source VALORANT strategy planner. Draw strats, save lineups, review replays, and plan live with your team. Local-first, cloud optional.",
+    "Free, open-source VALORANT strategy planner. Draw executes, save lineups, review replays, and plan live with your team. Local-first, no ads or paywalls.",
   keywords: [
     "Icarus",
     "Icarus Strats",

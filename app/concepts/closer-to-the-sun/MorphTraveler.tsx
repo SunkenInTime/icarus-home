@@ -14,8 +14,8 @@ import icarusLogo from "../../../icarus-logo-svg.svg";
  *
  * Stages are keyed to the sections the traveler passes:
  *   wing (hero) → dart (fast/free/yours) → reticle (agent bar) →
- *   folder (local-first) → heart (community) → comet (the torchlit extras) →
- *   logo (the sun).
+ *   folder (local-first) → reticle (live cloud planning) → play (replays) →
+ *   heart (community) → comet (the torchlit extras) → logo (the sun).
  */
 
 /** One stroke: [Mx,My, C1…C6, C1…C6] — a move and two cubics. */
@@ -85,6 +85,17 @@ const SHAPES: Record<string, Shape> = {
         ],
         alpha: [1, 1, 1, 1, 1],
     },
+    // Play button: the reticle's circle around a play triangle.
+    play: {
+        strokes: [
+            [32, 14, 42, 14, 50, 22, 50, 32, 50, 42, 42, 50, 32, 50],
+            [32, 50, 22, 50, 14, 42, 14, 32, 14, 22, 22, 14, 32, 14],
+            [27, 22, 27, 25.3, 27, 28.7, 27, 32, 27, 35.3, 27, 38.7, 27, 42],
+            [27, 42, 29.7, 40.3, 32.3, 38.7, 35, 37, 37.7, 35.3, 40.3, 33.7, 43, 32],
+            [43, 32, 40.3, 30.3, 37.7, 28.7, 35, 27, 32.3, 25.3, 29.7, 23.7, 27, 22],
+        ],
+        alpha: [1, 1, 1, 1, 1],
+    },
     // Heart with three small rays above it.
     heart: {
         strokes: [
@@ -122,14 +133,16 @@ const SHAPES: Record<string, Shape> = {
 
 /** Stage order along the page; index = nearest flight anchor, clamped. */
 export const STAGES = [
-    "wing", // hero headline — the falling wing begins the journey
+    "wing", // hero headline: the falling wing begins the journey
     "dart", // why icarus
     "reticle", // agent bar
     "folder", // local-first
+    "reticle", // live cloud planning
+    "play", // replays
     "heart", // community
     "comet", // extras (two anchors)
     "comet",
-    "logo", // the sun — the traveler resolves into the Icarus mark
+    "logo", // the sun: the traveler resolves into the Icarus mark
 ] as const;
 
 const MORPH_MS = 480;

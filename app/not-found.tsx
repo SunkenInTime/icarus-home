@@ -24,8 +24,8 @@ export default function NotFound() {
           Page not found.
         </h1>
         <p className="mt-5 max-w-lg leading-7" style={{ color: "#a1a1aa" }}>
-          No Icarus Strats page exists at this path. Try the product guide or
-          use a machine-readable index to find the right page.
+          There is no Icarus Strats page at this URL. Head back to the homepage,
+          or pick one of the links below.
         </p>
         <ul className="mt-8 space-y-3">
           {RECOVERY_LINKS.map(([label, href]) => (

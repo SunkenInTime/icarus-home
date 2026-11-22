@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll } from "framer-motion";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 
@@ -219,6 +220,20 @@ export default function SunSection({ versionInfo }: { versionInfo: VersionInfo }
                         className="inline-flex items-center gap-2 transition-colors hover:text-white"
                     >
                         <FaDiscord aria-hidden /> Discord
+                    </a>
+                    <Link
+                        href="/lineups"
+                        className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                    >
+                        Lineups
+                    </Link>
+                    <a
+                        href="https://beta.icarusstrats.com"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 transition-colors hover:text-white"
+                    >
+                        Web beta
                     </a>
                     <span aria-hidden style={{ color: palette.dim }}>
                         ·

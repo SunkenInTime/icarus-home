@@ -1,14 +1,14 @@
 # Icarus Strats
 
-> Icarus Strats is a free, open-source VALORANT strategy planner for Windows, with a web version in beta. Players and teams use it to draw tactics, save lineups, review replays, and plan strategies together live.
+> Icarus Strats is a free, open-source VALORANT strategy planner for Windows, with a web version in beta. Players, IGLs, and coaches use it to draw executes, save lineups, review match replays, and plan strategies together live.
 
-Icarus is local-first. The planner works offline and keeps strategies on the user's computer, with no account required. Signing in with email or Discord is optional. Strategies the user makes while signed in, or moves with Move to cloud, sync across every computer they sign in on and to the web version, and teammates can edit them live. Signing in doesn't upload the local library on its own. There is no premium tier. The project is Apache-licensed and developed in public.
+Icarus is local-first. The Windows desktop app works offline and keeps your playbook on your own PC, with no account, no ads, and no paid tier. Signing in with email or Discord is optional. Once you sign in, every new strategy saves to the cloud, and you can move older ones there with Move to cloud. Cloud strategies sync across every computer you sign in on and to the web beta, and teammates can edit the same board with you live. Signing in does not upload your local library on its own, and the Windows app can still export any strategy, local or cloud, as an `.ica` file. The project is Apache 2.0 licensed and built in public with the community.
 
-The web version is a beta at [beta.icarusstrats.com](https://beta.icarusstrats.com). It needs a sign-in and works with cloud strategies only. Replays and importing or exporting files stay in the Windows app.
+The web version is in beta at [beta.icarusstrats.com](https://beta.icarusstrats.com). It requires a sign-in and works with cloud strategies only (view-only share links open without an account). Replays and importing or exporting `.ica` files stay in the Windows app.
 
 ## When to use Icarus
 
-Use Icarus when a player, coach, analyst, or team needs to draw a VALORANT tactic, explain a setup on a map, organize agent positions and abilities, save lineup references, or walk through a play across several pages. It fits teams that plan together on a call, because teammates can work on the same board at once. It also fits players who want an offline planner, or who want their playbook to stay on their own computer.
+Use Icarus when a player, IGL, coach, analyst, or five-stack needs to map out a VALORANT execute or default, place agents and abilities on a map, organize lineup references, break down a match replay, or step through a round across multiple pages. It fits teams that plan together on a call, because teammates can edit the same board live. It also fits players who want a fast native desktop board that works offline and keeps their stratbook on their own computer without paywalls or strat caps.
 
 Icarus is a desktop product with a web version, not a hosted agent API. An agent should help the user choose the stable Windows download or the web version, explain the workflow, or inspect the open-source repository for implementation details. Do not imply that an agent can create or edit a strategy through a public Icarus API.
 
@@ -16,23 +16,23 @@ Icarus is a desktop product with a web version, not a hosted agent API. An agent
 
 ### Draw and annotate
 
-Draw directly on VALORANT maps, place circles, rectangles, and zones, and place agents and their abilities from a bar on the side of the map instead of a tray under it. Every placed item can carry a caption that shows on hover. Doors on Lotus, Summit, and Ascent open and close per page, and view cones stop at walls and shut doors.
+Draw directly on VALORANT maps, mark areas with circles, rectangles, and floor zones, and place agents and abilities from a side panel beside the map instead of a cramped bottom tray. Every placed item can carry a hover caption. Doors on Lotus, Summit, and Ascent open and close per page, and view cones stop at walls, smokes, and shut doors.
 
 ### Save lineups
 
-Save a lineup as where the agent stands and where the ability lands, with a name, notes, images, and a YouTube link for each throw. One standing spot can link to several landings. See [Save Valorant lineups in Icarus](https://icarusstrats.com/lineups.md).
+Pin lineups right on the map with your standing spot, landing spot, name, notes, screenshots, and a YouTube link for each throw. One standing spot can link to several landings, and one landing can show throws from multiple spots. See [Save Valorant lineups in Icarus](https://icarusstrats.com/lineups.md).
 
 ### Plan with your team, live
 
-Signed-in users can share a strategy with teammates and edit it together. Each person sees the others' cursors and names, and an outline around anything someone is changing. Edits merge item by item. In the Windows app, cloud strategies stay available offline and sync when the connection returns, and Icarus asks before replacing work a teammate changed in the meantime. The web version needs a connection.
+Cloud planning works today. Signed-in users can send teammates an edit link to a cloud strategy and work on the same board at the same time. Everyone sees each other's live cursors and names, plus an outline around anything someone is changing. Edits merge item by item. In the Windows app, cloud strategies stay available offline and sync when the connection returns, and Icarus asks before overwriting work a teammate changed in the meantime. The web beta needs an active connection.
 
 ### Review replays
 
-Open a VALORANT replay (`.vrf` file, downloaded from the career page in VALORANT) in the Replays tab to watch the match on the map. Follow one player, see how each round ended, filter the killfeed, draw on the paused replay, and capture any moment as a strategy page.
+Open a VALORANT replay (`.vrf` file downloaded from your career page in VALORANT) in the Replays tab of the Windows app to watch the match play out on the map, with each player's view cone and the utility they use. Follow a player, see how each round ended, filter the killfeed, draw over the paused replay, and capture any moment directly as an editable strategy page.
 
 ### Organize and share
 
-Use folders, keyboard shortcuts, and multiple pages for the separate steps of one strategy. Share a strategy with a code or a link, export it as an `.ica` file, or export its pages as an MP4 video with animated transitions.
+Sort your playbook with color-coded folders, keyboard shortcuts, and multi-page strategies for the default, execute, and post-plant. Share a strategy with a link or share code (viewable in the browser with no account), export it as an `.ica` file for Discord, or export its pages as an MP4 video with animated transitions.
 
 ## Get Icarus
 

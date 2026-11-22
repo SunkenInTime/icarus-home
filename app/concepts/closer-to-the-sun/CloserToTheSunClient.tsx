@@ -353,8 +353,8 @@ function Hero({ swings }: { swings: BigSwings }) {
                     className="rise-in mx-auto mt-6 max-w-xl text-center text-[16.5px] leading-[1.6]"
                     style={{ color: palette.muted, animationDelay: `${REVEAL.body}ms` }}
                 >
-                    Map out executes and share strats your team can follow. Works offline,
-                    with no account or paid tier.
+                    Draw executes, save lineups, and review replays on a fast desktop board.
+                    Works offline with no account, or live in the cloud with your team.
                 </p>
 
                 <div
@@ -391,7 +391,7 @@ function Hero({ swings }: { swings: BigSwings }) {
                 >
                     <Image
                         src="/board-preview.png"
-                        alt="The Icarus strategy board: a VALORANT map with drawn tactics, agents, and folders"
+                        alt="The Icarus strategy board showing an Ascent attack setup with agents, abilities, drawn paths, and notes"
                         width={2048}
                         height={1280}
                         priority
@@ -434,15 +434,15 @@ function Hero({ swings }: { swings: BigSwings }) {
 const CLAIMS = [
     {
         title: "Fast",
-        body: "Native desktop, 60fps canvas. The pen draws the second you do — you feel the board, not the software.",
+        body: "Native desktop, 165fps+ canvas. Draw, pan, and flip pages without browser lag.",
     },
     {
         title: "Free",
-        body: "Apache-licensed, no account needed, no premium tier. The best one happens to cost nothing.",
+        body: "Open source under Apache 2.0. No ads, no paywall, and no cap on your stratbook.",
     },
     {
         title: "Yours",
-        body: "Local-first. Your playbook lives on your machine, and goes to the cloud only if you put it there.",
+        body: "Works offline with no account. Your local strats stay on your PC, and signing in never uploads them behind your back.",
     },
 ] as const;
 
@@ -493,16 +493,14 @@ function AgentBar() {
                     <SectionHeading label="The agent bar">
                         Agents at your side.
                         <br />
-                        <span style={{ color: palette.muted }}>Not under your canvas.</span>
+                        <span style={{ color: palette.muted }}>Not under the map.</span>
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        Every other board buries agents in a bottom tray. Icarus mounts them on
-                        the side of the map, so you grab, drop, and swap agents without breaking
-                        your drawing flow. Right-click any agent for its full ability list — the
-                        abilities live on the map too.
+                        The whole roster sits right beside the map instead of crammed into a
+                        bottom strip. Drop a comp, right-click for their kit, and keep talking.
                     </p>
                 </div>
 
@@ -531,18 +529,16 @@ function LocalFirst() {
                 />
 
                 <div>
-                    <SectionHeading label="Local-first">
+                    <SectionHeading label="Offline first">
                         Yours, even offline.
                     </SectionHeading>
                     <p
                         className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
                         style={{ color: palette.muted }}
                     >
-                        No account needed. The playbook lives on your machine and works
-                        anywhere: offline, on LAN, on tournament wifi. Export any strategy as a
-                        file and hand it straight to a friend. When the team wants one board,
-                        sign in and move the strategy to the cloud. It syncs to every computer
-                        you use and to the web version, and teammates edit it with you live.
+                        Start drawing with no account. Your playbook lives on your PC, works
+                        offline or on tournament wifi, and exports to a single .ica file you
+                        can drop straight in Discord.
                     </p>
                     {/* The handed-off strategy, mid-flight to that friend. */}
                     <Image
@@ -560,7 +556,73 @@ function LocalFirst() {
     );
 }
 
-/* ── 5 · Community: built from feedback ────────────────────────── */
+/* ── 5 · Live cloud planning: one board, the whole team ────────── */
+
+function LiveCloud() {
+    return (
+        <section id="live-cloud" className="relative py-24 sm:py-32">
+            {/* Flight path banks left through live cloud planning. */}
+            <span data-flight-anchor aria-hidden className="absolute left-[10%] top-[28%] h-2 w-2" />
+
+            <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+                <div>
+                    <SectionHeading label="Cloud">
+                        Plan with your team, live.
+                    </SectionHeading>
+                    <p
+                        className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
+                        style={{ color: palette.muted }}
+                    >
+                        Sign in and every new strat saves to the cloud, synced across your PCs
+                        and the web beta. Send your team a link to build the round together with
+                        live cursors, and keep cloud strats open offline on desktop.
+                    </p>
+                </div>
+
+                <DemoVideo
+                    src="/live-cursors-showcase.mp4"
+                    label="Two teammates editing the same Ascent strat live: one draws execute arrows into A site while the other, shown by a cursor labelled mika, draws a mid arrow and moves Harbor's wall"
+                />
+            </div>
+        </section>
+    );
+}
+
+/* ── 6 · Replays: the match back on the map ────────────────────── */
+
+function Replays() {
+    return (
+        <section id="replays" className="relative py-24 sm:py-32">
+            {/* Flight path banks right through replays. */}
+            <span data-flight-anchor aria-hidden className="absolute right-[13%] top-[30%] h-2 w-2" />
+
+            <div className="mx-auto grid w-full max-w-[1160px] items-center gap-14 px-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+                <DemoVideo
+                    src="/replays-showcase.mp4"
+                    label="A real Lotus match replayed on the 2D map: the attackers hit A site, the replay pauses, a yellow arrow is drawn over the paused round, and Capture opens that moment as an editable strategy page"
+                    className="order-last md:order-first"
+                />
+
+                <div>
+                    <SectionHeading label="Replays">
+                        Turn match replays into strats.
+                    </SectionHeading>
+                    <p
+                        className="mt-5 max-w-md text-[15.5px] leading-[1.7]"
+                        style={{ color: palette.muted }}
+                    >
+                        Open any VALORANT .vrf replay in the desktop app to watch the whole
+                        match with sightlines, util, and the killfeed. Pause where the round
+                        slipped away, draw the fix, and capture it straight into a strategy
+                        page.
+                    </p>
+                </div>
+            </div>
+        </section>
+    );
+}
+
+/* ── 7 · Community: built from feedback ────────────────────────── */
 
 function Community() {
     return (
@@ -590,9 +652,8 @@ function Community() {
                     className="mx-auto mt-5 max-w-lg text-[15.5px] leading-[1.7]"
                     style={{ color: palette.muted }}
                 >
-                    Icarus ships from feedback. Tell us what&rsquo;s broken or missing in the
-                    Discord and it usually lands within a version or two — updates ship in
-                    days, not quarters.
+                    Built in public with the players, IGLs, and coaches who run it every week.
+                    Most of the app&rsquo;s best features started as a message in the Discord.
                 </p>
                 <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
                     <a
@@ -619,7 +680,7 @@ function Community() {
     );
 }
 
-/* ── 6 · Extras: found by torchlight (see TorchlitExtras) ──────── */
+/* ── 8 · Extras: found by torchlight (see TorchlitExtras) ──────── */
 
 /* ── Page ──────────────────────────────────────────────────────── */
 
@@ -649,6 +710,8 @@ export default function CloserToTheSunClient({
                     </>
                 )}
                 <LocalFirst />
+                <LiveCloud />
+                <Replays />
                 <Community />
                 <TorchlitExtras />
                 <SunSection versionInfo={latestVersionInfo} />

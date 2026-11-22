@@ -21,7 +21,7 @@ const shareImage = {
 // A full URL: Next leaves video paths as written, unlike image paths.
 const shareVideo = { url: absoluteUrl("/og/lineups-v1.mp4"), type: "video/mp4", width: 1200, height: 630 };
 const description =
-    "Save your VALORANT lineups on the map in Icarus: where you stand, where the ability lands, and the clip, screenshots and notes for each throw. Free and open source.";
+    "Pin your VALORANT lineups right on the map in Icarus: standing spot, landing spot, screenshots, notes, and video clip. Free, open source, and offline-ready on Windows.";
 
 export const metadata: Metadata = {
     title,
@@ -53,39 +53,39 @@ export const metadata: Metadata = {
 
 const STEPS = [
     {
-        title: "Start a lineup",
+        title: "Open the lineup tool",
         body: "Press G, or click Add Lineup in the sidebar.",
     },
     {
-        title: "Place where you throw from",
-        body: "Drag the agent to the spot you stand on.",
+        title: "Mark your standing spot",
+        body: "Drop your agent on the exact spot you throw from.",
     },
     {
-        title: "Place where it lands",
-        body: "Drag the ability to where it lands, then press Next.",
+        title: "Mark the landing spot",
+        body: "Place the ability where it lands, then press Next.",
     },
     {
-        title: "Add what you need to repeat it",
-        body: "Give it a name, paste a YouTube link, add screenshots, and write notes. Paste images straight from your clipboard.",
+        title: "Save the reference",
+        body: "Name the lineup, drop in a YouTube link, add quick notes, and paste aim screenshots straight from your clipboard.",
     },
 ] as const;
 
 const FAQ = [
     {
         question: "Is it free?",
-        answer: "Yes. Icarus is free and open source under the Apache 2.0 license, and it has no premium tier.",
+        answer: "Yes. Icarus is free and open source under the Apache 2.0 license, with no ads and no paid tier.",
     },
     {
         question: "Do I need an account?",
-        answer: "No. In the Windows app, lineups save to your computer and work offline. Sign in and move a strategy to the cloud only if you want it on your other computers and the web version, or want to edit it live with teammates.",
+        answer: "No. In the Windows app, your lineups save locally and work offline without signing in. Only sign in and move a strategy to the cloud if you want it synced across devices, open in the web beta, or editable live with teammates.",
     },
     {
         question: "Can I browse other people's lineups?",
-        answer: "Icarus is for the lineups you collect and the ones your team shares with you. It isn't a public lineup database.",
+        answer: "Icarus is built for your own lineups and the ones your team shares with you, not a public lineup database.",
     },
     {
         question: "Does it run on Mac or Linux?",
-        answer: "The app is for Windows. The web version runs in a browser once you sign in, and shows the strategies you keep in the cloud, lineups included.",
+        answer: "The desktop app is Windows-only for now. On Mac or Linux, you can sign in to the web beta in your browser to view and edit your cloud strategies, lineups included.",
     },
 ] as const;
 
@@ -176,12 +176,12 @@ export default async function LineupsPage() {
                             letterSpacing: "-0.02em",
                         }}
                     >
-                        Save your Valorant lineups where you plan.
+                        Save your VALORANT lineups where you plan.
                     </h1>
                     <Body className="mt-6 max-w-xl text-[16.5px]">
-                        Icarus keeps each lineup on the map: where you stand, where the ability lands,
-                        and the clip, screenshots and notes you need to land it again. It&rsquo;s free,
-                        and the Windows app works offline.
+                        Stop digging through saved clips and Discord channels mid-match. Pin every
+                        lineup right on the map with your standing spot, landing spot, screenshots,
+                        notes, and video clip. Free to use, and the Windows app works offline.
                     </Body>
                     <div className="mt-8 flex flex-wrap items-center gap-4">
                         <a href={downloadUrl} className="icarus-button icarus-button-primary icarus-button-lg">
@@ -228,10 +228,10 @@ export default async function LineupsPage() {
                         <SectionLabel>On the map</SectionLabel>
                         <SectionTitle>One spot, every throw from it.</SectionTitle>
                         <Body className="mt-5 max-w-md">
-                            A standing spot can lead to several landings, and a landing can be reached
-                            from several spots. Click an ability to see every lineup that lands there,
-                            or click an agent to see every lineup thrown from that spot. Each one opens
-                            its clip, screenshots and notes.
+                            One standing spot often covers two or three default plants, and the same
+                            choke point might have throws from across the map. Click an agent to see
+                            every lineup from that spot, or click an ability to see every way to land
+                            it. Each one pulls up your clip, screenshots, and notes.
                         </Body>
                     </div>
                     <Screenshot
@@ -246,10 +246,11 @@ export default async function LineupsPage() {
                     <SectionLabel>Your team</SectionLabel>
                     <SectionTitle>Hand your lineups to the rest of the five-stack.</SectionTitle>
                     <Body className="mt-5 max-w-2xl">
-                        Lineups live in a strategy, next to the plays they belong to. Share the
-                        strategy with a code or a file and your teammates get every lineup in it. If
-                        you sign in, put the strategy in the cloud and edit it together live. You&rsquo;ll
-                        see who is changing which lineup while they do it.
+                        Lineups live right inside the strategy they belong to, not off in a separate
+                        folder. Share the strategy with a link, code, or .ica file and your teammates
+                        get every lineup along with the play. Sign in and move it to the cloud to
+                        build a stratbook together live, with shared cursors showing who is working
+                        on what.
                     </Body>
                 </section>
 

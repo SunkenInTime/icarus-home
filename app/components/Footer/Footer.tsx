@@ -20,8 +20,8 @@ const Footer = () => {
                     <div>
                         <Wordmark height={20} />
                         <p className="mt-3 text-sm max-w-sm" style={{ color: "#a1a1aa" }}>
-                            A local-first Valorant strategy planner — built so the gap between an idea and
-                            the board is zero.
+                            A free, open-source VALORANT strategy board. Plan offline on desktop, or
+                            sync up live with your team.
                         </p>
                         <div className="callsign mt-4" style={{ color: "#52525b" }}>
                             BUILT BY DARA · OPEN SOURCE · APACHE 2.0
