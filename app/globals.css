@@ -370,11 +370,28 @@ body {
   animation: draw-stroke 760ms cubic-bezier(.35,.75,.3,1) 950ms both;
 }
 
+/* Share page: a light runs along the hairline while the link is opening. */
+@keyframes share-seam-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(485%); }
+}
+
+.share-seam-sweep {
+  animation: share-seam-sweep 1.5s var(--ease-out) infinite;
+}
+
 /* Gated here rather than in JS: useReducedMotion() reads null on the server and
    true on the client, so branching a className on it mismatches on hydration. */
 @media (prefers-reduced-motion: reduce) {
   .icarus-button {
     transition-duration: 0ms;
+  }
+
+  /* Without the sweep, a still, dim line stands for "in progress". */
+  .share-seam-sweep {
+    animation: none;
+    width: 100%;
+    opacity: 0.35;
   }
 
   .rise-in,
