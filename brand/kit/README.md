@@ -43,7 +43,6 @@ Rules:
 - Do not recolor the mark outside white, violet `#7c3aed`, or near-black `#09090b`. No gradients on it, no outlines, no drop shadows.
 - Do not set the word "Icarus" in another font next to the mark. Use the lockup files.
 - The wordmark is the only capitals in the brand, apart from VALORANT written the way Riot writes it. Nothing else is uppercased or letter-spaced.
-- The older rounded-sans "Icarus" logotype on the site's share image (`og-image.png`) is retired.
 
 ## Color
 

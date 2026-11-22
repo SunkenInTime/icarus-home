@@ -31,7 +31,7 @@ export const siteConfig = {
     url: "/og-image.png",
     width: 1200,
     height: 630,
-    alt: "Icarus VALORANT strategy planner preview",
+    alt: "The Icarus strategy board with an Ascent default drawn on the map",
   },
   author: {
     name: "Dara Adedeji",
